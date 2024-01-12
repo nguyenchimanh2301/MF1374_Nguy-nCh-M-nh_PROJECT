@@ -1,0 +1,57 @@
+input {
+    width: 200px;
+    height: 36px;
+    padding: 0px 0 0 12px;
+    border-radius: 4px;
+    border: 1px solid #e6e6e6;
+    /* margin-top: 8px; */
+  }
+  input::placeholder {
+    color: #999999;
+    font-size: 14px;
+  }
+  input:hover {
+    background-color: #e6e6e6;
+    cursor: pointer;
+  }
+  input:focus {
+    border: 1px solid #50b83c;
+    outline: none;
+  }
+  .danger {
+    border: 1px solid #e61d1d;
+  }
+  .danger-message{
+    font-size: 12px;
+    color: #e61d1d;
+  }
+  .box__input-icon{
+      position: relative;
+      width: 250px;
+    padding: 0px 12px 0px 0px;
+    display: flex;
+	justify-content: space-between;
+	justify-items: center;
+	align-items: flex-end;
+
+  }
+  .input-icon {
+    height: 36px;
+    width: 200px;
+    position: relative;
+
+  }
+  
+  .icon-search{
+      background: url("../../assets/img/Sprites.64af8f61.svg") no-repeat -1041px -89px;
+       height: 20px;
+       width: 20px;
+       position: absolute;
+       top:9px;
+       right: 7px;
+  }
+  
+  .success{
+    border: 1px solid #50B83C;
+  }
+  
