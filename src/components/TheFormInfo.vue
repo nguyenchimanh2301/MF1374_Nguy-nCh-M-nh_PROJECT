@@ -23,11 +23,11 @@
                  :hasError="v$.EmployeeSelect.EmployeeCode.$error"
                  ref="focusText"
                  ></MInput>
-                 <span
+                 <div
                   style="font-size: 12px; color: red"
                   v-if="v$.EmployeeSelect.EmployeeCode.$error">
                   {{ v$.EmployeeSelect.EmployeeCode.$errors[0].$message }}
-                </span>
+                </div>
               </label>
               <label id="label" for="">{{ this.MISAResource["VN"].FullName }}<span class="text--required">*</span>
                 <MInput
@@ -35,11 +35,11 @@
                  :hasError="v$.EmployeeSelect.FullName.$error"
                  input-id="name"
                  ></MInput>
-                 <span
+                 <div
                   style="font-size: 12px; color: red"
                   v-if="v$.EmployeeSelect.FullName.$error">
                   {{ v$.EmployeeSelect.FullName.$errors[0].$message }}
-                </span>
+              </div>
               </label>
             </div>
             <label id="label" for="">Đơn vị<span class="text--required">*</span>
@@ -97,7 +97,7 @@
               </label>
             </div>
             <label id="label" for="">Nơi cấp
-              <input type="text" style="width: 546px;" value="Hưng Yên" />
+              <input type="text" id="identity-place" value="Hưng Yên" />
             </label>
           </div>
         </div>
@@ -136,10 +136,10 @@
         </div>
         </div>
         <div class="form--footer">
-          <button class="button btn-second btn-cancel" @click="closeForm">Hủy</button>
+          <button class="button btn-second btn-cancel" @click="closeForm">{{ this.MISAResource["VN"].Cancel }}</button>
           <div>
-            <button class="button btn-second" @click="closeForm">Cất</button>
-            <button class="button btn-add">Cất và thêm</button>
+            <button class="button btn-second btn-add " @click="addData">{{ this.MISAResource["VN"].Add }}</button>
+            <button class="button btn-add ">Cất và thêm</button>
           </div>
         </div>
       </div>
@@ -417,6 +417,7 @@ export default {
                             .post(this.MISAApi, this.Employee)
                             .then((response) => {
                             response.data;
+                            console.log(this.Employee)
                             this.errorCode(response);
                             this.loadForm(response);
                             this.closeToast();

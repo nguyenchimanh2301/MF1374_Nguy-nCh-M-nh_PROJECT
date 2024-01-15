@@ -16,10 +16,11 @@
           </div>
         </div>
         <div class="content">
+          <div class="layout-data">
           <div class="feature">
             <div class="title"><h2>Nhân Viên</h2></div>
             <div class="btn--feature">
-              <button class="button btn-main" @click="showForm">Thêm mới nhân viên</button>
+              <button class="button btn-main btn-title" @click="showForm">Thêm mới nhân viên</button>
             </div>
           </div>
 
@@ -28,7 +29,7 @@
               <div></div>
               <div class="box__input-icon">
                 <div class="input-icon"> 
-                  <input type="text" name="input" placeholder="Placeholder" />
+                  <input type="text" name="input" placeholder="Tìm theo mã, tên nhân viên" />
                     <div class="icon-search"></div>
                 </div>
                 <div class="icon--reload"></div>
@@ -109,21 +110,21 @@
                     <div id="edit--feature" v-show="index===tool">
                       <ul >
                         <li>Nhân bản</li>
-                        <li>Xóa</li>
+                        <li @click="showDlg(item)">Xóa</li>
                         <li>Ngừng sử dụng</li>
                       </ul>
                     </div>
                   </div>
                   </div>
                    </td>
-                  <div class="tooltips" v-show="index===tool" >
+                  <!-- <div class="tooltips" v-show="index===tool" >
                     <button @click="showDlg(item)">
                       <div class="icon--delete"></div>
                     </button>
                     <button @click="showData(item)">
                       <div class="icon--edit"></div>
                     </button>
-                  </div>
+                  </div> -->
                 </tr>
               </tbody>
               <tfoot>
@@ -135,9 +136,11 @@
                     <div class="paging">
                       <span style="color: #616161"></span>
                       <span
-                        ><select name="" id="">
-                          <option value="">20 bản ghi trên trang</option>
-                        </select></span
+                        >
+                        <select name="" id=""  v-model="pageSize" @change="changPageSize" >
+                          <option v-for="(page, index) in pageSizes"
+                          :key="index" value="{{ page }}"> {{ page }} bản ghi trên 1 trang</option>
+                          </select></span
                       >
                       <span id="previous">Trước</span>
                       <span style="font-weight: 700">
@@ -157,6 +160,7 @@
           </div>
           </div>
         </div>
+      </div>
       </div>
   <!-- <div class="container">
     <div class="content">
@@ -496,14 +500,10 @@ export default {
       this.isShowForm = false;
     },
    
-   
-    //hàm load dữ liệu
-    //CreadtedBy : NC Mạnh
-    //CreatedDate "5/12/2023"
-    load() {
+    async loadFilter() {
       try {
-        this.api
-          .get(this.MISAApi)
+      await this.api
+          .get(this.MISAApi+`/getpaging?pageSize=`+this.pageSize+`&numberPage=`+this.numberPage``)
           .then((response) => {
             this.employees = response.data;
             // console.log(this.employees);
@@ -516,6 +516,24 @@ export default {
       }
     },
   },
+    //hàm load dữ liệu
+    //CreadtedBy : NC Mạnh
+    //CreatedDate "5/12/2023"
+   async load() {
+      try {
+      await this.api
+          .get(this.MISAApi)
+          .then((response) => {
+            this.employees = response.data;
+            // console.log(this.employees);
+          })
+          .catch((e) => {
+            this.errors.push(e);
+          });
+      } catch (error) {
+        console.log(error);
+      }
+    },
   data() {
     return {
       employees: [],
@@ -540,6 +558,9 @@ export default {
       msgToast : [],
       msgDialog : [],
       records: 0,
+      pageSizes : [10,20,30],
+      numberPage :1,
+      pageSize : 10,
     };
     // Thêm các dòng dữ liệu khác cần hiển thị
   },

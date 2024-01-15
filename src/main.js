@@ -46,7 +46,7 @@ app.use(router);
 app.config.globalProperties.api = axios;
 app.config.globalProperties.MISAEnum = MISAEnum;
 app.config.globalProperties.MISAResource = MISAResource;
-app.config.globalProperties.MISAApi = "http://localhost:8082/api/v1/Employees";
+app.config.globalProperties.MISAApi = "https://localhost:7096/api/v1/Employees";
 
 
 app.mount('#app')

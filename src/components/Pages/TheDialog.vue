@@ -2,8 +2,7 @@
    <div class="dialog--background" >
     <div class="dialog">
         <div class="dialog--title">
-            <h3>{{ titleDialog }} DỮ LIỆU</h3>
-            <div class="toast--btn" @click="hideDlg"></div>
+          
         </div>
        <div class="dialog--content">
         <div class="toast__icon " 
@@ -19,8 +18,9 @@
           </ul>
         </div>
        </div>
+       <hr style="height: 1px; float: bottom;margin: 0px 24px 0px 24px;">
        <div class="dialog__btn">
-        <button class="button btn--cancel" id="closedialog" @click="hideDlg">Hủy</button>
+        <button class="button btn-main btn--cancel" id="closedialog" @click="hideDlg">Hủy</button>
         <button class="button btn-main" @click="addData">Đồng Ý</button>
        </div>
     </div> 
