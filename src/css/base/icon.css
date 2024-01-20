@@ -99,6 +99,7 @@
 	background: var(--image) -424px -201px;
 	height: 24px;
 	width: 24px;
+	align-self: flex-end;
 }
 .icon--navbar{
 	background: var(--image) -847px -35px;

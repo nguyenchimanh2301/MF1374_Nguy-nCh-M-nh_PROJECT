@@ -23,19 +23,32 @@
 .sidebar{
   background-color: #0F2444 !important;
 }
+.layout-data > .feature{
+  width: 100%;
+  height: 56px;
+  background-color: #E6E6E6;
+  display: grid;
+  grid-template-columns: auto auto 12px;
+  align-items: flex-end;
+}
 .feature{
   width: 100%;
   height: 56px;
   background-color: #E6E6E6;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  display: grid;
+  grid-template-columns: auto auto 48px;
+  align-items: flex-end;
+}
+.btn--feature{
+  display: grid;
 }
 .feature .title{
   margin-left: 24px;
 }
+.
+.layout-data {
 
-.layout-data{
+  max-height: 100vh;
   margin: 0px 12px 0px 12px;
 }
 .content{

@@ -3,16 +3,18 @@ import App from './App.vue'
 
 import excel from 'vue-excel-export'
 
- import TheToastMessage from './components/Pages/TheToastMessage.vue';
- import MInput from './components/Pages/MInput.vue';
- import MLoader from './components/Pages/MLoader.vue';
- import TheDialog from './components/Pages/TheDialog.vue';
- import TheContent from './components/Pages/TheContent.vue';
+ import TheToastMessage from './components/ShareComponent/TheToastMessage.vue';
+ import MInput from './components/ShareComponent/MInput.vue';
+ import MLoader from './components/ShareComponent/MLoader.vue';
+ import TheDialog from './components/ShareComponent/TheDialog.vue';
+ import TheContent from './components/DataComponent/TheContent.vue';
+ import ThePagination from './components/ShareComponent/ThePagination.vue';
+
 
 import MISAResource from './js/helper/resource';
-import TheEmployee from './components/Pages/MainComponent/TheEmployee.vue';
-import TheSetting from './components/Pages/MainComponent/TheSetting.vue';
-import TheReport from './components/Pages/MainComponent/TheReport.vue';
+import TheEmployee from './components/MainComponent/TheEmployee.vue';
+import TheSetting from './components/MainComponent/TheSetting.vue';
+import TheReport from './components/MainComponent/TheReport.vue';
 import  axios  from 'axios';
 import MISAEnum from './js/helper/enum';
 import { createRouter , createWebHistory } from 'vue-router';
@@ -40,6 +42,7 @@ app.component("the-dialog",TheDialog)
 app.component("the-employee",TheEmployee)
 app.component("the-setting",TheSetting)
 app.component("the-report",TheReport)
+app.component("ThePagination",ThePagination)
 
 app.use(excel)
 app.use(router);

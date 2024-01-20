@@ -50,7 +50,6 @@
   </script>
   
   <style scoped>
-    /* Định nghĩa các lớp CSS tùy thuộc vào yêu cầu của bạn */
     .border-error {
       /* CSS của lớp khi có lỗi */
       border: 1px solid red;

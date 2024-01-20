@@ -58,15 +58,15 @@
     color: #ffffff;
     justify-content: center;
   }
-  #previous{
-	background: var(--icon-bg) -36px -361px;
+  /* #previous{
+	background: var(--image) -36px -361px;
 	height: 7px;
 	width: 14px;
 	padding: 5px;
 
-}
-#sidebar__icon--show{
-	background: var(--icon-bg) -84px -409px;
+} */
+/* #sidebar__icon--show{
+	background: var(--image) -84px -409px;
 	height: 14px;
 	width: 14px;
-}
+} */

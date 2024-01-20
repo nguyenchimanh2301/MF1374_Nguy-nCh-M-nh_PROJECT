@@ -330,7 +330,7 @@ import {
   helpers,
 } from "@vuelidate/validators";
 import { reactive, computed,  } from "vue";
-import MISAResource from "../js/helper/resource";
+import MISAResource from "../../js/helper/resource";
 
 export default {
     props: ["EmployeeSelected", "methodP"],

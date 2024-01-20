@@ -1,57 +1,64 @@
 input {
-    width: 200px;
-    height: 36px;
-    padding: 0px 0 0 12px;
-    border-radius: 4px;
-    border: 1px solid #e6e6e6;
-    /* margin-top: 8px; */
-  }
-  input::placeholder {
-    color: #999999;
-    font-size: 14px;
-  }
-  input:hover {
-    background-color: #e6e6e6;
-    cursor: pointer;
-  }
-  input:focus {
-    border: 1px solid #50b83c;
-    outline: none;
-  }
-  .danger {
-    border: 1px solid #e61d1d;
-  }
-  .danger-message{
-    font-size: 12px;
-    color: #e61d1d;
-  }
-  .box__input-icon{
-      position: relative;
-      width: 250px;
-    padding: 0px 12px 0px 0px;
-    display: flex;
-	justify-content: space-between;
-	justify-items: center;
-	align-items: flex-end;
+  width: 200px;
+  height: 36px;
+  padding: 0px 0 0 12px;
+  border-radius: 4px;
+  border: 1px solid #e6e6e6;
+  /* margin-top: 8px; */
+}
+input::placeholder {
+  color: #999999;
+  font-size: 14px;
+}
+input:hover {
+  background-color: #e6e6e6;
+  cursor: pointer;
+}
+input:focus {
+  border: 1px solid #50b83c;
+  outline: none;
+}
+.danger {
+  border: 1px solid #e61d1d;
+}
+.danger-message {
+  font-size: 12px;
+  color: #e61d1d;
+}
+.box__input-icon {
+  position: relative;
+  width: 260px;
+  display: flex;
+  justify-content: space-between;
+  justify-items: center;
+  align-items: center;
+  border: 1px solid #e6e6e6;
+  justify-self: end;
+  border-radius: 4px;
+}
+.box__input-icon input{
+  border: none;
+  width: 224px;
+}
+.input-icon {
+  height: 36px;
+  width: 200px;
+  position: relative;
+}
+.btn-search {
+ border: none;
+ border-radius: 4px;
+}
+.btn-search:hover{
+  background-color: #50b83c;
+}
+.icon-search {
+  background: url("../../assets/img/Sprites.64af8f61.svg") no-repeat -1041px -89px;
+  height: 24px;
+  width: 24px;
+  background-color: #ffffff;
+}
 
-  }
-  .input-icon {
-    height: 36px;
-    width: 200px;
-    position: relative;
-
-  }
-  
-  .icon-search{
-      background: url("../../assets/img/Sprites.64af8f61.svg") no-repeat -1041px -89px;
-       height: 20px;
-       width: 20px;
-       position: absolute;
-       top:9px;
-       right: 7px;
-  }
-  
-  .success{
-    border: 1px solid #50B83C;
-  }
-  
+.success {
+  border: 1px solid #50b83c;
+}
