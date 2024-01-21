@@ -1,17 +1,22 @@
-@import url(./base/button.css);
-@import url(./base/input.css);
-@import url(./base/combobox.css);
-@import url(./base/toast.css);
-@import url(./base/grid.css);
+
+@import url(./base/form/combobox.css);
+@import url(./base/form/formInput.css);
+@import url(./base/form/popup.css);
+@import url(./base/form/toast.css);
+
+@import url(./base/component/button.css);
+@import url(./base/component/input.css);
+@import url(./base/component/icon.css);
+@import url(./base/component/loading.css);
+@import url(./base/component/tooltip.css);
+
+@import url(./base/layout/sidebar.css);
+@import url(./base/layout/table.css);
+@import url(./base/layout/navbar.css);
+@import url(./base/layout/grid.css);
+
 @import url(./base/variable.css);
-@import url(./base/popup.css);
-@import url(./base/icon.css);
-@import url(./base/sidebar.css);
-@import url(./base/table.css);
-@import url(./base/navbar.css);
-@import url(./base/tooltip.css);
-@import url(./base/formInput.css);
-@import url(./base/loading.css);
+
 @import url(./layout/employee.css);
 
 

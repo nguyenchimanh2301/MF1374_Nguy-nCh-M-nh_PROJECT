@@ -75,6 +75,7 @@ export default{
    created(){
       this.titleDialog = this.title;
       this.employeeId = this.employeeIdRemove;
+      console.log(this.employeeId);
       if(this.titleDialog!=='Xóa'){
         this.text = "Không";
       }
@@ -91,6 +92,7 @@ export default{
     },
     addData(){
        if(this.titleDialog==='Xóa'){
+        console.log(this.employeeId);
         this.$emit('removeData', this.employeeId.EmployeeId);
        }
        else{

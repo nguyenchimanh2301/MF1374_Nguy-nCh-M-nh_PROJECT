@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="PageNumber">
       <ul>
         <li @click="changePage('previous')">Trước</li>
         <li
@@ -51,7 +51,7 @@
         this.$emit('update:pageSize',value)
           return 
         }
-      }
+      },
     },
     methods: {
       //Hàm thay đổi số trang 
@@ -74,7 +74,7 @@
         }
         console.log(page);
         this.$emit('update:pageNumber',page)
-        this.$emit('dataFilter',this.pageSize,page,)
+        this.$emit('dataFilter',this.pageSize,page)
       },
     },
     props: {
@@ -89,19 +89,36 @@
         type:Number,
         default: 100
       },
+     
     }
   };
   </script>
   <style>
-  ul {
+ .PageNumber ul {
     display: flex;
     list-style: none;
+    justify-content: space-between;
   }
-  li {
-    margin: 10px;
+  .PageNumber li{
+    text-align: center;
+    margin: 5px
+  }
+  .PageNumber  li:not(:first-child,:last-child){
+    width: 20px;
+  }
+  .PageNumber li:hover{
+    background-color: #E0E0E0;
+  }
+  .PageNumber li:active{
+    background-color: green;
   }
   .page--active {
     border: 1px solid;
+    border-radius: 4px;
+  }
+  .PageNumber{
+    width: 370px;
+    margin-right: 12px;
   }
   </style>
   

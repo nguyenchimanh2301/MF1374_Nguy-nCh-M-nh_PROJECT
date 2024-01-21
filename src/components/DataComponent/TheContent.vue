@@ -41,7 +41,7 @@
                 <div class="icon-search"></div>
               </button>
             </div>
-            <div class="icon--reload"></div>
+            <div class="icon--reload" @click="Reload()"></div>
             <div></div>
           </div>
           <div class="scroll__table">
@@ -153,7 +153,7 @@
                       name=""
                       id=""
                       v-model="pageSize"
-                      @change="changPageSize"
+                      @change="changPageSize(pageSize)"
                     >
                       <option
                         v-for="(page, index) in pageSizes"
@@ -165,12 +165,11 @@
                     </select></span
                   >
                   <the-pagination 
-                  v-model:pageNumber="pageNumber"
+                   v-model:pageNumber="pageNumber"
                    v-model:pageSize="pageSize" 
                    :totalRecords="records"
                    @dataFilter = "loadFilter"
                    ></the-pagination>
-                  <div>Trang hiện tại: {{ currentPage }}</div>
                 </div>
               </div>
             </div>
@@ -355,20 +354,22 @@ export default {
     
   },
   created() {
-    this.loadFilter(this.pageSize, this.numberPage);
-      try {
-         this.api
+    this.loadFilter(this.pageSize, this.numberPage);{
+      this.api
           .get(
-            this.MISAApi)
+            this.MISAApi
+          )
           .then((response) => {
+            this.employees = response.data;
             this.records = response.data.length;
+            
+            this.loader = false;
           })
           .catch((e) => {
             this.errors.push(e);
           });
-      } catch (error) {
-        console.log(error);
-      }
+    }
+    // this.loadFilter(this.pageSize,this.numberPage) 
     },
   //   watch: {
   //   // Theo dõi sự thay đổi trong mảng selectedItems
@@ -386,7 +387,7 @@ export default {
     CountRowSelect() {
       this.sum = this.selectedItems.length; // Cập nhật tổng số phần tử trong selectedItems
     },
-
+    
     toggleSelectAll() {
       // Đảo ngược giá trị của selectAll và cập nhật mảng selectedItems tương ứng
       // this.selectedItems = this.selectedItems.map(() => this.selectAll);
@@ -465,11 +466,7 @@ export default {
           .then((response) => {
             response.data;
             this.isShowDlg = false;
-            this.load();
-            this.showToast = true;
-            setTimeout(() => {
-              this.showToast = false;
-            }, 2000);
+           this.Reload();
           })
           .catch((e) => {
             console.log(e);
@@ -513,15 +510,19 @@ export default {
     hideForm() {
       this.isShowForm = false;
     },
-    changPageSize() {
+    changPageSize(pageSize) {
+      this.pageSize = pageSize;
       this.loader = true;
       this.loadFilter(this.pageSize, this.numberPage);
       console.log(this.pageSize);
     },
+    Reload(){
+       setTimeout(() => this.loadFilter(this.pageSize,this.numberPage),3);
+    },
     async loadFilter(pageSize, numberPage) {
-      this.numberPage = numberPage;
-      this.pageSize = pageSize;
-      try {
+       this.pageSize = pageSize;
+       this.numberPage = numberPage;
+        try {
         await this.api
           .get(
             this.MISAApi +
@@ -540,9 +541,9 @@ export default {
           });
       } catch (error) {
         console.log(error);
+       }
       }
     },
-  },
   //hàm load dữ liệu
   //CreadtedBy : NC Mạnh
   //CreatedDate "5/12/2023"
@@ -562,7 +563,7 @@ export default {
       selectAll: false,
       selectedItems: [],
       sum: 0,
-      loader: true,
+      loader: false,
       title: "",
       employeeId: {},
       isShowDlg: false,
@@ -644,23 +645,9 @@ export default {
   background-color: #f2fff0;
   color: green;
 }
-
-#numberPage {
-  list-style: none;
-  display: flex;
+.icon--reload:hover{
+background-color: green;
 }
 
-#numberPage li {
-  width: 20px;
-  /* border: 1px solid ; */
-}
 
-.hidden-element {
-    display: none;
-  }
-
-.selectedPage{
-  border: 1px solid;
-  border-radius :4px ;
-}
 </style>
