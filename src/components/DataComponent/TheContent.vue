@@ -360,10 +360,7 @@ export default {
             this.MISAApi
           )
           .then((response) => {
-            this.employees = response.data;
             this.records = response.data.length;
-            
-            this.loader = false;
           })
           .catch((e) => {
             this.errors.push(e);
@@ -514,7 +511,6 @@ export default {
       this.pageSize = pageSize;
       this.loader = true;
       this.loadFilter(this.pageSize, this.numberPage);
-      console.log(this.pageSize);
     },
     Reload(){
        setTimeout(() => this.loadFilter(this.pageSize,this.numberPage),3);
@@ -563,7 +559,7 @@ export default {
       selectAll: false,
       selectedItems: [],
       sum: 0,
-      loader: false,
+      loader: true,
       title: "",
       employeeId: {},
       isShowDlg: false,
@@ -648,6 +644,8 @@ export default {
 .icon--reload:hover{
 background-color: green;
 }
-
+#edit--detail{
+  color: blue;
+}
 
 </style>

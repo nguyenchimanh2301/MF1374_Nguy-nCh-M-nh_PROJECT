@@ -66,7 +66,13 @@ thead tr,th:first-child{
 thead tr,th,td:last-child{
     text-align: center;
 }
-#table th,td{
+#table th{
+    outline: none;
+    line-height: 50px;
+    font-size: 14px;
+   
+}
+#table td{
     outline: none;
     line-height: 48px;
     font-size: 14px;

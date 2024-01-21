@@ -24,6 +24,7 @@
     computed: {
       TotalPage(){
         // Trả về số trang có thể chia
+        console.log(this.pageSize);
         return  Math.ceil(this.totalRecords / this.pageSize);
       },
      //Hàm custom hiển thị số trang  
@@ -83,7 +84,7 @@
         default: 1
       },pageSize: {
         type:Number,
-        default: 20
+        default: 10
       },
       totalRecords: {
         type:Number,
