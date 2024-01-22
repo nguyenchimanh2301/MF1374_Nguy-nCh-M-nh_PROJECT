@@ -17,6 +17,10 @@ import TheSetting from './components/MainComponent/TheSetting.vue';
 import TheReport from './components/MainComponent/TheReport.vue';
 import  axios  from 'axios';
 import MISAEnum from './js/helper/enum';
+import MISAErrorService from './Service/ErrorService';
+import MISAApiService from './Service/ApiService';
+
+
 import { createRouter , createWebHistory } from 'vue-router';
 
 const routes = [
@@ -49,6 +53,10 @@ app.use(router);
 app.config.globalProperties.api = axios;
 app.config.globalProperties.MISAEnum = MISAEnum;
 app.config.globalProperties.MISAResource = MISAResource;
+app.config.globalProperties.MISAErrorService = MISAErrorService;
+app.config.globalProperties.MISAApiService= MISAApiService;
+
+
 app.config.globalProperties.MISAApi = "https://localhost:7096/api/v1/Employees";
 
 

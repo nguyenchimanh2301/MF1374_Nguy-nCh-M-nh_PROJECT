@@ -1,0 +1,136 @@
+/*<!-- <div class="container">
+    <div class="content">
+      <div class="feature__button">
+        <div class="title">
+          <div style="position: relative">
+            <h2 style="font-size: 25px">Quản lý khách hàng</h2>
+          </div>
+        </div>
+        <div class="btn--feature">
+          <button id="btn-add" class="button btn-main" @click="showForm">
+            Thêm mới
+            <div class="icon--adduser"></div>
+          </button>
+        </div>
+      </div>
+      <div class="table">
+        <div class="main--content">
+          <div style="background-color: #ffffff">
+            <div class="feature">
+              <div class="feature__box">
+                <div class="box__input--icon">
+                  <div class="item--select">
+                    <div>
+                      <div>
+                        Đã chọn<span id="count">{{ sum }}</span>
+                      </div>
+                      <div><span id="clear">Bỏ chọn</span></div>
+                      <div class="icon--close"></div>
+                    </div>
+                    <button class="button btn--delete">
+                      Xóa tất cả<i class="icon--trash"></i>
+                    </button>
+                  </div>
+                </div>
+                <div class="box__select--icon">
+                  <div style="position: relative"></div>
+                  <export-excel 
+                    :data  = "employees">
+                   <button>
+                    <div class="icon--filter" ></div>
+                  </button>
+                 </export-excel>
+                  <button>
+                    <div class="icon--reload"></div>
+                  </button>
+                </div>
+              </div>
+            </div>
+            <div class="table-scroll">
+              <table id="table">
+              <thead>
+                <tr>
+                  <th style="width: 50px">
+                    <input
+                      id="check"
+                      type="checkbox"
+                      v-model="selectAll"
+                      @change="toggleSelectAll"
+                    />
+                  </th>
+                  <th>Mã khách hàng</th>
+                  <th>Họ và tên</th>
+                  <th>Giới tính</th>
+                  <th>Ngày sinh</th>
+                  <th>Công ty</th>
+                  <th>Dư nợ</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr
+                  style="position: relative"
+                  v-for="(item, index) in orderedUsers"
+                  :key="index"
+                  @mouseover="showTooltip(index)"
+                  @mouseleave="hideTooltip"
+                  :class="{ 'highlighted-row': index === selectedRowIndex }"
+                  @keydown.down.prevent="moveDown(index)"
+                  @keydown.up.prevent="moveUp(index)"
+                  @keydown.enter.prevent="
+                    showData(orderedUsers[selectedRowIndex])
+                  "
+                  @click="Select(index)"
+                  tabindex="0"
+                >
+                  <td>
+                    <input
+                      id="check"
+                      type="checkbox"
+                      :value="item"
+                      v-model="selectedItems"
+                      @change="CountRowSelect"
+                    />
+                  </td>
+                  <td class="txt-left">{{ item.employeeCode }}</td>
+                  <td class="txt-left">{{ item.FullName }}</td>
+                  <td class="txt-left">
+                    {{ this.MISAEnum.GenderName(item.Gender) }}
+                  </td>
+                  <td class="txt-center">{{ this.MISAResource.formatDate(item.DateOfBirth) }}</td>
+                  <td class="txt-left">{{ item.CompanyName }}</td>
+                  <td class="txt-right">
+                    {{ this.MISAResource.formatCurrency(item.DebitAmount) }}
+                  </td>
+                  <div class="tooltips" v-show="index===tool" >
+                    <button @click="showDlg(item)">
+                      <div class="icon--delete"></div>
+                    </button>
+                    <button @click="showData(item)">
+                      <div class="icon--edit"></div>
+                    </button>
+                  </div>
+                </tr>
+              </tbody>
+            </table>
+            </div>
+         
+          </div>
+        </div>
+        <div class="footer">
+          <div style="font-weight: 600">Tổng: 100</div>
+          <div class="paging">
+            <span>Số bản ghi/trang</span>
+            <span
+              ><select name="" id="">
+                <option value="">10</option>
+              </select></span
+            >
+            <div>
+              <div id="previous"></div>
+              <div id="next"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div> -->

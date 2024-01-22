@@ -1,5 +1,4 @@
 .data{
-    width: calc(100vw- 24px -200px);
     background-color: #ffffff;
     margin:12px 24px 12px 0px 24px;
     border-radius: 4px;
@@ -11,18 +10,20 @@
 }
 #table{
     line-height: 48px;
-    width: calc(100% - 24px); 
     border: 1px solid #E0E0E0;
     border-collapse: collapse;
     margin-left: 12px;
     height: 100%;
+    width: 100vw;
+    overflow-x: scroll;
+    white-space: nowrap;
 }
 #table thead {
    background-color: #E0E0E0;
    position: sticky;
    top: 0;
    inset-inline-start: 0;
-   z-index: 10; 
+   z-index: 100; 
 
 }
 #table tr{
@@ -63,6 +64,32 @@ thead tr,th:first-child{
     width: 50px;
     z-index: 100;
 }
+th:first-child{
+    position: sticky;
+    left: 0;
+    background-color: #E0E0E0;
+
+}
+th:last-child{
+    position: sticky;
+    right: 0;
+    background-color: #E0E0E0;
+
+}
+td:first-child{
+    position: sticky;
+    left: 0;
+    inset-block-start: 0;
+    background-color: #ffffff;
+
+}
+
+td:last-child{
+    position: sticky;
+    right: 0;
+    z-index:50;
+
+}
 thead tr,th,td:last-child{
     text-align: center;
 }
@@ -79,7 +106,8 @@ thead tr,th,td:last-child{
    
 }
 .scroll__table{
-height: calc(100vh - 181px);
+height: calc(100vh - 236px);
+width:calc(100vw - 248px);
 overflow: scroll;
 }
 /* .txt-left{
@@ -140,3 +168,47 @@ tbody tr:active{
 #next{
     margin-right: 16px;
 }
+
+
+#table th {
+}
+
+
+.scroll__table::-webkit-scrollbar {
+    height: 8px; /* Chiều cao của thanh cuộn */
+    border-radius: 8px; 
+
+  }
+  
+  .scroll__table::-webkit-scrollbar-thumb {
+    background-color: #333;
+    height: 5px;
+    border-radius: 8px; 
+
+
+/* Màu sắc của "nút" thanh cuộn */
+  }
+  
+  /* Tùy chỉnh thanh cuộn cho Firefox */
+  .scroll__table::-moz-scrollbar {
+    height: 5px;
+    border-radius: 8px;
+  }
+  
+.scroll__table::-moz-scrollbar-thumb {
+    background: #888; 
+    border-radius: 8px; 
+  }
+  
+  /* Tùy chỉnh thanh cuộn cho Edge */
+.scroll__table::-ms-scrollbar {
+    height: 5px;
+    border-radius: 8px; 
+
+  }
+  
+.scroll__table::-ms-scrollbar-thumb {
+    background-color: #333;
+    border-radius: 8px; 
+
+  }

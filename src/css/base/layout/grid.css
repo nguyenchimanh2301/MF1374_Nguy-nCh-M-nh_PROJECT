@@ -27,17 +27,19 @@
   width: 100%;
   height: 56px;
   background-color: #E6E6E6;
-  display: grid;
+  display: flex;
   grid-template-columns: auto auto 12px;
-  align-items: flex-end;
+  align-items: center;
+  justify-content: space-between;
 }
 .feature{
   width: 100%;
   height: 56px;
   background-color: #E6E6E6;
-  display: grid;
-  grid-template-columns: auto auto 48px;
-  align-items: flex-end;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  justify-items: center;
 }
 .btn--feature{
   display: grid;
@@ -45,9 +47,7 @@
 .feature .title{
   margin-left: 24px;
 }
-.
 .layout-data {
-
   max-height: 100vh;
   margin: 0px 12px 0px 12px;
 }
@@ -59,7 +59,7 @@
 
 /* width */
 ::-webkit-scrollbar {
-  width: 5px;
+  width: 8px;
 }
 
 /* Track */

@@ -401,7 +401,7 @@ export default {
         //hàm thêm,thay đổi dữ liệu
         //cretedBy : NC Mạnh
         //CreatedAt : 5/12/2023
-        addData() {
+      async addData() {
             // if (this.v$.$error) {
             //     // alert("error");
             //     // console.log(this.v$.$errors[0].$message);
@@ -410,49 +410,51 @@ export default {
             //     return;
             // }
             // else {
+                this.msgError = [];
                 this.Employee = Object.assign({}, this.state.EmployeeSelect);
                 if (this.method === this.MISAEnum.method.ADD) {
                     try {
-                        this.api
+                       await this.api
                             .post(this.MISAApi, this.Employee)
                             .then((response) => {
                             response.data;
                             console.log(this.Employee)
-                            this.errorCode(response);
+                            this.msgError = this.MISAErrorService.GetErrorCode(response);
                             this.loadForm(response);
                             this.closeToast();
                         })
                             .catch((error) => {
-                          //  this.content = this.errorCode(e.response.data.errors.EmployeeCode[0]);
-                            this.errorCode(error.response);
+                          //  this.content = this.MISAErrorService.GetErrorCode(e.response.data.errors.EmployeeCode[0]);
                             this.v$.$validate();
+                            // this.msgError.push(this.MISAErrorService.GetMessageError(this.v$.$errors));
+                            this.v$.$errors.forEach(x=> this.msgError.push(x.$message));
+                            console.log(this.MISAErrorService.GetMessageError(this.v$.$errors));
                             this.loadForm(error.response);
                             this.FocusInput();
                         });
                         // this.loadForm();
                     }
                     catch (error) {
-                      this.errorCode(error);
+                      this.MISAErrorService.GetErrorCode(error);
                       this.loadForm();
                       
                     }
                 }
                 else {
                     try {
-                        this.api
+                      await this.api
                             .put(this.MISAApi + '/'+
                             this.state.EmployeeSelect.EmployeeId, this.Employee)
                             .then((response) => {
                             response.data;
-                            this.errorCode(response);
+                            this.msgError = this.MISAErrorService.GetErrorCode(response);
                             this.v$.$validate();
                             this.loadForm(response);
                             this.closeToast();
                         }).catch((e) => {
                             console.log(e.response.data)
-                             this.errorCode(e.response);
+                            this.msgError = this.MISAErrorService.GetErrorCode(e.response);
                             this.loadForm(e.response);
-                            // alert(this.msgError);
                         });
                     }
                     catch (error) {
@@ -462,38 +464,9 @@ export default {
                 }
             // }
         },
-        //hàm bắt lỗi trả về từ api
-        //CreatedBy: NCManh
-        //CreatedDate:15/12/2023
-        errorCode(error) {
-           console.log(error.status)
-           this.msgError = [];
-            switch (error.status) {
-                case 200:
-                    return this.msgError.push(this.MISAResource.returnMessage.updateComplete);
-                case 201:
-                      return this.msgError.push(this.MISAResource.returnMessage.addComplete);
-                case 400:
-                    return this.msgError = this.getTextError(error.data.errors);
-                case 404:
-                     return this.msgError.push(this.MISAResource.returnMessage.notFoundUrl)
-                case 500:
-                     return  this.msgError.push(this.MISAResource.returnMessage.severError)
-                default:
-                    return " ";
-            }
-        },
-        //hàm bắt lỗi trả về từ api
-        //CreatedBy: NCManh
-        //CreatedDate:20/12/2023
-        getTextError(entity){
-           if(entity){
-            return Object.values(entity).reduce((x,y)=>x.concat(y))
-           }
-           else return ;
-        },
+    
         FocusInput(){
-          document.getElementById("empcode").focus();
+          // document.getElementById("empcode").focus();
         },
         //hàm loadForm
         //cretedBy : NC Mạnh
@@ -518,7 +491,6 @@ export default {
         //hàm đóng form
         //cretedBy : NC Mạnh
         //CreatedAt : 5/12/2023
-
         closeForm(){
           this.$emit("some-event")
         },

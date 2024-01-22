@@ -30,7 +30,6 @@
 
         <div class="data">
           <div class="feature">
-            <div></div>
             <div class="box__input-icon">
               <input
                 type="text"
@@ -41,8 +40,12 @@
                 <div class="icon-search"></div>
               </button>
             </div>
-            <div class="icon--reload" @click="Reload()"></div>
-            <div></div>
+             <button class="btn-reload">
+              <div class="icon--reload" @click="Reload"></div>
+             </button>
+             <button class="btn-import">
+              <div class="icon--import" @click="Import"></div>
+             </button>
           </div>
           <div class="scroll__table">
             <table id="table">
@@ -139,7 +142,9 @@
                 <tr></tr>
               </tfoot>
             </table>
-            <div class="footer">
+           
+          </div>
+          <div class="footer">
               <div colspan="8">
                 <div class="total-record">
                   Tổng số: <strong> {{ records }} </strong> bản ghi
@@ -173,147 +178,11 @@
                 </div>
               </div>
             </div>
-          </div>
         </div>
       </div>
     </div>
   </div>
-  <!-- <div class="container">
-    <div class="content">
-      <div class="feature__button">
-        <div class="title">
-          <div style="position: relative">
-            <h2 style="font-size: 25px">Quản lý khách hàng</h2>
-          </div>
-        </div>
-        <div class="btn--feature">
-          <button id="btn-add" class="button btn-main" @click="showForm">
-            Thêm mới
-            <div class="icon--adduser"></div>
-          </button>
-        </div>
-      </div>
-      <div class="table">
-        <div class="main--content">
-          <div style="background-color: #ffffff">
-            <div class="feature">
-              <div class="feature__box">
-                <div class="box__input--icon">
-                  <div class="item--select">
-                    <div>
-                      <div>
-                        Đã chọn<span id="count">{{ sum }}</span>
-                      </div>
-                      <div><span id="clear">Bỏ chọn</span></div>
-                      <div class="icon--close"></div>
-                    </div>
-                    <button class="button btn--delete">
-                      Xóa tất cả<i class="icon--trash"></i>
-                    </button>
-                  </div>
-                </div>
-                <div class="box__select--icon">
-                  <div style="position: relative"></div>
-                  <export-excel 
-                    :data  = "employees">
-                   <button>
-                    <div class="icon--filter" ></div>
-                  </button>
-                 </export-excel>
-                  <button>
-                    <div class="icon--reload"></div>
-                  </button>
-                </div>
-              </div>
-            </div>
-            <div class="table-scroll">
-              <table id="table">
-              <thead>
-                <tr>
-                  <th style="width: 50px">
-                    <input
-                      id="check"
-                      type="checkbox"
-                      v-model="selectAll"
-                      @change="toggleSelectAll"
-                    />
-                  </th>
-                  <th>Mã khách hàng</th>
-                  <th>Họ và tên</th>
-                  <th>Giới tính</th>
-                  <th>Ngày sinh</th>
-                  <th>Công ty</th>
-                  <th>Dư nợ</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr
-                  style="position: relative"
-                  v-for="(item, index) in orderedUsers"
-                  :key="index"
-                  @mouseover="showTooltip(index)"
-                  @mouseleave="hideTooltip"
-                  :class="{ 'highlighted-row': index === selectedRowIndex }"
-                  @keydown.down.prevent="moveDown(index)"
-                  @keydown.up.prevent="moveUp(index)"
-                  @keydown.enter.prevent="
-                    showData(orderedUsers[selectedRowIndex])
-                  "
-                  @click="Select(index)"
-                  tabindex="0"
-                >
-                  <td>
-                    <input
-                      id="check"
-                      type="checkbox"
-                      :value="item"
-                      v-model="selectedItems"
-                      @change="CountRowSelect"
-                    />
-                  </td>
-                  <td class="txt-left">{{ item.employeeCode }}</td>
-                  <td class="txt-left">{{ item.FullName }}</td>
-                  <td class="txt-left">
-                    {{ this.MISAEnum.GenderName(item.Gender) }}
-                  </td>
-                  <td class="txt-center">{{ this.MISAResource.formatDate(item.DateOfBirth) }}</td>
-                  <td class="txt-left">{{ item.CompanyName }}</td>
-                  <td class="txt-right">
-                    {{ this.MISAResource.formatCurrency(item.DebitAmount) }}
-                  </td>
-                  <div class="tooltips" v-show="index===tool" >
-                    <button @click="showDlg(item)">
-                      <div class="icon--delete"></div>
-                    </button>
-                    <button @click="showData(item)">
-                      <div class="icon--edit"></div>
-                    </button>
-                  </div>
-                </tr>
-              </tbody>
-            </table>
-            </div>
-         
-          </div>
-        </div>
-        <div class="footer">
-          <div style="font-weight: 600">Tổng: 100</div>
-          <div class="paging">
-            <span>Số bản ghi/trang</span>
-            <span
-              ><select name="" id="">
-                <option value="">10</option>
-              </select></span
-            >
-            <div>
-              <div id="previous"></div>
-              <div id="next"></div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div> -->
+  
   <TheFormInfo
     v-if="isShowForm"
     @some-event="hideForm"
@@ -351,40 +220,25 @@ export default {
     orderedUsers: function () {
       return _.orderBy(this.employees, "FullName", "Asc");
     },
-    
+
+ 
   },
   created() {
-    this.loadFilter(this.pageSize, this.numberPage);{
-      this.api
-          .get(
-            this.MISAApi
-          )
-          .then((response) => {
-            this.records = response.data.length;
-          })
-          .catch((e) => {
-            this.errors.push(e);
-          });
-    }
-    // this.loadFilter(this.pageSize,this.numberPage) 
+    this.loadFilter(this.pageSize, this.numberPage);
+    this.LoadAllData();
     },
   //   watch: {
-  //   // Theo dõi sự thay đổi trong mảng selectedItems
-  //      selectedItems: {
-  //        handler(newVal) {
-  //       // Kiểm tra xem tất cả các mục đã được chọn chưa
-  //       this.selectAll = newVal.every(item => item);
-  //       console.log(this.selectAll);
-  //     },
-  //     deep: true
-  //   }
 
   // },
   methods: {
     CountRowSelect() {
       this.sum = this.selectedItems.length; // Cập nhật tổng số phần tử trong selectedItems
     },
-    
+    async LoadAllData(){
+          await this.MISAApiService.GetData();
+          let data = await this.MISAApiService.GetData();
+          this.records = data.length;
+    },
     toggleSelectAll() {
       // Đảo ngược giá trị của selectAll và cập nhật mảng selectedItems tương ứng
       // this.selectedItems = this.selectedItems.map(() => this.selectAll);
@@ -455,22 +309,18 @@ export default {
     //CreadtedBy : NC Mạnh
     //CreatedDate "5/12/2023"
     deleteData(id) {
+      this.msgToast = [];
       this.msgToast.push(this.MISAResource.returnMessage.deleteComplete);
-      console.log(this.msgDialog);
       try {
-        this.api
-          .delete(this.MISAApi + "/" + id)
-          .then((response) => {
-            response.data;
-            this.isShowDlg = false;
-           this.Reload();
-          })
-          .catch((e) => {
-            console.log(e);
-          });
+        this.MISAApiService.DeleteData(id);
+        this.isShowDlg = false;
+        this.showFormToast();
+        this.Reload();
       } catch (error) {
         console.log(error);
       }
+  
+
     },
     //hàm show tool
     //CreadtedBy : NC Mạnh
@@ -507,13 +357,17 @@ export default {
     hideForm() {
       this.isShowForm = false;
     },
-    changPageSize(pageSize) {
+   async changPageSize(pageSize) {
       this.pageSize = pageSize;
       this.loader = true;
-      this.loadFilter(this.pageSize, this.numberPage);
+    await this.loadFilter(this.pageSize, this.numberPage);
     },
-    Reload(){
-       setTimeout(() => this.loadFilter(this.pageSize,this.numberPage),3);
+   async Reload(){
+       this.loader = true;
+       await this.LoadAllData(),
+       await  this.loadFilter(this.pageSize, this.numberPage);
+       setTimeout(() => this.loader = false,2);
+       
     },
     async loadFilter(pageSize, numberPage) {
        this.pageSize = pageSize;
@@ -622,30 +476,55 @@ export default {
 } */
 #edit--feature {
   width: 150px;
-  height: 60px;
+  height: 80px;
   border: 1px solid;
   position: absolute;
-  right: 10%;
+  right: 10px;
   top: 10px;
-  z-index: 100;
+  z-index: 200;
   background-color: #ffffff;
+  
 }
 
 #edit--feature ul {
   list-style: none;
   line-height: 20px;
   text-align: left;
+  z-index: 200;
+  background-color: #ffffff;
+
 }
 
 #edit--feature ul li:hover {
-  background-color: #f2fff0;
+  background-color: #ffffff;
   color: green;
+  z-index: 200;
+  
 }
-.icon--reload:hover{
+.btn-reload:hover{
 background-color: green;
 }
 #edit--detail{
   color: blue;
 }
-
+.btn-reload{
+  height: 36px;
+  width: 36px;
+  border-radius:4px;
+  border: unset;
+  text-align: center;
+  margin: 0px 18px 0px 12px;
+  display: grid;
+  place-content: center;
+}
+.btn-import{
+  height: 36px;
+  width: 36px;
+  border-radius:4px;
+  border: unset;
+  text-align: center;
+  margin: 0px 12px 0px 0px;
+  display: grid;
+  place-content: center;
+}
 </style>

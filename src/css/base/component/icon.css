@@ -101,6 +101,13 @@
 	width: 24px;
 	align-self: flex-end;
 }
+
+.icon--import{
+	background: var(--image) -705px -255px;
+	height: 24px;
+	width: 24px;
+	align-self: flex-end;
+}
 .icon--navbar{
 	background: var(--image) -847px -35px;
 	height: 24px;
