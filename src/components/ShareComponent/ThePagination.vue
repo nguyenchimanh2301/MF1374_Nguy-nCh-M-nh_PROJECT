@@ -24,7 +24,6 @@
     computed: {
       TotalPage(){
         // Trả về số trang có thể chia
-        console.log(this.pageSize);
         return  Math.ceil(this.totalRecords / this.pageSize);
       },
      //Hàm custom hiển thị số trang  
@@ -73,7 +72,6 @@
         if (page == "...") {
           return;
         }
-        console.log(page);
         this.$emit('update:pageNumber',page)
         this.$emit('dataFilter',this.pageSize,page)
       },

@@ -2,15 +2,14 @@
 const ErrorService={
 
         GetErrorCode(error) {
-            console.log(error)
             let msgError = [];
-             switch (error.data.StatusCode) {
+             switch (error.data.StatusCode || error.data.status) {
                  case 200:
                      return msgError.push(this.MISAResource.returnMessage.updateComplete);
                  case 201:
                        return msgError.push(this.MISAResource.returnMessage.addComplete);
                  case 400:
-                     return msgError = ErrorService.GetMessageError(error.data.Errors);
+                     return msgError = ErrorService.GetMessageError(error.data.Errors ||error.data.errors );
                  case 404:
                       return msgError.push(this.MISAResource.returnMessage.notFoundUrl)
                  case 500:

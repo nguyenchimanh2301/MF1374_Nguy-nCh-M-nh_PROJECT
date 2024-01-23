@@ -70,12 +70,12 @@ th:first-child{
     background-color: #E0E0E0;
 
 }
-th:last-child{
+/* th:last-child{
     position: sticky;
     right: 0;
     background-color: #E0E0E0;
 
-}
+} */
 td:first-child{
     position: sticky;
     left: 0;
@@ -84,12 +84,12 @@ td:first-child{
 
 }
 
-td:last-child{
+/* td:last-child{
     position: sticky;
     right: 0;
     z-index:50;
 
-}
+} */
 thead tr,th,td:last-child{
     text-align: center;
 }

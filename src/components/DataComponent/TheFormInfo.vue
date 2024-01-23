@@ -139,175 +139,13 @@
           <button class="button btn-second btn-cancel" @click="closeForm">{{ this.MISAResource["VN"].Cancel }}</button>
           <div>
             <button class="button btn-second btn-add " @click="addData">{{ this.MISAResource["VN"].Add }}</button>
-            <button class="button btn-add ">Cất và thêm</button>
+            <button class="button btn-add btn-main">Cất và thêm</button>
           </div>
         </div>
       </div>
     </div>
   </div>
 
-
-
-
-
-  <!-- <div class="dark--screen" :class="{'close-form': closeCss}">
-    <div class="form">
-      <div class="form--content">
-        <div class="form--title">
-          <h3>{{ this.MISAResource["VN"].EmployeeInformation }}</h3>
-          <div class="icon--close-popup"  @click="closeForm"></div>
-        </div>
-        <div class="form--input">
-          <div class="form__input--left">
-            <div style="display: flex; justify-content: space-between">
-              <label id="label" for=""
-                ><span>{{ this.MISAResource["VN"].EmployeeCode }}<span class="text--required">*</span></span>
-                 <MInput
-                 v-model="state.EmployeeSelect.EmployeeCode"
-                  input-id="empcode"
-                 :hasError="v$.EmployeeSelect.EmployeeCode.$error"
-                 ref="focusText"
-                 ></MInput>
-                <span
-                  style="font-size: 12px; color: red"
-                  v-if="v$.EmployeeSelect.EmployeeCode.$error"
-                >
-                  {{ v$.EmployeeSelect.EmployeeCode.$errors[0].$message }}
-                </span>
-              </label>
-              <label id="label"
-                ><span>{{ this.MISAResource["VN"].FullName }}<span class="text--required">*</span></span>
-                <MInput
-                 v-model="state.EmployeeSelect.FullName"
-                 :hasError="v$.EmployeeSelect.FullName.$error"
-                 input-id="name"
-                 ></MInput>
-                <span
-                  style="font-size: 12px; color: red"
-                  v-if="v$.EmployeeSelect.FullName.$error"
-                >
-                  {{ v$.EmployeeSelect.FullName.$errors[0].$message }}
-                </span>
-              </label>
-            </div>
-            <label id="label" for=""
-              >{{ this.MISAResource["VN"].FullName }}
-              <MInput
-                 v-model="state.EmployeeSelect.PhoneNumber"
-                 :hasError="v$.EmployeeSelect.PhoneNumber.$error"
-                 input-id="phoneNumber"
-                 ></MInput>
-              <span
-                style="font-size: 12px; color: red"
-                v-if="v$.EmployeeSelect.PhoneNumber.$error">
-                {{ v$.EmployeeSelect.PhoneNumber.$errors[0].$message }}
-              </span>
-            </label>
-            <label id="label" for=""
-              >Email
-              <MInput
-                 v-model="state.EmployeeSelect.Email"
-                 :hasError="v$.EmployeeSelect.Email.$error"
-                 input-id="email"
-                 ></MInput>
-              <span
-                style="font-size: 12px; color: red"
-                v-if="v$.EmployeeSelect.Email.$error">
-                {{ v$.EmployeeSelect.Email.$errors[0].$message }}
-              </span>
-            </label>
-          </div>
-          <div class="form__input--right">
-            <div>
-              <label id="label" for=""
-                >{{ this.MISAResource["VN"].DateOfBirth }}
-                <input type="date" id="selectedDate" />
-              </label>
-              <label id="label" for=""
-                >{{ this.MISAResource["VN"].GenderName }}
-                <div class="box__input--radio">
-                  <label id="gender" for=""
-                    ><input
-                      name="gender"
-                      type="radio"
-                      v-model="state.EmployeeSelect.Gender"
-                      value="0"
-                    />{{ this.MISAResource["VN"].Gender.Male }}</label
-                  >
-                  <label id="gender" for=""
-                    ><input
-                      name="gender"
-                      type="radio"
-                      v-model="state.EmployeeSelect.Gender"
-                      value="1"
-                    />{{ this.MISAResource["VN"].Gender.Male }}</label
-                  >
-                  <label id="gender" for=""
-                    ><input
-                      name="gender"
-                      type="radio"
-                      v-model="state.EmployeeSelect.Gender"
-                      value="2"
-                    />{{ this.MISAResource["VN"].Gender.Other }}</label
-                  >
-                </div>
-              </label>
-            </div>
-            <div
-              style="
-                display: flex;
-                width: 550px;
-                justify-content: space-between;
-              "
-            >
-              <label id="label" for=""
-                >
-                <div class="tooltip">{{ this.MISAResource["VN"].IdentityNumber }}</div>
-                <MInput
-                 v-model="state.EmployeeSelect.EmployeeGroupId"
-                 input-id="idCard"
-                 ></MInput>
-              </label>
-              <label id="label" for=""
-                >{{ this.MISAResource["VN"].IdentityDate }}
-                <input type="date" id="dateProvide"  
-                v-model="state.EmployeeSelect.DateOfBirth"
-                   />
-              </label>
-            </div>
-            <label id="label" for=""
-              >{{ this.MISAResource["VN"].IdentityPlace }}
-              <input type="text" style="width: 546px" />
-            </label>
-          </div>
-        </div>
-        <div class="form__input--under">
-          <label id="label" for=""
-            >{{ this.MISAResource["VN"].Company }}
-            <input
-              type="text"
-              id="company"
-              v-model="state.EmployeeSelect.CompanyName"
-            />
-          </label>
-          <label id="label" for=""
-            >{{ this.MISAResource["VN"].Address }}
-            <input
-              type="text"
-              id="address"
-              v-model="state.EmployeeSelect.Address"
-            />
-          </label>
-        </div>
-        <div class="form--footer">
-          <button class="button btn--cancel" @click="closeForm">{{ this.MISAResource["VN"].Cancel }}</button>
-          <button class="button btn-main" @click="addData">{{ this.MISAResource["VN"].Add }}</button>
-        </div>
-      </div>
-  
-    </div>
-
-  </div> -->
   <the-dialog
       v-if="isShowDlg"
       @addData="addData"
@@ -333,16 +171,17 @@ import { reactive, computed,  } from "vue";
 import MISAResource from "../../js/helper/resource";
 
 export default {
-    props: ["EmployeeSelected", "methodP"],
+    props: ["EmployeeSelected", "methodP","MaxCode"],
     created() {
         this.state.EmployeeSelect = this.EmployeeSelected;
         console.log(this.state.EmployeeSelect);
         this.method = this.methodP;
-        this.methodP === this.MISAEnum.method.ADD
-            ? (this.title = this.MISAResource.NameMode.AddNew)
-            : (this.title = this.MISAResource.NameMode.Change);
-       console.log(this.$refs.focusText);
-    },
+        if(  this.methodP === this.MISAEnum.method.ADD){
+          (this.title = this.MISAResource.NameMode.AddNew);
+           this.state.EmployeeSelect.EmployeeCode = "NV-"+ (this.MaxCode + 1);
+        }
+        (this.title = this.MISAResource.NameMode.Change);
+    }, 
     setup() {
         //reactive validate
         const state = reactive({
@@ -402,14 +241,6 @@ export default {
         //cretedBy : NC Mạnh
         //CreatedAt : 5/12/2023
       async addData() {
-            // if (this.v$.$error) {
-            //     // alert("error");
-            //     // console.log(this.v$.$errors[0].$message);
-            //     this.isShowDlg = false;
-            //     // this.closeForm();
-            //     return;
-            // }
-            // else {
                 this.msgError = [];
                 this.Employee = Object.assign({}, this.state.EmployeeSelect);
                 if (this.method === this.MISAEnum.method.ADD) {
@@ -422,17 +253,17 @@ export default {
                             this.msgError = this.MISAErrorService.GetErrorCode(response);
                             this.loadForm(response);
                             this.closeToast();
+                            this.$emit('loadData');
                         })
                             .catch((error) => {
-                          //  this.content = this.MISAErrorService.GetErrorCode(e.response.data.errors.EmployeeCode[0]);
                             this.v$.$validate();
-                            // this.msgError.push(this.MISAErrorService.GetMessageError(this.v$.$errors));
                             this.v$.$errors.forEach(x=> this.msgError.push(x.$message));
-                            console.log(this.MISAErrorService.GetMessageError(this.v$.$errors));
+                            if(this.msgError.length < 1 ){
+                              this.MsgValidate = this.MISAErrorService.GetErrorCode(error.response);
+                              this.msgError =  this.msgError.concat(this.MsgValidate);
+                            }
                             this.loadForm(error.response);
-                            this.FocusInput();
                         });
-                        // this.loadForm();
                     }
                     catch (error) {
                       this.MISAErrorService.GetErrorCode(error);
@@ -452,21 +283,19 @@ export default {
                             this.loadForm(response);
                             this.closeToast();
                         }).catch((e) => {
-                            console.log(e.response.data)
-                            this.msgError = this.MISAErrorService.GetErrorCode(e.response);
+                          this.v$.$validate();
+                            this.v$.$errors.forEach(x=> this.msgError.push(x.$message));
+                            if(this.msgError.length < 1 ){
+                              this.MsgValidate = this.MISAErrorService.GetErrorCode(e.response);
+                              this.msgError =  this.msgError.concat(this.MsgValidate);
+                            }
                             this.loadForm(e.response);
                         });
                     }
                     catch (error) {
                         console.log(error);
-                        console.log();
                     }
                 }
-            // }
-        },
-    
-        FocusInput(){
-          // document.getElementById("empcode").focus();
         },
         //hàm loadForm
         //cretedBy : NC Mạnh
@@ -510,7 +339,7 @@ export default {
         },
     },
    mounted(){
-    this.FocusInput();
+
    },
     data() {
         return {
@@ -526,7 +355,7 @@ export default {
             msgToast: [],
             typeToast :"info",
             closeCss : false,
-            
+            MsgValidate:[],
         };
     },
 };

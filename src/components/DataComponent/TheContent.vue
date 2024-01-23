@@ -43,9 +43,10 @@
              <button class="btn-reload">
               <div class="icon--reload" @click="Reload"></div>
              </button>
-             <button class="btn-import">
-              <div class="icon--import" @click="Import"></div>
-             </button>
+              <button class=" btn-import " @click="ImportFileClick">
+                <div class="icon--import "></div>
+              <input type="file" ref="fileInput" @change="handleFileChange" />
+              </button>
           </div>
           <div class="scroll__table">
             <table id="table">
@@ -53,7 +54,8 @@
                 <tr>
                   <th>
                     <div class="checked__box">
-                      <input id="check" type="checkbox" />
+                      <input id="check" type="checkbox" v-model="selectAll"
+                       @change="toggleSelectAll"/>
                     </div>
                   </th>
                   <th>MÃ NHÂN VIÊN</th>
@@ -74,11 +76,15 @@
                   style="position: relative"
                   v-for="(item, index) in orderedUsers"
                   :key="index"
+                  @keydown.delete.prevent="
+                    showDlg(orderedUsers[selectedRowIndex])
+                  "
                   @keydown.down.prevent="moveDown(index)"
                   @keydown.up.prevent="moveUp(index)"
                   @keydown.enter.prevent="
                     showData(orderedUsers[selectedRowIndex])
                   "
+                  
                   :class="{ 'highlighted-row': index === selectedRowIndex }"
                   @click="Select(index)"
                   tabindex="0"
@@ -121,14 +127,13 @@
                   <td>
                     <div
                       id="editRow"
-                      @mouseover="showTooltip(index)"
-                      @mouseleave="hideTooltip"
+                      @click="showTooltip(index)"
                     >
-                      <div id="edit--detail">Sửa</div>
+                      <div id="edit--detail" >Sửa</div>
                       <div class="icon--drop">
                         <div id="edit--feature" v-show="index === tool">
                           <ul>
-                            <li>Nhân bản</li>
+                            <li @click="CopyData(item)">Nhân bản</li>
                             <li @click="showDlg(item)">Xóa</li>
                             <li>Ngừng sử dụng</li>
                           </ul>
@@ -188,8 +193,9 @@
     @some-event="hideForm"
     :EmployeeSelected="employee"
     :methodP="method"
+    :MaxCode="maxCode"
     @showFormToast="showFormToast"
-    @loadData="load"
+    @loadData="LoadAllData"
   >
   </TheFormInfo>
   <!-- this is toast-message -->
@@ -226,17 +232,29 @@ export default {
   created() {
     this.loadFilter(this.pageSize, this.numberPage);
     this.LoadAllData();
+
     },
   //   watch: {
 
   // },
   methods: {
+    ImportFileClick(){
+      this.$refs.fileInput.click();
+     },
+   async handleFileChange() {
+      this.loader = true;
+      this.selectedFile = this.$refs.fileInput.files[0];
+      this.employees = await this.MISAApiService.uploadFile(this.selectedFile);
+      this.loader = false;
+
+    },
     CountRowSelect() {
       this.sum = this.selectedItems.length; // Cập nhật tổng số phần tử trong selectedItems
     },
     async LoadAllData(){
           await this.MISAApiService.GetData();
           let data = await this.MISAApiService.GetData();
+          this.maxCode = this.MISADataService.GetMaxCode(data);
           this.records = data.length;
     },
     toggleSelectAll() {
@@ -264,7 +282,7 @@ export default {
       }
       this.CountRowSelect();
     },
-
+   
     moveUp(index) {
       if (this.row > 0) {
         index = --this.row;
@@ -300,7 +318,6 @@ export default {
       this.isShowDlg = true;
       this.title = "Xóa";
       this.employeeId = item;
-      console.log(item);
       this.type = this.MISAResource.notice.warning;
       this.msgDialog.push("Bạn có muốn xóa nhân viên " + item.FullName);
     },
@@ -341,6 +358,16 @@ export default {
       this.content = this.MISAResource.returnMessage.updateComplete;
       this.type = this.MISAResource.notice.question;
     },
+     //hàm nhân bản
+    //CreadtedBy : NC Mạnh
+    //CreatedDate "5/12/2023"
+     CopyData(item){
+      this.isShowForm = true;
+      this.employee = {};
+      this.employee = item;
+      this.method = this.MISAEnum.method.ADD;
+      this.content = this.MISAResource.returnMessage.addComplete;
+    },
     //hàm mở form thông tin
     //CreadtedBy : NC Mạnh
     //CreatedDate "5/12/2023"
@@ -349,7 +376,7 @@ export default {
       this.employee = {};
       this.method = this.MISAEnum.method.ADD;
       this.content = this.MISAResource.returnMessage.addComplete;
-      console.log(this.type);
+
     },
     //hàm đóng form thông tin
     //CreadtedBy : NC Mạnh
@@ -429,6 +456,10 @@ export default {
       currentPage: 1,
       totalPage: 10, // Đặt số t
       pageNumber : 1,
+      selectedFile : "",
+      response: [],
+      maxCode: 0,
+
     };
     // Thêm các dòng dữ liệu khác cần hiển thị
   },
@@ -476,30 +507,30 @@ export default {
 } */
 #edit--feature {
   width: 150px;
-  height: 80px;
-  border: 1px solid;
+  height: 115px;
+  border: 1px solid #E0E0E0;
   position: absolute;
   right: 10px;
-  top: 10px;
-  z-index: 200;
   background-color: #ffffff;
-  
+  z-index: 999;
+  border-radius: 4px;
 }
 
 #edit--feature ul {
   list-style: none;
   line-height: 20px;
   text-align: left;
-  z-index: 200;
   background-color: #ffffff;
+
 
 }
-
+#edit--feature ul li{
+  line-height: 36px ;
+  padding-left: 12px;
+}
 #edit--feature ul li:hover {
-  background-color: #ffffff;
+  background-color: #E0E0E0;
   color: green;
-  z-index: 200;
-  
 }
 .btn-reload:hover{
 background-color: green;
@@ -526,5 +557,8 @@ background-color: green;
   margin: 0px 12px 0px 0px;
   display: grid;
   place-content: center;
+}
+input[type="file"]{
+  display: none;
 }
 </style>

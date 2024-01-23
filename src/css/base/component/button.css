@@ -1,17 +1,18 @@
 .button {
     height: 36px;
-    background-color: var(--button-color);
     outline: none;
     opacity: 100%;
     font-size: 14px;
     font-weight: 500;
     cursor: pointer;
+    min-width: 80px;
+    border-radius: 4px;
   }
   .btn-main {
     color: white;
-    min-width: 80px;
     border: none;
-    border-radius: 4px;
+    background-color: var(--button-color);
+    
   }
 .btn-title{
   justify-self: end;

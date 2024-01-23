@@ -2,7 +2,6 @@
    <div class="dialog--background" >
     <div class="dialog">
         <div class="dialog--title">
-          
         </div>
        <div class="dialog--content">
         <div class="toast__icon " 
@@ -20,7 +19,7 @@
        </div>
        <hr style="height: 1px; float: bottom;margin: 0px 24px 0px 24px;">
        <div class="dialog__btn">
-        <button class="button btn-main btn--cancel" id="closedialog" @click="hideDlg">Hủy</button>
+        <button class="button btn-cancel" @click="hideDlg">Hủy</button>
         <button class="button btn-main" @click="addData">Đồng Ý</button>
        </div>
     </div> 
@@ -75,7 +74,6 @@ export default{
    created(){
       this.titleDialog = this.title;
       this.employeeId = this.employeeIdRemove;
-      console.log(this.employeeId);
       if(this.titleDialog!=='Xóa'){
         this.text = "Không";
       }
@@ -92,7 +90,6 @@ export default{
     },
     addData(){
        if(this.titleDialog==='Xóa'){
-        console.log(this.employeeId);
         this.$emit('removeData', this.employeeId.EmployeeId);
        }
        else{
@@ -114,5 +111,9 @@ export default{
 <style scoped>
 .dialog--text li{
   list-style: none;
+}
+
+.dialog__btn .btn-cancel:hover{
+   background-color: #E0E0E0;
 }
 </style>
