@@ -30,8 +30,15 @@
 .form--title{
     display: flex;
     justify-content: space-between;
-    align-items: center;
-    margin: 12px 24px 0px 24px;
+    align-items: flex-start;
+    justify-items: flex-start;
+    margin: 12px 24px 0px 12px;
+}
+.form--title .check--box{
+    display: flex;
+}
+.form--title .check--box input[type="checkbox"]{
+    margin-left: 10px;
 }
 .form--title div{
     display: flex;
@@ -65,6 +72,20 @@ display: grid;
 column-gap: 12px;
 row-gap: 12px;
 }
+
+#label .combobox {
+    margin:10px 8px 0px 0px;
+
+}
+
+#label .combobox input{
+    margin :0px;
+    width: 100%;
+    border: unset;
+}
+#label .combobox input:focus{
+    border: none;
+}
 .form__input--left input{
  width: 554px;
  height: 36px;
@@ -88,17 +109,18 @@ display: grid;
 column-gap: 12px;
 row-gap: 12px;
 }
-.form__input--right input{
+.form__input--right input {
     width: 550px;
     height: 36px;
- margin-top: 10px;
-
+  margin-top: 10px;
+ }
+ .form__input--left .combobox{
+  margin-top: 10px;
  }
 .form__input--right > div{
     display: flex;
     justify-content: space-between;
     width: 550px;
-    align-items: end;
 }
 .from--input input{
     border: 1px solid #e6e6e6;
@@ -107,7 +129,7 @@ row-gap: 12px;
 .box__input--radio{
     width: 260px; 
     display: flex;
-    align-items: flex-end;
+    align-items: center;
     height: 49px;
 
 }
@@ -115,16 +137,9 @@ row-gap: 12px;
 margin: 0px 24px 0px 24px;
 
 }
-.form__input--under input{
-   width: 1125px;
-    height: 36px;
-    border: 1px solid #e6e6e6;
-    border-radius: 4px;
- margin-top: 10px;
 
-}
 .form__input--under input{
-    width: 1134px;
+    width: 1125px;
      height: 36px;
      border: 1px solid #e6e6e6;
      border-radius: 4px;
@@ -140,6 +155,7 @@ margin: 0px 24px 0px 24px;
 label{
     display: flex;
     align-items: flex-end;
+    column-gap: 10px;
 }
 input[type="date"]{
     width: 260px;
@@ -187,4 +203,7 @@ input[type="radio"]{
 }
 .form--info input{
     width: 260px;
+}
+.icon--close:hover{
+  background-color: #e6e6e6;
 }

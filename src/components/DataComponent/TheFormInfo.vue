@@ -3,10 +3,12 @@
     <div class="form">
       <div class="form--content">
         <div class="form--title">
-          <div style="display: flex;">
+          <div class="form--title check-box">
             <h3>{{ this.MISAResource["VN"].EmployeeInformation }}</h3>
-            <label for=""><input type="checkbox" />Là khách hàng</label>
-            <label for=""><input type="checkbox" />Là nhà cung cấp</label>
+            <div>
+              <label for="" id="object"><input type="checkbox" name="object" />Là khách hàng</label>
+              <label for="" id="object"><input type="checkbox" name="object" />Là nhà cung cấp</label>
+            </div>
           </div>
           <div class="form--title-icon">
           <div class="icon--question"></div>
@@ -43,7 +45,7 @@
               </label>
             </div>
             <label id="label" for="">Đơn vị<span class="text--required">*</span>
-              <input type="text" value="Phòng nhân sự"/>
+                <m-combobox></m-combobox>
             </label>
             <label id="label" for="">Chức danh
               <input type="text" value="Fresher"/>

@@ -9,6 +9,8 @@ import excel from 'vue-excel-export'
  import TheDialog from './components/ShareComponent/TheDialog.vue';
  import TheContent from './components/DataComponent/TheContent.vue';
  import ThePagination from './components/ShareComponent/ThePagination.vue';
+ import MCombobox from './components/ShareComponent/MCombobox.vue';
+
 
 
 import MISAResource from './js/helper/resource';
@@ -49,6 +51,8 @@ app.component("the-employee",TheEmployee)
 app.component("the-setting",TheSetting)
 app.component("the-report",TheReport)
 app.component("ThePagination",ThePagination)
+app.component("MCombobox",MCombobox)
+
 
 app.use(excel)
 app.use(router);

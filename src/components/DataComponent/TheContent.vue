@@ -230,8 +230,8 @@ export default {
  
   },
   created() {
-    this.loadFilter(this.pageSize, this.numberPage);
-    this.LoadAllData();
+    // this.loadFilter(this.pageSize, this.numberPage);
+    // this.LoadAllData();
 
     },
   //   watch: {
@@ -414,7 +414,9 @@ export default {
             this.loader = false;
           })
           .catch((e) => {
-            this.errors.push(e);
+            if(e){
+              this.errors.push(e);
+            }
           });
       } catch (error) {
         console.log(error);
@@ -440,7 +442,7 @@ export default {
       selectAll: false,
       selectedItems: [],
       sum: 0,
-      loader: true,
+      loader: false,
       title: "",
       employeeId: {},
       isShowDlg: false,
@@ -471,94 +473,5 @@ export default {
 
 
 <style>
-.tooltips {
-  position: absolute;
-  z-index: 10;
-  right: 15%;
-  display: flex;
-  align-items: center;
-  justify-items: center;
-  height: 40px;
-  width: 80px;
-  top: 10%;
-  justify-content: space-between;
-  /* background-color: red; */
-}
 
-.tooltips button {
-  height: 30px;
-  width: 30px;
-  border: none;
-  outline: none;
-  background-color: #f2fff0;
-}
-
-.highlighted-row {
-  background-color: #f2fff0;
-  /* Màu nền để làm nổi bật dòng đang được chọn */
-}
-
-.focus-row {
-  backdrop-filter: red;
-}
-
-/* .icon--drop:hover #edit--feature{
-  display:block;
-} */
-#edit--feature {
-  width: 150px;
-  height: 115px;
-  border: 1px solid #E0E0E0;
-  position: absolute;
-  right: 10px;
-  background-color: #ffffff;
-  z-index: 999;
-  border-radius: 4px;
-}
-
-#edit--feature ul {
-  list-style: none;
-  line-height: 20px;
-  text-align: left;
-  background-color: #ffffff;
-
-
-}
-#edit--feature ul li{
-  line-height: 36px ;
-  padding-left: 12px;
-}
-#edit--feature ul li:hover {
-  background-color: #E0E0E0;
-  color: green;
-}
-.btn-reload:hover{
-background-color: green;
-}
-#edit--detail{
-  color: blue;
-}
-.btn-reload{
-  height: 36px;
-  width: 36px;
-  border-radius:4px;
-  border: unset;
-  text-align: center;
-  margin: 0px 18px 0px 12px;
-  display: grid;
-  place-content: center;
-}
-.btn-import{
-  height: 36px;
-  width: 36px;
-  border-radius:4px;
-  border: unset;
-  text-align: center;
-  margin: 0px 12px 0px 0px;
-  display: grid;
-  place-content: center;
-}
-input[type="file"]{
-  display: none;
-}
 </style>
