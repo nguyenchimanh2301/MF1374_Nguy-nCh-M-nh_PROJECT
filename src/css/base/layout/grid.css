@@ -140,7 +140,7 @@
   color: green;
 }
 .btn-reload:hover{
-background-color: green;
+background-color: rgb(57, 172, 102);
 }
 #edit--detail{
   color: blue;
@@ -164,6 +164,10 @@ background-color: green;
   margin: 0px 12px 0px 0px;
   display: grid;
   place-content: center;
+}
+.btn-import:hover{
+background-color: rgb(57, 172, 102);
+  
 }
 input[type="file"]{
   display: none;

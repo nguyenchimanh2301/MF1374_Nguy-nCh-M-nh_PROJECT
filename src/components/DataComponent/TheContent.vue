@@ -9,7 +9,7 @@
         <div class="navbar--name"></div>
         <div class="navbar__input"></div>
         <div class="navbar__icon--user">
-          <div class="icon--bell"></div>
+          <div data-c-tooltip="Thông báo" tooltip-position ="left" class="icon--bell"></div>
           <div class="icon--user"></div>
           <div class="name--user">Nguyễn Chí Mạnh</div>
         </div>
@@ -36,14 +36,14 @@
                 name="input"
                 placeholder="Tìm theo mã, tên nhân viên"
               />
-              <button class="btn-search">
+              <button class="btn-search" data-c-tooltip="Tìm kiếm" >
                 <div class="icon-search"></div>
               </button>
             </div>
-             <button class="btn-reload">
+             <button class="btn-reload"  data-c-tooltip="Tải lại trang" tooltip-position ="left" >
               <div class="icon--reload" @click="Reload"></div>
              </button>
-              <button class=" btn-import " @click="ImportFileClick">
+              <button class=" btn-import " data-c-tooltip="Chèn tệp " tooltip-position ="left" @click="ImportFileClick">
                 <div class="icon--import "></div>
               <input type="file" ref="fileInput" @change="handleFileChange" />
               </button>
@@ -62,7 +62,7 @@
                   <th>Tên nhân viên</th>
                   <th>GIỚI TÍNH</th>
                   <th>NGÀY SINH</th>
-                  <th>SỐ CMND</th>
+                  <th data-c-tooltip="Số chứng minh thư nhân dân" tooltip-position ="bottom">SỐ CMND</th>
                   <th>CHỨC DANH</th>
                   <th>TÊN ĐƠN VỊ</th>
                   <th>SỐ TÀI KHOẢN</th>
@@ -84,7 +84,6 @@
                   @keydown.enter.prevent="
                     showData(orderedUsers[selectedRowIndex])
                   "
-                  
                   :class="{ 'highlighted-row': index === selectedRowIndex }"
                   @click="Select(index)"
                   tabindex="0"
@@ -100,7 +99,7 @@
                       />
                     </div>
                   </td>
-                  <td>{{ item.EmployeeCode }}</td>
+                  <td class="txt-left">{{ item.EmployeeCode }}</td>
                   <td class="txt-left">{{ item.FullName }}</td>
                   <td class="txt-left">
                     {{ this.MISAEnum.GenderName(item.Gender) }}
@@ -121,13 +120,13 @@
                     {{ item.Gender.IdentityNumber }}
                   </td>
                   <td class="txt-left">{{ item.CompanyName }}</td>
-                  <td class="txt-right">
-                    {{ this.MISAResource.formatCurrency(item.DebitAmount) }}
+                  <td class="txt-left">
                   </td>
                   <td>
                     <div
                       id="editRow"
                       @click="showTooltip(index)"
+                      @mouseleave="hideTooltip(index)"
                     >
                       <div id="edit--detail" >Sửa</div>
                       <div class="icon--drop">
@@ -230,8 +229,8 @@ export default {
  
   },
   created() {
-    // this.loadFilter(this.pageSize, this.numberPage);
-    // this.LoadAllData();
+    this.loadFilter(this.pageSize, this.numberPage);
+    this.LoadAllData();
 
     },
   //   watch: {
@@ -251,9 +250,10 @@ export default {
     CountRowSelect() {
       this.sum = this.selectedItems.length; // Cập nhật tổng số phần tử trong selectedItems
     },
+    // Láy tất cả bản ghi 
     async LoadAllData(){
           await this.MISAApiService.GetData();
-          let data = await this.MISAApiService.GetData();
+          let data = await this.MISAApiService.GetData('Employees');
           this.maxCode = this.MISADataService.GetMaxCode(data);
           this.records = data.length;
     },
@@ -473,5 +473,6 @@ export default {
 
 
 <style>
+
 
 </style>

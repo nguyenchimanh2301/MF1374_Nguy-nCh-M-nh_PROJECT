@@ -76,6 +76,10 @@ th:first-child{
     background-color: #E0E0E0;
 
 } */
+
+.txt-left{
+    padding-left: 10px;
+}
 td:first-child{
     position: sticky;
     left: 0;

@@ -4,32 +4,40 @@
     <button class="combobox__button" @click="showDataClick"><div class="icon-combobox"></div></button>
     <div class="combobox_data"  v-if="showData">
     <a class="combobox-item" 
-    v-for="(item,index) in arrays" :key="index"
-    :class="{'item-selected':item ==itemSelected}"
-    @click="Selectitem(item)"
-    > {{ item }}</a>
+    v-for="(item,index) in dataApi" :key="index" 
+    :class="{'item-selected':item[propText] ==itemSelected}"
+    @click="Selectitem(item[propText])"
+    > {{ item[propText] }}</a>
     </div>
     </div>
 </template>
 <script>
 export default {
+props:["dataApi","propText","propValue"],
 methods:{
+  
+  created() {
+    console.log(this.api);
+  },
+  mounted() {
+    this.arrays = this.api;
+  },
   showDataClick(){
     this.showData=!this.showData;
   },
   Selectitem(item){
     this.itemSelected = item;
      this.showData=false;
+    this.$emit('update:modelValue',item[this.propValue])
   }
 },
 data(){
     return{
        showData:false,
-       arrays :[0,1,2],
+       arrays : [],
        itemSelected:""
     }
 },
-props:["api","propText"]
 }
 </script>
 <style>

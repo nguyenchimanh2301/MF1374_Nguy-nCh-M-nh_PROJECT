@@ -12,7 +12,7 @@
           </div>
           <div class="form--title-icon">
           <div class="icon--question"></div>
-          <div class="icon--close" @click="closeForm"></div>
+          <div class="icon--close" data-c-tooltip="Đóng" tooltip-position ="left" @click="closeForm"></div>
          </div>
         </div>
         <div class="form--input">
@@ -45,7 +45,10 @@
               </label>
             </div>
             <label id="label" for="">Đơn vị<span class="text--required">*</span>
-                <m-combobox></m-combobox>
+                <m-combobox :dataApi="position" 
+                propText="DepartmentName"
+                propValue="DepartmentId"
+                ></m-combobox>
             </label>
             <label id="label" for="">Chức danh
               <input type="text" value="Fresher"/>
@@ -91,7 +94,7 @@
                 width: 550px;
                 justify-content: space-between;
               ">
-              <label id="label" for="">Số CMTND
+              <label id="label" for="" data-c-tooltip="Số chứng minh thư nhân dân" tooltip-position ="left">Số CMTND
                 <input type="text" id="idcard" value="033201000203"/>
               </label>
               <label id="label" for="">Ngày cấp
@@ -176,13 +179,13 @@ export default {
     props: ["EmployeeSelected", "methodP","MaxCode"],
     created() {
         this.state.EmployeeSelect = this.EmployeeSelected;
-        console.log(this.state.EmployeeSelect);
         this.method = this.methodP;
         if(  this.methodP === this.MISAEnum.method.ADD){
           (this.title = this.MISAResource.NameMode.AddNew);
            this.state.EmployeeSelect.EmployeeCode = "NV-"+ (this.MaxCode + 1);
         }
         (this.title = this.MISAResource.NameMode.Change);
+        this.GetDataCombobox();
     }, 
     setup() {
         //reactive validate
@@ -229,6 +232,9 @@ export default {
         return { state, v$ };
     },
     methods: {
+        async GetDataCombobox(){
+         this.position =  await this.MISAApiService.GetData('Departments');
+        },
         showDlg() {
             this.type =
                 this.methodP === this.MISAEnum.method.ADD
@@ -358,6 +364,8 @@ export default {
             typeToast :"info",
             closeCss : false,
             MsgValidate:[],
+            position:[],
+
         };
     },
 };

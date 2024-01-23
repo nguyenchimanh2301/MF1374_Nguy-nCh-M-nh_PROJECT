@@ -30,24 +30,26 @@
   top: calc(100% + 2px);
   display: flex;
   flex-direction: column;
-  row-gap: 10px;
+  row-gap: 3px;
   width: 100%;
   z-index: 999;
+   height: 170px;
+   overflow-y: scroll;
   background-color: #ffffff;
+
 }
 .combobox-item {
-  border: 1px solid;
   width: 100%;
   padding:8px 12px;
-  border: 1px solid #e6e6e6;
+  background-color: #ffffff;
   border-radius: 4px;
 }
 .combobox-item:hover {
-  background-color: rgb(183, 210, 183);
+  background-color: #6BC18D;
 }
 
 .combobox-item-selected {
-  background-color: rgb(40, 118, 40);
+  background-color: #033C1A;
   color: #ffffff;
 }
 .item-selected {

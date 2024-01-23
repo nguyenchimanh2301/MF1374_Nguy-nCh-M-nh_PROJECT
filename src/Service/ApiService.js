@@ -1,11 +1,11 @@
 import axios from "axios";
-const  MISAApi ="https://localhost:7096/api/v1/Employees";
+const  MISAApi ="https://localhost:7096/api/v1/";
 
 const ApiService={
     //DeleteData Service
    //CreatedBy NCMANH(23/1/2024)
   async DeleteData(id){
-    return await axios.delete(MISAApi + "/" + id)
+    return await axios.delete(MISAApi + "Employees/" + id)
     .then((response) => {
       response.data;
     })
@@ -15,10 +15,10 @@ const ApiService={
    }, 
     //GetData Service
    //CreatedBy NCMANH(23/1/2024)
-   async GetData(){
+   async GetData(className){
     return await axios
     .get(
-      MISAApi
+      MISAApi+className
     )
     .then((response) => {
       return response.data;
@@ -34,7 +34,7 @@ const ApiService={
     formData.append('file',file);
 
     // Gọi API với yêu cầu POST và FormData object
-    return await axios.post(MISAApi+'/Import', formData)
+    return await axios.post(MISAApi+'Employees/Import', formData)
       .then(response => {
         // Xử lý phản hồi từ API
       return response.data;

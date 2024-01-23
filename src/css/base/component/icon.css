@@ -84,10 +84,10 @@
 	margin-bottom: 20px;
 } */
 .icon--bell{
-	background: var(--image) -788px -30px;
-	width: 20px;
-	height: 20px;
-	padding: 2px;
+	background: var(--image) -786px -30px;
+    width: 24px;
+    height: 24px;
+    padding: 2px;
 }
 .icon--user{
 	background: var(--image) -352px -894px;
