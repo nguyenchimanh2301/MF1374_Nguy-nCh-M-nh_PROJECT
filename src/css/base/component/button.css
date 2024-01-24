@@ -16,6 +16,7 @@
   }
 .btn-title{
   justify-self: end;
+  width: 170px;
 }
 .btn-add{
   height: 36px;
@@ -33,7 +34,7 @@
     width: 73px;
     background-color: #ffffff;
     border-radius: 3px;
-    border: 1px solid ;
+    border: 1px solid var(--border-color);
   }
 /* .btn-cancel{
   justify-self: left;

@@ -48,7 +48,14 @@
                 <m-combobox :dataApi="position" 
                 propText="DepartmentName"
                 propValue="DepartmentId"
+                v-model="state.EmployeeSelect.DepartmentId"
+                :hasError="v$.EmployeeSelect.DepartmentId.$error"
                 ></m-combobox>
+                <div
+                  style="font-size: 12px; color: red"
+                  v-if="v$.EmployeeSelect.DepartmentId.$error">
+                  {{ v$.EmployeeSelect.DepartmentId.$errors[0].$message }}
+              </div>
             </label>
             <label id="label" for="">Chức danh
               <input type="text" value="Fresher"/>
@@ -143,8 +150,8 @@
         <div class="form--footer">
           <button class="button btn-second btn-cancel" @click="closeForm">{{ this.MISAResource["VN"].Cancel }}</button>
           <div>
-            <button class="button btn-second btn-add " @click="addData">{{ this.MISAResource["VN"].Add }}</button>
-            <button class="button btn-add btn-main">Cất và thêm</button>
+            <button class="button btn-second btn-add btn-second " @click="addData">{{ this.MISAResource["VN"].Add }}</button>
+            <button class="button btn-add btn-main ">Cất và thêm</button>
           </div>
         </div>
       </div>
@@ -197,6 +204,7 @@ export default {
                 PhoneNumber: "",
                 Gender: 1,
                 DateOfBirth:"",
+                DepartmentId:"",
             },
         });
         //validate
@@ -205,6 +213,10 @@ export default {
                 EmployeeSelect: {
                   EmployeeCode: {
                         required: helpers.withMessage(MISAResource["VN"].EmployeeNotEmpty, required),
+                        // minLength: minLength(6),
+                    },
+                    DepartmentId: {
+                        required: helpers.withMessage(MISAResource["VN"].DepartmentNotEmpty, required),
                         // minLength: minLength(6),
                     },
                     Email: {
@@ -251,6 +263,7 @@ export default {
       async addData() {
                 this.msgError = [];
                 this.Employee = Object.assign({}, this.state.EmployeeSelect);
+                console.log(this.Employee)
                 if (this.method === this.MISAEnum.method.ADD) {
                     try {
                        await this.api

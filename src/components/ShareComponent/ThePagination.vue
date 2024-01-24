@@ -72,8 +72,9 @@
         if (page == "...") {
           return;
         }
-        this.$emit('update:pageNumber',page)
-        this.$emit('dataFilter',this.pageSize,page)
+        this.$emit('update:pageNumber',page);
+        this.$emit('dataFilter');
+        // this.$emit('dataFilter',this.pageSize,page)
       },
     },
     props: {

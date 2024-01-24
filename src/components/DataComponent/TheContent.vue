@@ -30,18 +30,26 @@
 
         <div class="data">
           <div class="feature">
+            <button v-show="sum>0" class="btn-delete-multiple"  data-c-tooltip="Xóa nhiều" tooltip-position ="left"  @click="showDlgDelete()"> 
+              <div class="icon--remove"></div>
+            </button>
             <div class="box__input-icon">
               <input
                 type="text"
                 name="input"
                 placeholder="Tìm theo mã, tên nhân viên"
+                v-model="searchText"
+                @input="SearchData"
               />
-              <button class="btn-search" data-c-tooltip="Tìm kiếm" >
-                <div class="icon-search"></div>
+              <button class="btn-search" data-c-tooltip="Tìm kiếm" @click="SearchData" >
+                <div class="icon-search" ></div>
               </button>
             </div>
              <button class="btn-reload"  data-c-tooltip="Tải lại trang" tooltip-position ="left" >
               <div class="icon--reload" @click="Reload"></div>
+             </button>
+             <button class="btn-export" data-c-tooltip="Xuất tệp" tooltip-position ="left" @click="ExportFile">
+              <div class="icon--export" ></div>
              </button>
               <button class=" btn-import " data-c-tooltip="Chèn tệp " tooltip-position ="left" @click="ImportFileClick">
                 <div class="icon--import "></div>
@@ -113,14 +121,14 @@
                   <td class="txt-right">
                     {{ item.Gender.IdentityNumber }}
                   </td>
-                  <td class="txt-right">
-                    {{ item.Gender.IdentityNumber }}
-                  </td>
-                  <td class="txt-right">
-                    {{ item.Gender.IdentityNumber }}
-                  </td>
-                  <td class="txt-left">{{ item.CompanyName }}</td>
                   <td class="txt-left">
+                  </td>
+                  <td class="txt-right">
+                    {{ item.CreditNumber }}
+                  </td>
+                  <td class="txt-left">{{ item.BankName }}</td>
+                  <td class="txt-left">
+                  {{ item.BankAdress }}
                   </td>
                   <td>
                     <div
@@ -177,7 +185,7 @@
                    v-model:pageNumber="pageNumber"
                    v-model:pageSize="pageSize" 
                    :totalRecords="records"
-                   @dataFilter = "loadFilter"
+                   @dataFilter = "SearchData"
                    ></the-pagination>
                 </div>
               </div>
@@ -225,20 +233,45 @@ export default {
     orderedUsers: function () {
       return _.orderBy(this.employees, "FullName", "Asc");
     },
-
- 
   },
   created() {
     this.loadFilter(this.pageSize, this.numberPage);
-    this.LoadAllData();
-
+    this.SearchData();
     },
-  //   watch: {
-
-  // },
+    watch: {
+    
+  },
   methods: {
+    async SearchData(){
+    let text = this.searchText.trim();
+    this.employees = [];
+    let url = this.MISAApi+`/getpaging?searchText=${text}`;
+    if(this.text===null){
+      this.LoadAllData();
+    }else{
+      await this.api
+    .get(url)
+    .then((response) => {
+      this.employees = response.data;
+      this.records = this.employees.length;
+      console.log(url);
+    }).catch((e) => {
+      console.log(e);
+    });
+    }
+    } , 
     ImportFileClick(){
       this.$refs.fileInput.click();
+     },
+    async ExportFile(){
+    await this.api
+    .get('https://localhost:7096/api/v1/Employees/Export')
+    .then((response) => {
+      console.log(response.data);
+    }).catch((e) => {
+      console.log(e);
+    });
+
      },
    async handleFileChange() {
       this.loader = true;
@@ -246,6 +279,19 @@ export default {
       this.employees = await this.MISAApiService.uploadFile(this.selectedFile);
       this.loader = false;
 
+    },
+    //Hiển thị dialog cảnh báo xóa nhiều
+    //CreadtedBy : NC Mạnh(23/01/2024)
+    showDlgDelete(){
+      this.msgDialog = [];
+      this.isShowDlg = true;
+      this.title = this.MISAResource.DeleteMultiple;
+      this.selectedItems.map(x=>this.employeeIdArray.push(x.EmployeeId));
+      console.log( this.employeeIdArray);
+      this.type = this.MISAResource.notice.warning;
+      this.msgDialog.push(this.MISAResource["VN"].DeleteQuestion);
+      let res =  this.MISAApiService.DeleteDataMultiple(this.employeeIdArray);
+      console.log(res);
     },
     CountRowSelect() {
       this.sum = this.selectedItems.length; // Cập nhật tổng số phần tử trong selectedItems
@@ -257,6 +303,9 @@ export default {
           this.maxCode = this.MISADataService.GetMaxCode(data);
           this.records = data.length;
     },
+     //Hàm toggle tất cả bản ghi  với checkbox
+    //CreadtedBy : NC Mạnh
+    //CreatedDate "5/12/2023"
     toggleSelectAll() {
       // Đảo ngược giá trị của selectAll và cập nhật mảng selectedItems tương ứng
       // this.selectedItems = this.selectedItems.map(() => this.selectAll);
@@ -267,6 +316,9 @@ export default {
       }
       this.sum = this.selectedItems.length;
     },
+    //Hàm chọn bản ghi  với checkbox
+    //CreadtedBy : NC Mạnh
+    //CreatedDate "5/12/2023"
     Select(index) {
       this.selectedRowIndex = index;
       this.showTooltip(index);
@@ -282,7 +334,9 @@ export default {
       }
       this.CountRowSelect();
     },
-   
+   //Hàm lên dòng trên bằng phím mũi lên trên
+    //CreadtedBy : NC Mạnh
+    //CreatedDate "5/12/2023"
     moveUp(index) {
       if (this.row > 0) {
         index = --this.row;
@@ -290,6 +344,9 @@ export default {
         this.showTooltip(index);
       }
     },
+    //Hàm xuống dòng dưới bằng phím mũi xuống dưới
+    //CreadtedBy : NC Mạnh
+    //CreatedDate "5/12/2023"
     moveDown(index) {
       if (this.row < this.orderedUsers.length - 1) {
         index = ++this.row;
@@ -297,7 +354,9 @@ export default {
         this.showTooltip(index);
       }
     },
-
+    //hàm hiển thị và đóng from toast
+    //CreadtedBy : NC Mạnh
+    //CreatedDate "5/12/2023"
     showFormToast() {
       this.showToast = true;
       setTimeout(() => {
@@ -316,10 +375,10 @@ export default {
     showDlg(item) {
       this.msgDialog = [];
       this.isShowDlg = true;
-      this.title = "Xóa";
+      this.title = this.MISAResource.NameMode.Delete;
       this.employeeId = item;
       this.type = this.MISAResource.notice.warning;
-      this.msgDialog.push("Bạn có muốn xóa nhân viên " + item.FullName);
+      this.msgDialog.push(this.MISAResource.DeleteQuestion+item.FullName);
     },
     //hàm xóa employee
     //param : employeeId
@@ -336,8 +395,6 @@ export default {
       } catch (error) {
         console.log(error);
       }
-  
-
     },
     //hàm show tool
     //CreadtedBy : NC Mạnh
@@ -461,7 +518,8 @@ export default {
       selectedFile : "",
       response: [],
       maxCode: 0,
-
+      employeeIdArray: [],
+      searchText : " ",
     };
     // Thêm các dòng dữ liệu khác cần hiển thị
   },

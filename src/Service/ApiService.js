@@ -13,6 +13,15 @@ const ApiService={
       console.log(e);
     });
    }, 
+   async DeleteDataMultiple(data){
+    return await axios.delete(MISAApi + "Employees",{data})
+    .then((response) => {
+      response.data;
+    })
+    .catch((e) => {
+      console.log(e);
+    });
+   }, 
     //GetData Service
    //CreatedBy NCMANH(23/1/2024)
    async GetData(className){

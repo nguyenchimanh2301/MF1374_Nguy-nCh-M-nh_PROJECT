@@ -1,6 +1,7 @@
 const MISAResource = {
   VN: {
       "EmployeeNotEmpty" : 'Mã nhân viên  không được để trống',
+      "DepartmentNotEmpty" :'Hãy chọn phòng ban',
       "FullNameNotEmpty" : 'Họ tên không được để trống',
       "EmailNotEmpty" : 'Email không được để trống',
       "EmailNotValid" : 'Email không đúng định dạng',
@@ -21,7 +22,7 @@ const MISAResource = {
       "ValueInput":'Giá trị nhập vào',
       "Company":'Công ty',
       "Address":'Địa chỉ',
-
+      "DeleteQuestion" : "Bạn có muốn xóa nhân viên đã chọn",
       Gender:{
         Male:"Nam",
         Female:"Nữ",
@@ -34,6 +35,7 @@ const MISAResource = {
     "EmployeeNotEmpty" : 'Mã nhân viên không được để trống',
     "FullNameNotEmpty" : 'Họ tên không được để trống',
     "EmailNotValid" : 'Email không đúng định dạng',
+    
   },
   returnMessage: {
     addComplete: "THÊM MỚI THÀNH CÔNG",
@@ -50,7 +52,10 @@ const MISAResource = {
   },
   NameMode:{
      AddNew:"THÊM MỚI",
-     Change:"THAY ĐỔI"
+     Change:"THAY ĐỔI",
+     Delete :"Xóa",
+     DeleteMultiple :"Xóa nhiều"
+
   },
   //hàm format tiền
 //CreadtedBy : NC Mạnh

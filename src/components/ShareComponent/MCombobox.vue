@@ -1,23 +1,27 @@
 <template>
-    <div class="combobox">
-    <input type="text" class="combobox_input" :value="itemSelected" >
+    <div class="combobox" >
+    <input type="text" class="combobox_input" 
+     :value="itemSelected" 
+      :class="{
+        'border-error': hasError,
+      }">
     <button class="combobox__button" @click="showDataClick"><div class="icon-combobox"></div></button>
     <div class="combobox_data"  v-if="showData">
     <a class="combobox-item" 
     v-for="(item,index) in dataApi" :key="index" 
     :class="{'item-selected':item[propText] ==itemSelected}"
-    @click="Selectitem(item[propText])"
+    @click="Selectitem(item)"
     > {{ item[propText] }}</a>
     </div>
     </div>
 </template>
 <script>
 export default {
-props:["dataApi","propText","propValue"],
+props:["dataApi","propText","propValue","hasError"],
 methods:{
   
   created() {
-    console.log(this.api);
+    console.log(this.propValue);
   },
   mounted() {
     this.arrays = this.api;
@@ -26,7 +30,7 @@ methods:{
     this.showData=!this.showData;
   },
   Selectitem(item){
-    this.itemSelected = item;
+    this.itemSelected = item[this.propText];
      this.showData=false;
     this.$emit('update:modelValue',item[this.propValue])
   }
@@ -35,7 +39,7 @@ data(){
     return{
        showData:false,
        arrays : [],
-       itemSelected:""
+       itemSelected:"",
     }
 },
 }

@@ -7,16 +7,17 @@
 
 .data .feature{
     background-color: #ffffff;
+    position: relative;
 }
 #table{
     line-height: 48px;
     border: 1px solid #E0E0E0;
     border-collapse: collapse;
     margin-left: 12px;
-    height: 100%;
     width: 100vw;
     overflow-x: scroll;
     white-space: nowrap;
+    table-layout: fixed;
 }
 #table thead {
    background-color: #E0E0E0;
@@ -30,7 +31,8 @@
     position: relative;
 }
 thead,tbody tr,td{
-    border: 1px solid #E0E0E0
+    border: 1px solid #E0E0E0;
+    width: auto;
 }
 .checked__box{
     display: grid;
@@ -76,9 +78,13 @@ th:first-child{
     background-color: #E0E0E0;
 
 } */
-
+.txt-right{
+    padding-right: 10px;
+    text-align: right;
+}
 .txt-left{
     padding-left: 10px;
+    text-align: left;
 }
 td:first-child{
     position: sticky;
@@ -106,6 +112,7 @@ thead tr,th,td:last-child{
 #table td{
     outline: none;
     line-height: 48px;
+    max-height:48px;
     font-size: 14px;
    
 }

@@ -19,9 +19,9 @@ import TheSetting from './components/MainComponent/TheSetting.vue';
 import TheReport from './components/MainComponent/TheReport.vue';
 import  axios  from 'axios';
 import MISAEnum from './js/helper/enum';
-import MISAErrorService from './Service/ErrorService';
-import MISAApiService from './Service/ApiService';
-import DataService from './Service/DataService';
+import MISAErrorService from './Service/errorservice';
+import MISAApiService from './Service/apiservice';
+import DataService from './Service/dataservice';
 
 
 

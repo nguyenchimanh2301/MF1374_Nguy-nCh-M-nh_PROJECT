@@ -145,6 +145,19 @@ background-color: rgb(57, 172, 102);
 #edit--detail{
   color: blue;
 }
+.btn-delete-multiple{
+  height: 36px;
+  width: 36px;
+  border-radius:4px;
+  border: unset;
+  text-align: center;
+  margin: 0px 18px 0px 12px;
+  display: grid;
+  place-content: center;
+  position: absolute;
+  top: 10px;
+  left: 0px;
+}
 .btn-reload{
   height: 36px;
   width: 36px;
@@ -165,9 +178,24 @@ background-color: rgb(57, 172, 102);
   display: grid;
   place-content: center;
 }
+
+.btn-export{
+  height: 36px;
+  width: 36px;
+  border-radius:4px;
+  border: unset;
+  text-align: center;
+  margin: 0px 12px 0px 0px;
+  display: grid;
+  place-content: center;
+}
 .btn-import:hover{
 background-color: rgb(57, 172, 102);
   
+}
+
+.btn-export:hover{
+  background-color: rgb(57, 172, 102);
 }
 input[type="file"]{
   display: none;

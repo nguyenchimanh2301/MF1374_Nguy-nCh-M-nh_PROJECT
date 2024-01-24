@@ -101,6 +101,13 @@
 	width: 24px;
 	align-self: flex-end;
 }
+.icon--remove{
+	background: var(--image) -147px -147px;
+	height: 18px;
+	width: 18px;
+	align-self: flex-end;
+}
+
 
 .icon--import{
 	background: var(--image) -705px -255px;
@@ -108,6 +115,13 @@
 	width: 24px;
 	align-self: flex-end;
 }
+.icon--export{
+	background: var(--image) -147px -258px;
+	height: 19px;
+	width: 19px;
+	align-self: flex-end;
+}
+
 .icon--navbar{
 	background: var(--image) -847px -35px;
 	height: 24px;
