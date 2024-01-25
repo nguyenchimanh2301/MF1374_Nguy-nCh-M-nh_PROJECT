@@ -1,6 +1,5 @@
 const DataService = {
 
-
     
    GetMaxCode(data){
     try {

@@ -39,7 +39,7 @@
                 name="input"
                 placeholder="Tìm theo mã, tên nhân viên"
                 v-model="searchText"
-                @input="SearchData"
+                @input="OninputSearchData"
               />
               <button class="btn-search" data-c-tooltip="Tìm kiếm" @click="SearchData" >
                 <div class="icon-search" ></div>
@@ -80,6 +80,11 @@
                 </tr>
               </thead>
               <tbody>
+                <tr v-show="orderedUsers.length===0">
+                  <div> 
+                      Không tồn tại bản ghi muốn tìm
+                  </div>
+                </tr>
                 <tr
                   style="position: relative"
                   v-for="(item, index) in orderedUsers"
@@ -96,6 +101,7 @@
                   @click="Select(index)"
                   tabindex="0"
                 >
+                  
                   <td>
                     <div class="checked__box">
                       <input
@@ -235,44 +241,49 @@ export default {
     },
   },
   created() {
-    this.loadFilter(this.pageSize, this.numberPage);
-    this.SearchData();
+    this.SearchData(this.pageSize,this.numberPage);  
     },
     watch: {
     
   },
   methods: {
-    async SearchData(){
-    let text = this.searchText.trim();
-    this.employees = [];
-    let url = this.MISAApi+`/getpaging?searchText=${text}`;
-    if(this.text===null){
-      this.LoadAllData();
-    }else{
-      await this.api
-    .get(url)
-    .then((response) => {
-      this.employees = response.data;
-      this.records = this.employees.length;
-      console.log(url);
-    }).catch((e) => {
-      console.log(e);
-    });
+    //Lọc dữ liệu khi nhập
+    //CreatedBy NCMANH(24/1/2024)
+    OninputSearchData(){
+      this.SearchData(this.pageSize,this.numberPage);
+    },
+     //Hàm phân trang dữ liệu
+    //CreatedBy NCMANH(24/1/2024)
+    async SearchData(pageSize,numberPage){
+      let text = this.searchText.trim();
+      let urlRecord =  this.MISAApi+`/getpaging?searchText=${text}`
+      if(this.text === null){
+      console.log(text);
+      }else{
+      this.employees = await this.MISAApiService.loadFilter(text,pageSize,numberPage);
+      let CountRecords = await this.MISAApiService.GetDataUrl(urlRecord);
+      this.records= CountRecords.length;
+      this.loader = false;
     }
     } , 
+    //Hiển thị màn hình chọn tệp
     ImportFileClick(){
       this.$refs.fileInput.click();
      },
+   //Hàm xuất tệp
+    //CreatedBy NCMANH(24/1/2024)
     async ExportFile(){
+    let url = 'https://localhost:7096/api/v1/Employees/Export';
     await this.api
-    .get('https://localhost:7096/api/v1/Employees/Export')
+    .get(url)
     .then((response) => {
       console.log(response.data);
-    }).catch((e) => {
-      console.log(e);
+      window.open(url);
     });
 
      },
+      //Hàm lấy về tệp  dữ liệu
+    //CreatedBy NCMANH(24/1/2024)
    async handleFileChange() {
       this.loader = true;
       this.selectedFile = this.$refs.fileInput.files[0];
@@ -287,11 +298,9 @@ export default {
       this.isShowDlg = true;
       this.title = this.MISAResource.DeleteMultiple;
       this.selectedItems.map(x=>this.employeeIdArray.push(x.EmployeeId));
-      console.log( this.employeeIdArray);
       this.type = this.MISAResource.notice.warning;
       this.msgDialog.push(this.MISAResource["VN"].DeleteQuestion);
-      let res =  this.MISAApiService.DeleteDataMultiple(this.employeeIdArray);
-      console.log(res);
+     this.MISAApiService.DeleteDataMultiple(this.employeeIdArray);
     },
     CountRowSelect() {
       this.sum = this.selectedItems.length; // Cập nhật tổng số phần tử trong selectedItems
@@ -299,9 +308,9 @@ export default {
     // Láy tất cả bản ghi 
     async LoadAllData(){
           await this.MISAApiService.GetData();
-          let data = await this.MISAApiService.GetData('Employees');
-          this.maxCode = this.MISADataService.GetMaxCode(data);
+          let data = this.MISAApiService.GetData();
           this.records = data.length;
+          console.log();
     },
      //Hàm toggle tất cả bản ghi  với checkbox
     //CreadtedBy : NC Mạnh
@@ -428,11 +437,13 @@ export default {
     //hàm mở form thông tin
     //CreadtedBy : NC Mạnh
     //CreatedDate "5/12/2023"
-    showForm() {
+    async showForm() {
       this.isShowForm = true;
       this.employee = {};
       this.method = this.MISAEnum.method.ADD;
       this.content = this.MISAResource.returnMessage.addComplete;
+      let data =  await this.MISAApiService.GetData();
+      this.maxCode =  this.MISADataService.GetMaxCode(data);
 
     },
     //hàm đóng form thông tin
@@ -441,44 +452,24 @@ export default {
     hideForm() {
       this.isShowForm = false;
     },
+     //hàm thay đổi số bản ghi
+    //CreadtedBy : NC Mạnh
+    //CreatedDate "23/01/2024"
    async changPageSize(pageSize) {
-      this.pageSize = pageSize;
-      this.loader = true;
-    await this.loadFilter(this.pageSize, this.numberPage);
+       pageSize = this.pageSize;
+       this.loader = true;
+      await this.SearchData(pageSize,this.numberPage);
     },
+    //hàm Load lại dữ liệu
+    //CreadtedBy : NC Mạnh
+    //CreatedDate "23/01/2024"
    async Reload(){
        this.loader = true;
-       await this.LoadAllData(),
-       await  this.loadFilter(this.pageSize, this.numberPage);
+       await this.SearchData(this.pageSize,this.numberPage);
        setTimeout(() => this.loader = false,2);
        
     },
-    async loadFilter(pageSize, numberPage) {
-       this.pageSize = pageSize;
-       this.numberPage = numberPage;
-        try {
-        await this.api
-          .get(
-            this.MISAApi +
-              `/getpaging?pageSize=` +
-              this.pageSize +
-              `&numberPage=` +
-              this.numberPage +
-              ``
-          )
-          .then((response) => {
-            this.employees = response.data;
-            this.loader = false;
-          })
-          .catch((e) => {
-            if(e){
-              this.errors.push(e);
-            }
-          });
-      } catch (error) {
-        console.log(error);
-       }
-      }
+ 
     },
   //hàm load dữ liệu
   //CreadtedBy : NC Mạnh

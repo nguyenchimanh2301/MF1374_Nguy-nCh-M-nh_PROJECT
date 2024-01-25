@@ -1,11 +1,11 @@
 import axios from "axios";
-const  MISAApi ="https://localhost:7096/api/v1/";
+const  MISAApi ="https://localhost:7096/api/v1/Employees";
 
 const ApiService={
     //DeleteData Service
    //CreatedBy NCMANH(23/1/2024)
   async DeleteData(id){
-    return await axios.delete(MISAApi + "Employees/" + id)
+    return await axios.delete(MISAApi + id)
     .then((response) => {
       response.data;
     })
@@ -14,7 +14,7 @@ const ApiService={
     });
    }, 
    async DeleteDataMultiple(data){
-    return await axios.delete(MISAApi + "Employees",{data})
+    return await axios.delete(MISAApi,{data})
     .then((response) => {
       response.data;
     })
@@ -22,12 +22,23 @@ const ApiService={
       console.log(e);
     });
    }, 
-    //GetData Service
-   //CreatedBy NCMANH(23/1/2024)
-   async GetData(className){
+   async GetDataUrl(url){
     return await axios
     .get(
-      MISAApi+className
+      url
+    )
+    .then((response) => {
+      return response.data;
+    }).catch((e) => {
+      console.log(e);
+    });
+   } ,
+    //GetData Service
+   //CreatedBy NCMANH(23/1/2024)
+   async GetData(){
+    return await axios
+    .get(
+      MISAApi
     )
     .then((response) => {
       return response.data;
@@ -43,7 +54,7 @@ const ApiService={
     formData.append('file',file);
 
     // Gọi API với yêu cầu POST và FormData object
-    return await axios.post(MISAApi+'Employees/Import', formData)
+    return await axios.post(MISAApi+'/Import', formData)
       .then(response => {
         // Xử lý phản hồi từ API
       return response.data;
@@ -52,7 +63,28 @@ const ApiService={
         // Xử lý lỗi
         console.error('Error uploading file:', error);
       });
-  }
+  },
+   //Filter Service
+   //CreatedBy NCMANH(23/1/2024)
+ async loadFilter(text, pageSize, numberPage) {
+    let url = MISAApi+`/getpaging?searchText=${text}&pageSize=${pageSize}&numberPage= ${numberPage}`;
+      try {
+    return await axios
+        .get(
+        url
+        )
+        .then((response) => {
+         return  response.data;
+        })
+        .catch((e) => {
+          if(e){
+            console.log(e);
+          }
+        });
+    } catch (error) {
+      console.log(error);
+     }
+    },
 }
 
 export default ApiService;
