@@ -89,15 +89,21 @@ export default{
        this.$emit('hideDlg');
     },
     addData(){
-       if(this.titleDialog==='Xóa'){
+       if(this.titleDialog===this.MISAResource.NameMode.Delete){
         this.$emit('removeData', this.employeeId.EmployeeId);
+        this.$emit('loadData');
+       }
+       if(this.titleDialog===this.MISAResource.NameMode.DeleteMultiple){
+        this.$emit('deleteMultiple');
+        this.$emit('loadData');
+        this.hideDlg();
        }
        else{
         // this.$emit('addData');
         this.hideDlg();
+        this.$emit('loadData');
    
        }
-       this.$emit('Reload');
     },
     data() {
         return {

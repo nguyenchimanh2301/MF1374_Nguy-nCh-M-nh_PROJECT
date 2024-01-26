@@ -12,6 +12,8 @@
           <div data-c-tooltip="Thông báo" tooltip-position ="left" class="icon--bell"></div>
           <div class="icon--user"></div>
           <div class="name--user">Nguyễn Chí Mạnh</div>
+          <div class="icon-dropdown"></div>
+
         </div>
       </div>
     </div>
@@ -97,11 +99,11 @@
                   @keydown.enter.prevent="
                     showData(orderedUsers[selectedRowIndex])
                   "
+                  @dblclick="showData(orderedUsers[selectedRowIndex])"
                   :class="{ 'highlighted-row': index === selectedRowIndex }"
                   @click="Select(index)"
                   tabindex="0"
                 >
-                  
                   <td>
                     <div class="checked__box">
                       <input
@@ -202,7 +204,7 @@
   
   <TheFormInfo
     v-if="isShowForm"
-    @some-event="hideForm"
+    @hideForm="hideForm"
     :EmployeeSelected="employee"
     :methodP="method"
     :MaxCode="maxCode"
@@ -225,6 +227,7 @@
     :msgError="msgDialog"
     :employeeIdRemove="employeeId"
     @loadData="Reload"
+    @deleteMultiple="DeleteMultiple"
   >
   </the-dialog>
   <!-- end dialog -->
@@ -266,7 +269,9 @@ export default {
       }else{
       this.employees = await this.MISAApiService.loadFilter(text,pageSize,numberPage);
       let CountRecords = await this.MISAApiService.GetDataUrl(urlRecord);
-      this.records= CountRecords.length;
+      if(CountRecords){
+        this.records= CountRecords.length;
+      }
       this.loader = false;
     }
     } , 
@@ -275,7 +280,7 @@ export default {
       this.$refs.fileInput.click();
      },
    //Hàm xuất tệp
-    //CreatedBy NCMANH(24/1/2024)
+  //CreatedBy NCMANH(24/1/2024)
     async ExportFile(){
     let url = 'https://localhost:7096/api/v1/Employees/Export';
     await this.api
@@ -300,11 +305,19 @@ export default {
     showDlgDelete(){
       this.msgDialog = [];
       this.isShowDlg = true;
-      this.title = this.MISAResource.DeleteMultiple;
-      this.selectedItems.map(x=>this.employeeIdArray.push(x.EmployeeId));
+      this.title = this.MISAResource.NameMode.DeleteMultiple;
+      console.log(this.title);
       this.type = this.MISAResource.notice.warning;
       this.msgDialog.push(this.MISAResource["VN"].DeleteQuestion);
-     this.MISAApiService.DeleteDataMultiple(this.employeeIdArray);
+    },
+
+    //Hàm xóa nhiều bản ghi 
+    //CreadtedBy : NC Mạnh(23/01/2024)
+    DeleteMultiple(){
+      this.selectedItems.map(x=>this.employeeIdArray.push(x.EmployeeId));
+      this.msgToast.push(this.MISAResource.returnMessage.deleteComplete);
+      this.MISAApiService.DeleteDataMultiple(this.employeeIdArray);
+      this.showFormToast();
     },
     CountRowSelect() {
       this.sum = this.selectedItems.length; // Cập nhật tổng số phần tử trong selectedItems

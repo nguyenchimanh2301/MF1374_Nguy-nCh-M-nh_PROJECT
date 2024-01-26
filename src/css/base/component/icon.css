@@ -24,7 +24,7 @@
 
 }
 .icon--logo img{
-	height: 44px;
+	height: 40px;
 }
 .icon--item{
 	width: 20px;
@@ -123,7 +123,7 @@
 }
 
 .icon--navbar{
-	background: var(--image) -847px -35px;
+	background: var(--image) -846px -32px;
 	height: 24px;
 	width: 24px;
     margin-left: 24px;

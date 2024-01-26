@@ -69,7 +69,7 @@
             <div>
               <label id="label" for=""
                 >{{ this.MISAResource["VN"].DateOfBirth }}
-                <input type="date" id="selectedDate" />
+                <input type="date" id="selectedDate" v-model="state.EmployeeSelect.DateOfBirth" />
               </label>
               <label id="label" for="">{{ this.MISAResource["VN"].Gender}}
                 <div class="box__input--radio">
@@ -190,6 +190,7 @@ export default {
     props: ["EmployeeSelected", "methodP","MaxCode"],
     created() {
         this.state.EmployeeSelect = this.EmployeeSelected;
+        this.state.EmployeeSelect.Gender = 0;
         this.method = this.methodP;
         if(  this.methodP === this.MISAEnum.method.ADD){
           (this.title = this.MISAResource.NameMode.AddNew);
@@ -254,6 +255,7 @@ export default {
         return { state, v$ };
     },
     methods: {
+       //
         async GetDataCombobox(){
           this.position =  await this.MISAApiService.GetDataName('Positions');
           this.department =  await this.MISAApiService.GetDataName('Departments');
@@ -373,7 +375,9 @@ export default {
             this.isShowDlg = false;
             this.showToast=true;
             setTimeout(() => 
-            this.$emit("some-event"),
+            this.$emit("hideForm"),2000
+            )
+            setTimeout(() => 
             this.showToast=false,2000
             )
             this.$emit('loadData');

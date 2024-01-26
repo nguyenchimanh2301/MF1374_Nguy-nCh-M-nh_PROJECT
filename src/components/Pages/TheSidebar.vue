@@ -79,7 +79,7 @@
             <div>Phân tích tài chính</div>
           </div>
         </div>
-        <div class="btn--sidebar-footer">
+        <!-- <div class="btn--sidebar-footer">
           <div id="btn--hide-sidebar">
            <div id="previous" onclick="collapseSidebar()">
            </div>
@@ -90,7 +90,7 @@
            </div>
            <p> Mở rộng</p>
           </div>
-         </div>
+         </div> -->
       </div>
        <!-- <div class="sidebar" :class="{'side':isExpanded}">
       <div class="list--item" :class="{'width':isExpanded}">
