@@ -205,6 +205,12 @@ export default {
                 Gender: 1,
                 DateOfBirth:"",
                 DepartmentId:"",
+                Address:"",
+                BankName:"",
+                BankPlace:"",
+                CreditNumber:"",
+                PositionId:"",
+
             },
         });
         //validate
@@ -245,7 +251,8 @@ export default {
     },
     methods: {
         async GetDataCombobox(){
-         this.position =  await this.MISAApiService.GetData('Departments');
+          let url= "https://localhost:7096/api/v1/Departments"
+          this.position =  await this.MISAApiService.GetDataUrl(url);
         },
         showDlg() {
             this.type =

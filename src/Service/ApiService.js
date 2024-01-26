@@ -1,7 +1,20 @@
 import axios from "axios";
 const  MISAApi ="https://localhost:7096/api/v1/Employees";
+const  Api ="https://localhost:7096/api/v1/";
 
 const ApiService={
+  
+  async GetDataName(name){
+    return await axios
+    .get(
+      Api+name
+    )
+    .then((response) => {
+      return response.data;
+    }).catch((e) => {
+      console.log(e);
+    });
+   } ,
     //DeleteData Service
    //CreatedBy NCMANH(23/1/2024)
   async DeleteData(id){
@@ -33,6 +46,7 @@ const ApiService={
       console.log(e);
     });
    } ,
+   
     //GetData Service
    //CreatedBy NCMANH(23/1/2024)
    async GetData(){

@@ -10,6 +10,8 @@ import excel from 'vue-excel-export'
  import TheContent from './components/DataComponent/TheContent.vue';
  import ThePagination from './components/ShareComponent/ThePagination.vue';
  import MCombobox from './components/ShareComponent/MCombobox.vue';
+ import  MDropdownList from './components/ShareComponent/MDropdownList.vue';
+
 
 
 
@@ -41,7 +43,6 @@ const routes = [
 
  })
 
-
 const app = createApp(App);
 app.component("MToast",TheToastMessage)
 app.component("MInput",MInput)
@@ -52,7 +53,7 @@ app.component("the-setting",TheSetting)
 app.component("the-report",TheReport)
 app.component("ThePagination",ThePagination)
 app.component("MCombobox",MCombobox)
-
+app.component("MDropdownList",MDropdownList)
 
 app.use(excel)
 app.use(router);

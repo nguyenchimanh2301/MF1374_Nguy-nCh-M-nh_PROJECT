@@ -122,12 +122,22 @@
                     {{ this.MISAResource.formatDate(item.DateOfBirth) }}
                   </td>
                   <td class="txt-right">
-                    {{ item.Gender.IdentityNumber }}
+                    {{ item.IdentityNumber }}
                   </td>
-                  <td class="txt-right">
-                    {{ item.Gender.IdentityNumber }}
+                  <td class="txt-left"  >
+                    <div v-for="(department, index) in department" :key="index" >
+                      <span v-if="department.DepartmentId===item.DepartmentId"> 
+                        {{ department.DepartmentName }}
+                      </span>
+                    </div>
                   </td>
-                  <td class="txt-left">
+                
+                  <td class="txt-left"  >
+                    <div v-for="(position, index) in position" :key="index">
+                      <div v-if="position.PositionId===item.PositionId">
+                      {{ position.PositionName }}
+                    </div>
+                    </div>
                   </td>
                   <td class="txt-right">
                     {{ item.CreditNumber }}
@@ -170,7 +180,13 @@
               </div>
               <div colspan="6">
                 <div class="paging">
-                  <span style="color: #616161"></span>
+                  <m-dropdown-list 
+                  :dataApi="pageSizes"
+                   propText="text"
+                   propValue="value"
+                   @ChangePageSize="changPageSize"
+                  ></m-dropdown-list>
+                  <!-- <span style="color: #616161"></span>
                   <span>
                     <select
                       name=""
@@ -186,7 +202,7 @@
                         {{ page }} bản ghi trên 1 trang
                       </option>
                     </select></span
-                  >
+                  > -->
                   <the-pagination 
                    v-model:pageNumber="pageNumber"
                    v-model:pageSize="pageSize" 
@@ -241,16 +257,20 @@ export default {
     },
   },
   created() {
-    this.SearchData(this.pageSize,this.numberPage);  
+     this.SearchData(this.pageSize,this.numberPage);  
+     this.LoadAllData();
     },
     watch: {
     
   },
   methods: {
+    // async GetMaxCode(){
+    //   let data =   await this.MISAApiService.GetData();
+    // },
     //Lọc dữ liệu khi nhập
     //CreatedBy NCMANH(24/1/2024)
     OninputSearchData(){
-      this.SearchData(this.pageSize,this.numberPage);
+      setTimeout(()=> this.SearchData(this.pageSize,this.numberPage),500);
     },
      //Hàm phân trang dữ liệu
     //CreatedBy NCMANH(24/1/2024)
@@ -307,10 +327,10 @@ export default {
     },
     // Láy tất cả bản ghi 
     async LoadAllData(){
-          await this.MISAApiService.GetData();
-          let data = this.MISAApiService.GetData();
-          this.records = data.length;
-          console.log();
+          let data = await this.MISAApiService.GetData();
+          this.maxCode = this.MISADataService.GetMaxCode(data) +1;
+          this.position =  await this.MISAApiService.GetDataName('Positions');
+          this.department =  await this.MISAApiService.GetDataName('Departments');
     },
      //Hàm toggle tất cả bản ghi  với checkbox
     //CreadtedBy : NC Mạnh
@@ -437,14 +457,11 @@ export default {
     //hàm mở form thông tin
     //CreadtedBy : NC Mạnh
     //CreatedDate "5/12/2023"
-    async showForm() {
+     showForm() {
       this.isShowForm = true;
       this.employee = {};
       this.method = this.MISAEnum.method.ADD;
       this.content = this.MISAResource.returnMessage.addComplete;
-      let data =  await this.MISAApiService.GetData();
-      this.maxCode =  this.MISADataService.GetMaxCode(data);
-
     },
     //hàm đóng form thông tin
     //CreadtedBy : NC Mạnh
@@ -456,7 +473,6 @@ export default {
     //CreadtedBy : NC Mạnh
     //CreatedDate "23/01/2024"
    async changPageSize(pageSize) {
-       pageSize = this.pageSize;
        this.loader = true;
       await this.SearchData(pageSize,this.numberPage);
     },
@@ -500,7 +516,20 @@ export default {
       msgDialog: [],
       countPage: [],
       records: 0,
-      pageSizes: [10, 20, 30],
+      pageSizes: [
+        {
+        text: "10 bản ghi trên 1 trang",
+        value : 10
+        },
+        {
+        text: "20 bản ghi trên 1 trang",
+        value : 20
+        },
+        {
+        text: "30 bản ghi trên 1 trang",
+        value : 30
+        },
+       ],
       numberPage: 1,
       pageSize: 10,
       currentPage: 1,
@@ -511,6 +540,9 @@ export default {
       maxCode: 0,
       employeeIdArray: [],
       searchText : " ",
+      position : [],
+      department : [],
+
     };
     // Thêm các dòng dữ liệu khác cần hiển thị
   },
@@ -522,6 +554,5 @@ export default {
 
 
 <style>
-
 
 </style>
