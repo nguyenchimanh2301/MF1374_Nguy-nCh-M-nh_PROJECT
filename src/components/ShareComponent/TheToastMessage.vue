@@ -28,7 +28,7 @@
             'icon--question': icon == 'question',
             'icon--danger': icon == 'error',
             'icon--warning': icon == 'warning',
-
+            'icon--success': icon == 'success',
         }"></div>
         <div class="toast--content" >
         <ul v-for="(item, index) in msgToast" :key="index">

@@ -3,7 +3,8 @@ const  MISAApi ="https://localhost:7096/api/v1/Employees";
 const  Api ="https://localhost:7096/api/v1/";
 
 const ApiService={
-  
+    //Api Service lấy dữ liệu theo tên 
+    //CreatedBy(23/1/2024)
   async GetDataName(name){
     return await axios
     .get(
@@ -18,7 +19,7 @@ const ApiService={
     //DeleteData Service
    //CreatedBy NCMANH(23/1/2024)
   async DeleteData(id){
-    return await axios.delete(MISAApi + id)
+    return await axios.delete(MISAApi +`/${id}`)
     .then((response) => {
       response.data;
     })
@@ -35,6 +36,8 @@ const ApiService={
       console.log(e);
     });
    }, 
+    //Api Service lấy dữ liệu theo Url 
+    //CreatedBy(23/1/2024)
    async GetDataUrl(url){
     return await axios
     .get(
@@ -78,8 +81,8 @@ const ApiService={
         console.error('Error uploading file:', error);
       });
   },
-   //Filter Service
-   //CreatedBy NCMANH(23/1/2024)
+   //Api Service phân trang
+      //CreatedBy NCMANH(23/1/2024)
  async loadFilter(text, pageSize, numberPage) {
     let url = MISAApi+`/getpaging?searchText=${text}&pageSize=${pageSize}&numberPage= ${numberPage}`;
       try {

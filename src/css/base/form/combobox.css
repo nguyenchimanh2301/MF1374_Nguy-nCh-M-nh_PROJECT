@@ -14,6 +14,7 @@
   height: 36px;
   width: 260px;
   flex: 1;
+  font-size: 14px;
 }
 .combobox__button {
   height: 36px;
@@ -35,7 +36,7 @@
   z-index: 999;
    height: 170px;
    overflow-y: scroll;
-  background-color: #ffffff;
+  background-color:#e6e6e6;
 
 }
 .combobox-item {
@@ -43,6 +44,7 @@
   padding:8px 12px;
   background-color: #ffffff;
   border-radius: 4px;
+  font-weight: 400;
 }
 .combobox-item:hover {
   background-color: #6BC18D;

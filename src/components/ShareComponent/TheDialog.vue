@@ -95,7 +95,9 @@ export default{
        else{
         // this.$emit('addData');
         this.hideDlg();
+   
        }
+       this.$emit('Reload');
     },
     data() {
         return {

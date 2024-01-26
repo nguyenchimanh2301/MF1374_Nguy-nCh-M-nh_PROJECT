@@ -1,8 +1,10 @@
 const MISAEnum = {
+    //Enum phương thức thêm và sửa
     method:{
         ADD:0,
         UPDATE:1
     },
+    //Enum Giới tính
     Gender:{
         MALE :0,
         FEMALE:1,
@@ -11,6 +13,7 @@ const MISAEnum = {
     EN:{
 
     },
+    //Enum Giới tính
     GenderName(gender){
        if(gender===0){
           return "Nam";

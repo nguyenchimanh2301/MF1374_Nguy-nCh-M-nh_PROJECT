@@ -45,7 +45,7 @@
               </label>
             </div>
             <label id="label" for="">Đơn vị<span class="text--required">*</span>
-                <m-combobox :dataApi="position" 
+                <m-combobox :dataApi="department" 
                 propText="DepartmentName"
                 propValue="DepartmentId"
                 v-model="state.EmployeeSelect.DepartmentId"
@@ -57,8 +57,12 @@
                   {{ v$.EmployeeSelect.DepartmentId.$errors[0].$message }}
               </div>
             </label>
-            <label id="label" for="">Chức danh
-              <input type="text" value="Fresher"/>
+            <label id="label" for="">{{ this.MISAResource["VN"].PositionName}}
+              <m-combobox :dataApi="position" 
+                propText="PositionName"
+                propValue="PositionId"
+                v-model="state.EmployeeSelect.PositionId"
+                ></m-combobox>
             </label>
           </div>
           <div class="form__input--right">
@@ -67,23 +71,23 @@
                 >{{ this.MISAResource["VN"].DateOfBirth }}
                 <input type="date" id="selectedDate" />
               </label>
-              <label id="label" for="">Giới tính
+              <label id="label" for="">{{ this.MISAResource["VN"].Gender}}
                 <div class="box__input--radio">
                   <label id="gender" for=""
                     ><input
                       name="gender"
                       type="radio"
                       v-model="state.EmployeeSelect.Gender"
-                      value="0"
-                    />{{ this.MISAResource["VN"].Gender.Male }}</label
+                      value= "0"
+                    />{{ this.MISAResource["VN"].GenderName.Male }}</label
                   >
                   <label id="gender" for=""
                     ><input
                       name="gender"
                       type="radio"
                       v-model="state.EmployeeSelect.Gender"
-                      value="1"
-                    />{{ this.MISAResource["VN"].Gender.Female }}</label
+                      value= "1"
+                    />{{ this.MISAResource["VN"].GenderName.Female }}</label
                   >
                   <label id="gender" for=""
                     ><input
@@ -91,7 +95,7 @@
                       type="radio"
                       v-model="state.EmployeeSelect.Gender"
                       value="2"
-                    />{{ this.MISAResource["VN"].Gender.Other }}</label
+                    />{{ this.MISAResource["VN"].GenderName.Other }}</label
                   >
                 </div>
               </label>
@@ -102,26 +106,26 @@
                 justify-content: space-between;
               ">
               <label id="label" for="" data-c-tooltip="Số chứng minh thư nhân dân" tooltip-position ="left">Số CMTND
-                <input type="text" id="idcard" value="033201000203"/>
+                <input type="text" id="idcard"   v-model="state.EmployeeSelect.IdentityNumber">
               </label>
-              <label id="label" for="">Ngày cấp
-                <input type="date" />
+              <label id="label" for="">{{ this.MISAResource["VN"].IdentityDate }}
+                <input type="date"  v-model="state.EmployeeSelect.IdentityDate"/>
               </label>
             </div>
-            <label id="label" for="">Nơi cấp
-              <input type="text" id="identity-place" value="Hưng Yên" />
+            <label id="label" for="">{{ this.MISAResource["VN"].IdentityPlace }}
+              <input type="text" id="identity-place" v-model="state.EmployeeSelect.IdentityPlace"/>
             </label>
           </div>
         </div>
         <div class="form__input--under">
-          <label id="label" for="">Địa chỉ 
-            <input type="text" value="Song Mai Kim Động"/>
+          <label id="label" for="">{{ this.MISAResource["VN"].Address }}
+            <input type="text" v-model="state.EmployeeSelect.Address">
           </label>
         <div class="form--info">
-          <label id="label" for="">ĐT di động
-            <input type="text" value="0566211950"/>
+          <label id="label" for="">{{ this.MISAResource["VN"].PhoneNumber }}
+            <input type="text" v-model="state.EmployeeSelect.PhoneNumber"/>
           </label>
-          <label id="label" for="">ĐT cố định
+          <label id="label" for="">{{ this.MISAResource["VN"].Fax }}
             <input type="text" value="(077) 123-4567"/>
           </label>
           <label id="label" for="">Email
@@ -129,21 +133,21 @@
                  v-model="state.EmployeeSelect.Email"
                  :hasError="v$.EmployeeSelect.Email.$error"
                  input-id="email"
-                 ></MInput>
+            ></MInput>
               <span
                 style="font-size: 12px; color: red"
                 v-if="v$.EmployeeSelect.Email.$error">
                 {{ v$.EmployeeSelect.Email.$errors[0].$message }}
               </span>
           </label>
-          <label id="label" for="">Tài khoản ngân hàng
-            <input type="text" value="121313131"/>
+          <label id="label" for="">{{ this.MISAResource["VN"].CreditNumber }}
+            <input type="text" v-model="state.EmployeeSelect.CreditNumber"/>
           </label>
-          <label id="label" for="">Tên ngân hàng
-            <input type="text" value="Ngân hàng ACB"/>
+          <label id="label" for="">{{ this.MISAResource["VN"].BankName }}
+            <input type="text" v-model="state.EmployeeSelect.BankName"/>
           </label>
-          <label id="label" for="">Chi nhánh
-            <input type="text" value="Chi nhánh 10"/>
+          <label id="label" for="">{{ this.MISAResource["VN"].Address }}
+            <input type="text" v-model="state.EmployeeSelect.BankAdress"/>
           </label>
         </div>
         </div>
@@ -151,7 +155,7 @@
           <button class="button btn-second btn-cancel" @click="closeForm">{{ this.MISAResource["VN"].Cancel }}</button>
           <div>
             <button class="button btn-second btn-add btn-second " @click="addData">{{ this.MISAResource["VN"].Add }}</button>
-            <button class="button btn-add btn-main ">Cất và thêm</button>
+            <button class="button btn-add btn-main" @click="addData">Cất và thêm</button>
           </div>
         </div>
       </div>
@@ -251,8 +255,8 @@ export default {
     },
     methods: {
         async GetDataCombobox(){
-          let url= "https://localhost:7096/api/v1/Departments"
-          this.position =  await this.MISAApiService.GetDataUrl(url);
+          this.position =  await this.MISAApiService.GetDataName('Positions');
+          this.department =  await this.MISAApiService.GetDataName('Departments');
         },
         showDlg() {
             this.type =
@@ -264,11 +268,22 @@ export default {
         hideDlg() {
             this.isShowDlg = false;
         },
+      //  async OnClickAddData(e) {
+      //        if(e===null){
+      //         await this.addData();
+      //        }else{
+      //         await this.addData();
+      //         setTimeout(() => 
+      //       this.$emit("some-event"),2000
+      //       )
+      //        }
+      //   },
         //hàm thêm,thay đổi dữ liệu
         //cretedBy : NC Mạnh
         //CreatedAt : 5/12/2023
       async addData() {
                 this.msgError = [];
+                this.state.EmployeeSelect.Gender = parseInt(this.state.EmployeeSelect.Gender);
                 this.Employee = Object.assign({}, this.state.EmployeeSelect);
                 console.log(this.Employee)
                 if (this.method === this.MISAEnum.method.ADD) {
@@ -281,7 +296,6 @@ export default {
                             this.msgError = this.MISAErrorService.GetErrorCode(response);
                             this.loadForm(response);
                             this.closeToast();
-                            this.$emit('loadData');
                         })
                             .catch((error) => {
                             this.v$.$validate();
@@ -310,6 +324,7 @@ export default {
                             this.v$.$validate();
                             this.loadForm(response);
                             this.closeToast();
+
                         }).catch((e) => {
                           this.v$.$validate();
                             this.v$.$errors.forEach(x=> this.msgError.push(x.$message));
@@ -336,8 +351,8 @@ export default {
              this.MISAResource.returnMessage.addComplete:
              this.MISAResource.returnMessage.updateComplete;
             if(error.status===201|error.status===200){
-            this.typeToast = this.MISAResource.notice.information;
-            this.type = this.MISAResource.notice.information;
+            this.typeToast = this.MISAResource.notice.success;
+            this.type = this.MISAResource.notice.success;
             }
            else{
             this.typeToast = this.MISAResource.notice.warning;
@@ -357,13 +372,11 @@ export default {
         closeToast() {// this.showToast=true
             this.isShowDlg = false;
             this.showToast=true;
-            this.$emit("loadData");
             setTimeout(() => 
-            this.$emit("some-event"),2000
-            )
-            setTimeout(() => 
+            this.$emit("some-event"),
             this.showToast=false,2000
             )
+            this.$emit('loadData');
         },
     },
    mounted(){
@@ -385,7 +398,7 @@ export default {
             closeCss : false,
             MsgValidate:[],
             position:[],
-
+            department:[]
         };
     },
 };

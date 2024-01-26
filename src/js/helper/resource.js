@@ -13,20 +13,29 @@ const MISAResource = {
       "EmployeeCode"  : 'Mã nhân viên',
       "FullName" : 'Họ và tên',
       "PhoneNumber" : 'Số điện thoại',
+      "Fax" : 'ĐT cố định',
       "DateOfBirth" : 'Ngày sinh',
-      "GenderName" : 'Giới tính',
+      "Gender" : 'Giới tính',
       "IdentityNumber" : 'Số CMTND',
       "IdentityDate":'Ngày cấp',
       "IdentityPlace":'Nơi cấp',
       "DebitAmount":'Số tiền nợ',
       "ValueInput":'Giá trị nhập vào',
-      "Company":'Công ty',
+      "BankAddress":'Chi nhánh',
+      "BankName":'Tên ngân hàng',
+      "CreditNumber":'Tài khoản ngân hàng',
       "Address":'Địa chỉ',
+      "PositionName" : "Chức danh",
       "DeleteQuestion" : "Bạn có muốn xóa nhân viên đã chọn",
-      Gender:{
+      GenderName:{
         Male:"Nam",
         Female:"Nữ",
         Other :"Khác"
+      },
+      GenderCode:{
+        Male: 0,
+        Female:1,
+        Other :2
       },
       "Cancel":'Hủy',
       "Add":'Cất',
@@ -49,6 +58,7 @@ const MISAResource = {
     information: "information",
     error: "error",
     warning: "warning",
+    success: "success",
   },
   NameMode:{
      AddNew:"THÊM MỚI",

@@ -186,23 +186,6 @@
                    propValue="value"
                    @ChangePageSize="changPageSize"
                   ></m-dropdown-list>
-                  <!-- <span style="color: #616161"></span>
-                  <span>
-                    <select
-                      name=""
-                      id=""
-                      v-model="pageSize"
-                      @change="changPageSize(pageSize)"
-                    >
-                      <option
-                        v-for="(page, index) in pageSizes"
-                        :key="index"
-                        :value="page"
-                      >
-                        {{ page }} bản ghi trên 1 trang
-                      </option>
-                    </select></span
-                  > -->
                   <the-pagination 
                    v-model:pageNumber="pageNumber"
                    v-model:pageSize="pageSize" 
@@ -224,7 +207,7 @@
     :methodP="method"
     :MaxCode="maxCode"
     @showFormToast="showFormToast"
-    @loadData="LoadAllData"
+    @loadData="Reload"
   >
   </TheFormInfo>
   <!-- this is toast-message -->
@@ -241,6 +224,7 @@
     :type="type"
     :msgError="msgDialog"
     :employeeIdRemove="employeeId"
+    @loadData="Reload"
   >
   </the-dialog>
   <!-- end dialog -->
@@ -326,6 +310,8 @@ export default {
       this.sum = this.selectedItems.length; // Cập nhật tổng số phần tử trong selectedItems
     },
     // Láy tất cả bản ghi 
+    //CreadtedBy : NC Mạnh
+    //CreatedDate "5/12/2023"
     async LoadAllData(){
           let data = await this.MISAApiService.GetData();
           this.maxCode = this.MISADataService.GetMaxCode(data) +1;
@@ -407,7 +393,7 @@ export default {
       this.title = this.MISAResource.NameMode.Delete;
       this.employeeId = item;
       this.type = this.MISAResource.notice.warning;
-      this.msgDialog.push(this.MISAResource.DeleteQuestion+item.FullName);
+      this.msgDialog.push(this.MISAResource["VN"].DeleteQuestion +item.FullName);
     },
     //hàm xóa employee
     //param : employeeId
