@@ -315,6 +315,7 @@ export default {
       this.selectedItems.map(x=>this.employeeIdArray.push(x.EmployeeId));
       this.msgToast.push(this.MISAResource.returnMessage.deleteComplete);
       this.MISAApiService.DeleteDataMultiple(this.employeeIdArray);
+      this.employeeIdArray=[];
       this.showFormToast();
     },
     CountRowSelect() {
