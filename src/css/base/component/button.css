@@ -35,6 +35,7 @@
     background-color: #ffffff;
     border-radius: 3px;
     border: 1px solid var(--border-color);
+    color: black;
   }
 /* .btn-cancel{
   justify-self: left;

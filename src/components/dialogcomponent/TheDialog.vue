@@ -3,6 +3,7 @@
     <div class="dialog">
         <div class="dialog--title">
           <h3>{{ title }}</h3>
+          <div class="toast--btn" @click="hideDlg"></div>
         </div>
        <div class="dialog--content">
         <div class="toast__icon " 
@@ -19,6 +20,7 @@
         </div>
        </div>
        <div class="dialog__btn">
+        <button class="btn-main btn-second btn-cancel" id="closedialog" @click="hideDlg">Hủy</button>
         <button class="button " :class="{
           'btn-main':button===true,
           'btn-cancel':button===false

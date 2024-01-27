@@ -205,6 +205,3 @@ background-color: rgb(57, 172, 102);
 .btn-export:hover{
   background-color: rgb(57, 172, 102);
 }
-input[type="file"]{
-  display: none;
-}

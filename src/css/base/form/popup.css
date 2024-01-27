@@ -54,11 +54,14 @@
 
 }
 .dialog__btn{
-    display: grid;
+    display: flex;
     height: 36px;
     margin: 0px 24px 0px 24px;
-    grid-template-columns: auto auto;
-   align-self: flex-end;
+    justify-items: flex-end;
+    justify-content: flex-end;
+    column-gap: 8px;
+    align-self: flex-end;
+
 }
 .dialog__btn button{
   justify-self: end;

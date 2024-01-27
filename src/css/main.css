@@ -1,10 +1,10 @@
 
 @import url(./base/form/combobox.css);
-@import url(./base/form/formInput.css);
+@import url(./base/form/forminput.css);
 @import url(./base/form/popup.css);
 @import url(./base/form/toast.css);
 @import url(./base/form/dropdownlist.css);
-
+@import url(./base/form/formimport.css);
 
 @import url(./base/component/button.css);
 @import url(./base/component/input.css);

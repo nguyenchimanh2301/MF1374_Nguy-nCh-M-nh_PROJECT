@@ -51,7 +51,7 @@ const MISAResource = {
   returnMessage: {
     addComplete: "THÊM MỚI THÀNH CÔNG",
     updateComplete: "THAY ĐỔI THÀNH CÔNG",
-    deleteComplete: "XÓA NHÂN VIÊN THÀNH CÔNG",
+    deleteComplete: "Thành công! Nhân viên đã bị xóa",
     notFoundUrl: "Đường dẫn không chính xác",
     severError: "Lỗi hệ thống",
   },

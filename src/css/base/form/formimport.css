@@ -1,0 +1,85 @@
+/* 
+
+.form-sidebar{
+    height: 100%;
+}
+
+.menu-import li{
+    height: 36px;
+    text-align: left;
+    padding: 8px;
+    font-weight: 600;
+    list-style: none;
+    margin-top: 5px;
+    background-color: #ffffff;
+    border-radius: 4px;
+}
+.menu-import li:hover{
+    background-color: aqua;
+}
+
+.form-table{
+    background-color: #ffffff;
+
+}
+.form-excel-title{
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    display: grid;
+    grid-template-rows: 36px 36px auto;
+}
+input[type="file"]{
+   display: none;
+}
+
+#filename{
+    width: 700px;
+}
+
+
+#table--excel{
+    line-height: 48px;
+    border: 1px solid #E0E0E0;
+    border-collapse: collapse;
+    margin-left: 12px;
+    width: 100%;
+    overflow-x: scroll;
+    white-space: nowrap;
+    table-layout: fixed;
+    
+}
+.data-excel{
+    height: 100%;
+
+}
+.scroll__table-excel{
+    width: 100%;
+overflow: scroll; 
+height: 100%;
+
+} */
+
+.form-excel{
+    width: 90vw;
+    height: 80vh;
+    position: absolute;
+    background-color: #ffffff;
+    top: 5%;
+    left: 5%;
+
+    border-radius: 4px;
+    display: grid;
+    grid-template-rows: 56px auto 56px;
+}
+
+.form-header{
+    width: 100%;
+}
+.form-excel-content{
+    display: grid;
+    grid-template-columns: 200px auto;
+    grid-template-rows: 100% 100%;
+    column-gap: 10px;
+    background-color: var(--border-color);
+
+}

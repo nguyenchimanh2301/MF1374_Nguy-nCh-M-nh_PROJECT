@@ -4,7 +4,7 @@
     <div class="layout">
      <the-sidebar></the-sidebar>
     <!-- end sidebar -->
-     <router-view></router-view>
+    <table-employee></table-employee>
      <!-- <the-content></the-content> -->
    
   </div>
@@ -12,7 +12,7 @@
 </template>
 
 <script>
-import TheSidebar from './components/pages/TheSidebar.vue';
+import TheSidebar from './components/layoutcomponent/TheSidebar.vue';
 export default {
   name: 'App',
   components: {

@@ -10,7 +10,7 @@
     position: relative;
 }
 #table{
-    line-height: 48px;
+    line-height: 48px; 
     border: 1px solid #E0E0E0;
     border-collapse: collapse;
     margin-left: 12px;
@@ -30,7 +30,7 @@
 #table tr{
     position: relative;
 }
-thead,tbody tr,td{
+#table thead,tbody tr,td{
     border: 1px solid #E0E0E0;
     width: auto;
 }
@@ -62,11 +62,11 @@ tfoot{
 tfoot tr td{
     border: none;
 }
-thead tr,th:first-child{
+#table thead th:first-child{
     width: 50px;
     z-index: 100;
 }
-th:first-child{
+#table th:first-child{
     position: sticky;
     left: 0;
     background-color: #E0E0E0;
@@ -86,7 +86,7 @@ th:first-child{
     padding-left: 10px;
     text-align: left;
 }
-td:first-child{
+#table td:first-child{
     position: sticky;
     left: 0;
     inset-block-start: 0;
@@ -99,7 +99,7 @@ td:first-child{
     right: 0;
     background-color: #ffffff;
 } */
-thead tr,th,td:last-child{
+#table thead tr,th,td:last-child{
     text-align: center;
 }
 #table th{
@@ -128,14 +128,14 @@ overflow: scroll;
     text-align: center;
 }
 
-tbody,tfoot{
+#table tbody,tfoot{
     background-color: #ffffff;
 }
-tbody tr:hover{
+#table tbody tr:hover{
     background-color: #F8F8F8;
 }
 
-tbody tr:active{
+#table tbody tr:active{
     background-color: rgba(80,184,60,0.1);
 }
 
@@ -152,7 +152,7 @@ tbody tr:active{
 #table tfoot{
     height: 56px;
 }
- tfoot tr{
+#table tfoot tr{
     width: 100%;
     /* background-color: #E0E0E0; */
   

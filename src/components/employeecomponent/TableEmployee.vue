@@ -56,7 +56,7 @@
              </button>
               <button class=" btn-import " data-c-tooltip="Chèn tệp " tooltip-position ="left" @click="ImportFileClick">
                 <div class="icon--import "></div>
-              <input type="file" ref="fileInput" @change="handleFileChange" />
+           
               </button>
           </div>
           <div class="scroll__table">
@@ -202,7 +202,9 @@
       </div>
     </div>
   </div>
-  
+  <form-import-excel v-show="false">
+    
+  </form-import-excel>
   <form-employee-detail
     v-if="isShowForm"
     @hideForm="hideForm"
@@ -212,7 +214,7 @@
     @showFormToast="showFormToast"
     @loadData="Reload"></form-employee-detail>
   <!-- this is toast-message -->
-  <MToast :text="content" :msgToast="msgToast" :icon="type" v-if="showToast">
+  <MToast :text="content" :msgToast="msgToast" :icon="typeToast" v-if="showToast">
   </MToast>
   <MLoader v-if="loader"></MLoader>
   <!-- end toast-message -->
@@ -235,7 +237,9 @@
 <script>
 
 import _ from "lodash";
+import FormImportExcel from '../importcomponent/FormImportExcel.vue';
 export default {
+  components: { FormImportExcel },
   computed: {
     orderedUsers: function () {
       return _.orderBy(this.employees, "FullName", "Asc");
@@ -414,6 +418,7 @@ export default {
     deleteData(id) {
       this.msgToast = [];
       this.msgToast.push(this.MISAResource.returnMessage.deleteComplete);
+      this.typeToast = this.MISAResource.notice.success;
       try {
         this.MISAApiService.DeleteData(id);
         this.isShowDlg = false;
@@ -495,6 +500,7 @@ export default {
       isShowForm: false,
       employee: {},
       showToast: false,
+      typeToast: false,
       tool: [],
       content: "",
       method: 0,

@@ -3,38 +3,39 @@ import App from './App.vue'
 
 import excel from 'vue-excel-export'
 
- import TheToastMessage from './components/sharecomponent/TheToastMessage.vue';
- import MInput from './components/sharecomponent/MInput.vue';
- import MLoader from './components/sharecomponent/MLoader.vue';
- import TheDialog from './components/sharecomponent/TheDialog.vue';
- import TableEmployee from './components/employee/TableEmployee.vue';
- import ThePagination from './components/sharecomponent/ThePagination.vue';
- import MCombobox from './components/sharecomponent/MCombobox.vue';
- import  MDropdownList from './components/sharecomponent/MDropdownList.vue';
-
+ import TheToastMessage from './components/toastmessage/TheToastMessage.vue';
+ import MInput from './components/inputcomponent/MInput.vue';
+ import MLoader from './components/pagingcomponent/MLoader.vue';
+ import TheDialog from './components/dialogcomponent/TheDialog.vue';
+ import TableEmployee from './components/employeecomponent/TableEmployee.vue'
+ import ThePagination from './components/pagingcomponent/ThePagination.vue'
+ import MCombobox from './components/comboboxcomponent/MCombobox.vue'
+ import  MDropdownList from './components/dropdowncomponent/MDropdownList.vue';
+ import FormExcel from './components/importcomponent/FormImportExcel.vue'
 
 
  /* import font awesome icon component */
- 
 
 import MISAResource from './js/helper/resource';
-import TheEmployee from './components/router/TheEmployee.vue';
-import TheSetting from './components/router/TheSetting.vue';
-import TheReport from './components/router/TheReport.vue';
+import TheEmployee from './components/routercomponent/TheEmployee.vue';
+import ChooseFile from './components/routercomponent/ChooseFile.vue';
+import ImportResult from './components/routercomponent/ImportResult.vue';
+import DataImport from './components/routercomponent/DataImport.vue';
+
 import  axios  from 'axios';
 import MISAEnum from './js/helper/enum';
 import MISAErrorService from './service/errorservice';
 import MISAApiService from './service/apiservice';
 import DataService from './service/dataservice';
-import FormEmployeeDetail from './components/employee/FormEmployeeDetail.vue';
+import FormEmployeeDetail from './components/employeecomponent/FormEmployeeDetail.vue';
 
 
 import { createRouter , createWebHistory } from 'vue-router';
 
 const routes = [
- {path:'/employee', name:'employee' , component:TableEmployee},
- {path:'/setting', name:'setting' , component:TheSetting},
- {path:'/report', name:'report' , component:TheReport},
+ {path:'/employee', name:'employee' , component:DataImport},
+ {path:'/choosefile', name:'setting' , component:ChooseFile},
+ {path:'/result', name:'report' , component:ImportResult},
  {path:'/', name:'customer' , component:TableEmployee},
 
 ]
@@ -45,20 +46,23 @@ const routes = [
 
  })
 
-
 const app = createApp(App);
 app.component("MToast",TheToastMessage)
 app.component("MInput",MInput)
 app.component("MLoader",MLoader)
 app.component("the-dialog",TheDialog)
 app.component("the-employee",TheEmployee)
-app.component("the-setting",TheSetting)
-app.component("the-report",TheReport)
+app.component("the-result",ImportResult)
+app.component("the-choosefile",ChooseFile)
+app.component("the-data",DataImport)
+
 app.component("ThePagination",ThePagination)
 app.component("MCombobox",MCombobox)
 app.component("MDropdownList",MDropdownList)
 app.component("FormEmployeeDetail",FormEmployeeDetail)
 app.component("TableEmployee",TableEmployee)
+app.component("FormExcel",FormExcel)
+
 
 app.use(excel)
 app.use(router);
