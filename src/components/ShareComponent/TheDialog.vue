@@ -2,6 +2,7 @@
    <div class="dialog--background" >
     <div class="dialog">
         <div class="dialog--title">
+          <h3>{{ title }}</h3>
         </div>
        <div class="dialog--content">
         <div class="toast__icon " 
@@ -17,10 +18,11 @@
           </ul>
         </div>
        </div>
-       <hr style="height: 1px; float: bottom;margin: 0px 24px 0px 24px;">
        <div class="dialog__btn">
-        <button class="button btn-cancel" @click="hideDlg">Hủy</button>
-        <button class="button btn-main" @click="addData">Đồng Ý</button>
+        <button class="button " :class="{
+          'btn-main':button===true,
+          'btn-cancel':button===false
+       }" @click="addData" v-if="button" >{{ textBtn }}</button>
        </div>
     </div> 
 </div>
@@ -69,16 +71,29 @@ export default{
         type : String,
         default : "question",
         required : true
+      },
+      textBtn:{
+        type : String,
+        default : "Đồng ý",
+        required : true
+      },
+      button:{
+        type : Boolean,
+        default : true,
+      },
+      position:{
+        type : String,
+        default : "",
       }
    },
    created(){
       this.titleDialog = this.title;
       this.employeeId = this.employeeIdRemove;
-      if(this.titleDialog!=='Xóa'){
+      if(this.titleDialog!==this.MISAResource.NameMode.Delete){
         this.text = "Không";
       }
        else{
-            this.text = this.employeeId.Fullname;
+            this.text = this.employeeId.EmployeeCode;
       }
    },
    mounted(){
@@ -120,7 +135,9 @@ export default{
 .dialog--text li{
   list-style: none;
 }
-
+#btn-cancel{
+  align-self: end;
+}
 .dialog__btn .btn-cancel:hover{
    background-color: #E0E0E0;
 }

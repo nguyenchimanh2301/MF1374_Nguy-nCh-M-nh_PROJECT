@@ -41,6 +41,17 @@
   align-items: center;
   justify-items: center;
 }
+.delete-multiple{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+    /* float: left; */
+    position: absolute;
+    left: 0px;
+}
+.delete-multiple > strong{
+  margin-left: 5px;
+}
 .btn--feature{
   display: grid;
 }
@@ -154,9 +165,6 @@ background-color: rgb(57, 172, 102);
   margin: 0px 18px 0px 12px;
   display: grid;
   place-content: center;
-  position: absolute;
-  top: 10px;
-  left: 0px;
 }
 .btn-reload{
   height: 36px;

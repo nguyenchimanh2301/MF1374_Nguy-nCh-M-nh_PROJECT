@@ -19,7 +19,7 @@
 
 @import url(./base/variable.css);
 
-
+@import '~@fortawesome/fontawesome-free/css/all.css';
 
 *{
     margin: 0;

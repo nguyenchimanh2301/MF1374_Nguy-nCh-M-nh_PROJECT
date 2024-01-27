@@ -1,10 +1,10 @@
 <template>
-    <div class="combobox" >
-    <input type="text" class="combobox_input" 
-     :value="itemSelected" 
-      :class="{
+    <div class="combobox"   :class="{
         'border-error': hasError,
       }">
+    <input type="text" class="combobox_input" 
+     :value="itemSelected" 
+    >
     <button class="combobox__button" @click="showDataClick"><div class="icon-combobox"></div></button>
     <div class="combobox_data"  v-if="showData">
     <a class="combobox-item" 

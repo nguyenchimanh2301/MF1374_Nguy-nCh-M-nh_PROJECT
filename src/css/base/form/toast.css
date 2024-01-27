@@ -30,9 +30,9 @@
        height:22px;
    }
    .toast__icon.icon--danger{
-       background:  var(--image)  -762px -146px;
-       width: 20px;
-       height:20px;
+       background:  var(--image)  -752px -462px;
+       width: 36px;
+       height:36px;
    }
    .toast__icon.icon--warning{
        background:  var(--image) -817px -145px;

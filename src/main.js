@@ -3,37 +3,39 @@ import App from './App.vue'
 
 import excel from 'vue-excel-export'
 
- import TheToastMessage from './components/ShareComponent/TheToastMessage.vue';
- import MInput from './components/ShareComponent/MInput.vue';
- import MLoader from './components/ShareComponent/MLoader.vue';
- import TheDialog from './components/ShareComponent/TheDialog.vue';
- import TheContent from './components/DataComponent/TheContent.vue';
- import ThePagination from './components/ShareComponent/ThePagination.vue';
- import MCombobox from './components/ShareComponent/MCombobox.vue';
- import  MDropdownList from './components/ShareComponent/MDropdownList.vue';
+ import TheToastMessage from './components/sharecomponent/TheToastMessage.vue';
+ import MInput from './components/sharecomponent/MInput.vue';
+ import MLoader from './components/sharecomponent/MLoader.vue';
+ import TheDialog from './components/sharecomponent/TheDialog.vue';
+ import TableEmployee from './components/employee/TableEmployee.vue';
+ import ThePagination from './components/sharecomponent/ThePagination.vue';
+ import MCombobox from './components/sharecomponent/MCombobox.vue';
+ import  MDropdownList from './components/sharecomponent/MDropdownList.vue';
 
 
 
+ /* import font awesome icon component */
+ 
 
 import MISAResource from './js/helper/resource';
-import TheEmployee from './components/MainComponent/TheEmployee.vue';
-import TheSetting from './components/MainComponent/TheSetting.vue';
-import TheReport from './components/MainComponent/TheReport.vue';
+import TheEmployee from './components/router/TheEmployee.vue';
+import TheSetting from './components/router/TheSetting.vue';
+import TheReport from './components/router/TheReport.vue';
 import  axios  from 'axios';
 import MISAEnum from './js/helper/enum';
-import MISAErrorService from './Service/errorservice';
-import MISAApiService from './Service/apiservice';
-import DataService from './Service/dataservice';
-
+import MISAErrorService from './service/errorservice';
+import MISAApiService from './service/apiservice';
+import DataService from './service/dataservice';
+import FormEmployeeDetail from './components/employee/FormEmployeeDetail.vue';
 
 
 import { createRouter , createWebHistory } from 'vue-router';
 
 const routes = [
- {path:'/employee', name:'employee' , component:TheEmployee},
+ {path:'/employee', name:'employee' , component:TableEmployee},
  {path:'/setting', name:'setting' , component:TheSetting},
  {path:'/report', name:'report' , component:TheReport},
- {path:'/', name:'customer' , component:TheContent},
+ {path:'/', name:'customer' , component:TableEmployee},
 
 ]
 
@@ -42,6 +44,7 @@ const routes = [
     routes,
 
  })
+
 
 const app = createApp(App);
 app.component("MToast",TheToastMessage)
@@ -54,6 +57,8 @@ app.component("the-report",TheReport)
 app.component("ThePagination",ThePagination)
 app.component("MCombobox",MCombobox)
 app.component("MDropdownList",MDropdownList)
+app.component("FormEmployeeDetail",FormEmployeeDetail)
+app.component("TableEmployee",TableEmployee)
 
 app.use(excel)
 app.use(router);

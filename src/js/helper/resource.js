@@ -10,8 +10,8 @@ const MISAResource = {
       "PhoneIsValid" : 'Điện thoại phải đủ 10 số',
       "DebitAmountIsNumeric" : 'Tiền nợ  phải là số',
       "EmployeeInformation"  : 'Thông tin nhân viên',
-      "EmployeeCode"  : 'Mã nhân viên',
-      "FullName" : 'Họ và tên',
+      "EmployeeCode"  : 'Mã',
+      "FullName" : 'Tên',
       "PhoneNumber" : 'Số điện thoại',
       "Fax" : 'ĐT cố định',
       "DateOfBirth" : 'Ngày sinh',
@@ -26,7 +26,9 @@ const MISAResource = {
       "CreditNumber":'Tài khoản ngân hàng',
       "Address":'Địa chỉ',
       "PositionName" : "Chức danh",
-      "DeleteQuestion" : "Bạn có muốn xóa nhân viên đã chọn",
+      "DeleteQuestion" : "Bạn có thực sự muốn xóa nhân viên ",
+      "EmployeeCodeExist"  : 'Mã nhân viên',
+      "IsExist"  : 'Đã tồn tại trong hệ thống',
       GenderName:{
         Male:"Nam",
         Female:"Nữ",
@@ -67,6 +69,10 @@ const MISAResource = {
      DeleteMultiple :"Xóa nhiều"
 
   },
+  TextBtn:{
+    Close:"Đóng",
+    Accept:"Đồng ý",
+ },
   //hàm format tiền
 //CreadtedBy : NC Mạnh
 //CreatedDate "5/12/2023"

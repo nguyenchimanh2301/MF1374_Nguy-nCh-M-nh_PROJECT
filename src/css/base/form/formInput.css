@@ -10,8 +10,7 @@
 .close--form{
     display: none;
     z-index: -999;
-    /* transition: linear 2s ease-out;
-    -webkit-transition: all 2s ease-in-out */
+   
 }
 .show--form{
     display: block;
@@ -20,7 +19,7 @@
     z-index: 999;
 }
 .form{
-    width: 1200px;
+    width: 1140px;
     height: 700px;
     position: absolute;
     background-color: #ffffff;
@@ -33,7 +32,7 @@
     justify-content: space-between;
     align-items: flex-start;
     justify-items: flex-start;
-    margin: 12px 24px 0px 12px;
+    margin: 12px 32px 0px 15px;
 }
 .form--title .check--box{
     display: flex;
@@ -62,10 +61,10 @@
 }
 .form--input{
 display: grid;
-grid-template-columns: 560px 560px;
+grid-template-columns: 510px 510px;
 /* border: 1px solid; */
-margin: 0px 24px 0px 24px;
-column-gap: 24px;
+margin: 0px 32px 0px 32px;
+column-gap: 40px;
 
 }
 .form__input--left{
@@ -88,22 +87,26 @@ row-gap: 12px;
     border: none;
 }
 .form__input--left input{
- width: 554px;
+ width: 510px;
  height: 36px;
  margin-top: 10px;
 }
+.form-input-code{
+ display: flex;
+ column-gap: 10px;
+}
 #idcard{
-width: 260px;
+width: 290px;
 }
 #empcode{
-width: 260px;
+width: 200px;
 }
 #name{
-width: 260px;
+width: 300px;
 float: left;
 }
 #identity-place{
-    width: 540px;
+    width: 57 0px;
 }
 .form__input--right{
 display: grid;
@@ -111,7 +114,7 @@ column-gap: 12px;
 row-gap: 12px;
 }
 .form__input--right input {
-    width: 550px;
+    width: 510px;
     height: 36px;
   margin-top: 10px;
  }
@@ -120,8 +123,8 @@ row-gap: 12px;
  }
 .form__input--right > div{
     display: flex;
-    justify-content: space-between;
     width: 550px;
+    column-gap: 8px;
 }
 .from--input input{
     border: 1px solid #e6e6e6;
@@ -132,37 +135,46 @@ row-gap: 12px;
     display: flex;
     align-items: center;
     height: 49px;
-
+    column-gap: 10px;
 }
 .form__input--under{
-margin: 0px 24px 0px 24px;
+margin: 48px 32px 0px 32px;
 
 }
 
 .form__input--under input{
-    width: 1125px;
+    width: 1060px;
      height: 36px;
      border: 1px solid #e6e6e6;
      border-radius: 4px;
   margin-top: 10px;
  
  }
- 
+ .label-input{
+    display: flex;
+    flex-direction: column;
+ }
  .form__input--under #label{
     display: grid;
     margin-bottom: 8px;
-    font-weight: 600;
 }
 label{
     display: flex;
     align-items: flex-end;
-    column-gap: 10px;
+    column-gap: 5px;
 }
 input[type="date"]{
-    width: 260px;
+    width: 210px;
     height: 37px;
-    padding-left: 20px;
+    padding-left: 12px;
+    padding-right: 12px;
 
+
+}
+.input-identity{
+    display: flex;
+    width: 550px;
+    justify-content: space-between;             
 }
 .form--title input[type="checkbox"]{
     height: 20px;
@@ -174,10 +186,14 @@ input[type="radio"]{
     width: 30px;
 
 }
+#gender{
+    font-weight: 400;
+
+}
 #label{
     display: inline;
-    margin-bottom: 8px;
     font-weight: 600;
+
 }
 .form--footer{
     height: 56px;
@@ -186,12 +202,17 @@ input[type="radio"]{
     justify-content: space-between;
     align-items: center;
     border-top: 1px solid #e6e6e6;
-    margin: 0px 24px 0px 24px;
+    margin: 0px 32px 0px 32px;
 }
 
 .form--footer button{
-    min-width: 89px;
+    min-width: 80px;
     border-radius: 4px;
+    margin: 0;
+}
+.form--footer > div{
+    display: flex;
+    column-gap: 8px;
 }
 .text--required{
     color: red;
@@ -200,7 +221,7 @@ input[type="radio"]{
     display: grid;
     /* width: 100%; */
     grid-template-columns: 260px 260px 260px;
-    column-gap: 24px;
+    column-gap: 10px;
 }
 .form--info input{
     width: 260px;

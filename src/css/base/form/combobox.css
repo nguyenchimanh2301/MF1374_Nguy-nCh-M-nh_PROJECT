@@ -5,6 +5,7 @@
   border: unset;
   margin-top: 10px;
   border: 1px solid #e6e6e6;
+  width: 510px;
 }
 .combobox:has(.combobox_input:focus) {
   border: 1px solid green;

@@ -13,7 +13,6 @@
           <div class="icon--user"></div>
           <div class="name--user">Nguyễn Chí Mạnh</div>
           <div class="icon-dropdown"></div>
-
         </div>
       </div>
     </div>
@@ -29,12 +28,14 @@
             </button>
           </div>
         </div>
-
         <div class="data">
           <div class="feature">
-            <button v-show="sum>0" class="btn-delete-multiple"  data-c-tooltip="Xóa nhiều" tooltip-position ="left"  @click="showDlgDelete()"> 
-              <div class="icon--remove"></div>
-            </button>
+            <div class="delete-multiple" v-show="sum>0">
+              <button  class="btn-delete-multiple"  data-c-tooltip="Xóa nhiều" tooltip-position ="right"  @click="showDlgDelete()"> 
+              <i class="fas fa-trash"></i>
+             </button>
+             <p>Đã chọn</p> <strong>  {{ sum }}</strong>
+            </div>
             <div class="box__input-icon">
               <input
                 type="text"
@@ -202,16 +203,14 @@
     </div>
   </div>
   
-  <TheFormInfo
+  <form-employee-detail
     v-if="isShowForm"
     @hideForm="hideForm"
     :EmployeeSelected="employee"
     :methodP="method"
     :MaxCode="maxCode"
     @showFormToast="showFormToast"
-    @loadData="Reload"
-  >
-  </TheFormInfo>
+    @loadData="Reload"></form-employee-detail>
   <!-- this is toast-message -->
   <MToast :text="content" :msgToast="msgToast" :icon="type" v-if="showToast">
   </MToast>
@@ -234,7 +233,6 @@
 </template>
 
 <script>
-import TheFormInfo from "./TheFormInfo.vue";
 
 import _ from "lodash";
 export default {
@@ -406,7 +404,7 @@ export default {
       this.title = this.MISAResource.NameMode.Delete;
       this.employeeId = item;
       this.type = this.MISAResource.notice.warning;
-      this.msgDialog.push(this.MISAResource["VN"].DeleteQuestion +item.FullName);
+      this.msgDialog.push(this.MISAResource["VN"].DeleteQuestion +`<${item.EmployeeCode}>`);
     },
     //hàm xóa employee
     //param : employeeId
@@ -541,13 +539,11 @@ export default {
       searchText : " ",
       position : [],
       department : [],
-
+      titleDialog:"",
     };
     // Thêm các dòng dữ liệu khác cần hiển thị
   },
-  components: {
-    TheFormInfo,
-  },
+  
 };
 </script>
 

@@ -1,6 +1,6 @@
 <template>
   <div class="dark--screen">
-    <div class="form">
+    <div class="form " :class="{'close-form': showForm===false,'show-form': showForm===true,} ">
       <div class="form--content">
         <div class="form--title">
           <div class="form--title check-box">
@@ -17,9 +17,11 @@
         </div>
         <div class="form--input">
           <div class="form__input--left">
-            <div style="display: flex; justify-content: space-between">
+            <div class ="form-input-code">
+             <div class="label-input">
               <label id="label" for="">{{ this.MISAResource["VN"].EmployeeCode }} <span class="text--required">*</span>
-                <MInput
+              </label>
+              <MInput
                  v-model="state.EmployeeSelect.EmployeeCode"
                   input-id="empcode"
                  :hasError="v$.EmployeeSelect.EmployeeCode.$error"
@@ -30,9 +32,11 @@
                   v-if="v$.EmployeeSelect.EmployeeCode.$error">
                   {{ v$.EmployeeSelect.EmployeeCode.$errors[0].$message }}
                 </div>
-              </label>
+              </div>
+              <div class="label-input">
               <label id="label" for="">{{ this.MISAResource["VN"].FullName }}<span class="text--required">*</span>
-                <MInput
+              </label>
+              <MInput
                  v-model="state.EmployeeSelect.FullName"
                  :hasError="v$.EmployeeSelect.FullName.$error"
                  input-id="name"
@@ -42,7 +46,7 @@
                   v-if="v$.EmployeeSelect.FullName.$error">
                   {{ v$.EmployeeSelect.FullName.$errors[0].$message }}
               </div>
-              </label>
+            </div>
             </div>
             <label id="label" for="">Đơn vị<span class="text--required">*</span>
                 <m-combobox :dataApi="department" 
@@ -58,19 +62,18 @@
               </div>
             </label>
             <label id="label" for="">{{ this.MISAResource["VN"].PositionName}}
-              <m-combobox :dataApi="position" 
-                propText="PositionName"
-                propValue="PositionId"
-                v-model="state.EmployeeSelect.PositionId"
-                ></m-combobox>
+              <input type="text" v-model="state.EmployeeSelect.PositionName" />
             </label>
           </div>
           <div class="form__input--right">
             <div>
-              <label id="label" for=""
+              <div class="label-input">
+                <label id="label" for=""
                 >{{ this.MISAResource["VN"].DateOfBirth }}
-                <input type="date" id="selectedDate" v-model="state.EmployeeSelect.DateOfBirth" />
               </label>
+              <input type="date" id="selectedDate" v-model="state.EmployeeSelect.DateOfBirth" />
+              </div>
+    
               <label id="label" for="">{{ this.MISAResource["VN"].Gender}}
                 <div class="box__input--radio">
                   <label id="gender" for=""
@@ -100,14 +103,12 @@
                 </div>
               </label>
             </div>
-            <div style="
-                display: flex;
-                width: 550px;
-                justify-content: space-between;
-              ">
-              <label id="label" for="" data-c-tooltip="Số chứng minh thư nhân dân" tooltip-position ="left">Số CMTND
-                <input type="text" id="idcard"   v-model="state.EmployeeSelect.IdentityNumber">
+            <div class="input-identity">
+              <div class="label-input">
+              <label id="label" for="" data-c-tooltip="Số chứng minh nhân dân" tooltip-position ="left">Số CMND
               </label>
+              <input type="text" id="idcard"   v-model="state.EmployeeSelect.IdentityNumber">
+              </div>
               <label id="label" for="">{{ this.MISAResource["VN"].IdentityDate }}
                 <input type="date"  v-model="state.EmployeeSelect.IdentityDate"/>
               </label>
@@ -169,6 +170,8 @@
       :type="type"
       :title="title"
       :msgError="msgError" 
+      :textBtn="textBtn" 
+
     >
     </the-dialog>
     <MToast :text="content" :msgToast="msgToast" :icon="typeToast"  v-if="showToast"> </MToast>
@@ -177,10 +180,10 @@
 import useValidate from "@vuelidate/core";
 import {
   required,
-  minLength,
+  // minLength,
+  // maxLength,
+  // numeric,
   email,
-  maxLength,
-  numeric,
   helpers,
 } from "@vuelidate/validators";
 import { reactive, computed,  } from "vue";
@@ -196,7 +199,9 @@ export default {
           (this.title = this.MISAResource.NameMode.AddNew);
            this.state.EmployeeSelect.EmployeeCode = "NV-"+ (this.MaxCode + 1);
         }
-        (this.title = this.MISAResource.NameMode.Change);
+        else{
+          this.title = this.MISAResource.NameMode.Change;
+        }
         this.GetDataCombobox();
     }, 
     setup() {
@@ -238,12 +243,12 @@ export default {
                         required: helpers.withMessage(MISAResource["VN"].FullNameNotEmpty, required),
                         // minLength: minLength(10),
                     },
-                    PhoneNumber: {
-                        // required: helpers.withMessage(MISAResource["VN"].PhoneIsNotEmpty, required),
-                        numeric: helpers.withMessage(MISAResource["VN"].PhoneIsNumeric, numeric),
-                        minLength: helpers.withMessage(MISAResource["VN"].PhoneIsValid, minLength(10)),
-                        maxLength: helpers.withMessage(MISAResource["VN"].PhoneIsValid, maxLength(10)),
-                    },
+                    // PhoneNumber: {
+                    //     // required: helpers.withMessage(MISAResource["VN"].PhoneIsNotEmpty, required),
+                    //     numeric: helpers.withMessage(MISAResource["VN"].PhoneIsNumeric, numeric),
+                    //     minLength: helpers.withMessage(MISAResource["VN"].PhoneIsValid, minLength(10)),
+                    //     maxLength: helpers.withMessage(MISAResource["VN"].PhoneIsValid, maxLength(10)),
+                    // },
                     // DebitAmount: {
                     //     numeric: helpers.withMessage(MISAResource["VN"].DebitAmountIsNumeric, numeric),
                     //     // minLength: minLength(4),
@@ -284,38 +289,44 @@ export default {
         //cretedBy : NC Mạnh
         //CreatedAt : 5/12/2023
       async addData() {
-                this.msgError = [];
-                this.state.EmployeeSelect.Gender = parseInt(this.state.EmployeeSelect.Gender);
-                this.Employee = Object.assign({}, this.state.EmployeeSelect);
-                console.log(this.Employee)
-                if (this.method === this.MISAEnum.method.ADD) {
+                 this.msgError = [];
+                 this.type = " ";
+                 this.state.EmployeeSelect.Gender = parseInt(this.state.EmployeeSelect.Gender);
+                 this.Employee = Object.assign({}, this.state.EmployeeSelect);
+                  this.v$.$validate();
+                 console.log(this.v$.$errors);
+                  this.v$.$errors.forEach(x=> this.msgError.push(x.$message));
+                 if(this.msgError.length > 0){
+                  this.type = this.MISAResource.notice.error;
+                  this.isShowDlg = true;
+                  this.textBtn = this.MISAResource.TextBtn.Accept;
+                  return;
+                 }
+                 else{
+                  if (this.method === this.MISAEnum.method.ADD) {
                     try {
                        await this.api
                             .post(this.MISAApi, this.Employee)
                             .then((response) => {
                             response.data;
-                            console.log(this.Employee)
                             this.msgError = this.MISAErrorService.GetErrorCode(response);
                             this.loadForm(response);
                             this.closeToast();
                         })
                             .catch((error) => {
-                            this.v$.$validate();
-                            this.v$.$errors.forEach(x=> this.msgError.push(x.$message));
-                            if(this.msgError.length < 1 ){
                               this.MsgValidate = this.MISAErrorService.GetErrorCode(error.response);
                               this.msgError =  this.msgError.concat(this.MsgValidate);
-                            }
-                            this.loadForm(error.response);
+                              this.textBtn = this.MISAResource.TextBtn.Close;
+                              this.loadForm(error.response);
                         });
                     }
                     catch (error) {
                       this.MISAErrorService.GetErrorCode(error);
                       this.loadForm();
-                      
+                      console.log(error);
                     }
-                }
-                else {
+                      }
+                    else {
                     try {
                       await this.api
                             .put(this.MISAApi + '/'+
@@ -323,23 +334,22 @@ export default {
                             .then((response) => {
                             response.data;
                             this.msgError = this.MISAErrorService.GetErrorCode(response);
-                            this.v$.$validate();
                             this.loadForm(response);
                             this.closeToast();
+                            this.textBtn = this.MISAResource.TextBtn.Close;
 
-                        }).catch((e) => {
-                          this.v$.$validate();
-                            this.v$.$errors.forEach(x=> this.msgError.push(x.$message));
-                            if(this.msgError.length < 1 ){
-                              this.MsgValidate = this.MISAErrorService.GetErrorCode(e.response);
+                        }).catch((error) => {
+                              this.MsgValidate = this.MISAErrorService.GetErrorCode(error.response);
                               this.msgError =  this.msgError.concat(this.MsgValidate);
-                            }
-                            this.loadForm(e.response);
+                              this.textBtn = this.MISAResource.TextBtn.Close;
+                              this.loadForm(error.response);
+                           
                         });
                     }
                     catch (error) {
                         console.log(error);
                     }
+                 }
                 }
         },
         //hàm loadForm
@@ -357,7 +367,7 @@ export default {
             this.type = this.MISAResource.notice.success;
             }
            else{
-            this.typeToast = this.MISAResource.notice.warning;
+            this.typeToast = this.MISAResource.notice.success;
              this.type = this.MISAResource.notice.warning;
           }
           this.msgToast.push(message);
@@ -366,7 +376,11 @@ export default {
         //cretedBy : NC Mạnh
         //CreatedAt : 5/12/2023
         closeForm(){
-          this.$emit("some-event")
+          this.showForm = false; 
+          setTimeout(() => 
+            this.$emit("hideForm"),1000
+            )
+ 
         },
         //hàm đóng form
         //cretedBy : NC Mạnh
@@ -402,7 +416,9 @@ export default {
             closeCss : false,
             MsgValidate:[],
             position:[],
-            department:[]
+            department:[],
+            showForm :  true,
+            textBtn :"",
         };
     },
 };
@@ -410,26 +426,31 @@ export default {
 
 <style>
 .close-form{
-  /* animation:  hide 4s ; */
-  /* position: absolute;
-  top: -150%; */
+  animation:  hide 2s ;
+  position: absolute;
 }
-
 @keyframes hide{
     0% {
-      transform: Rotate(120deg);
-    }
-    25% {
-        transform: Rotate(240deg);
-    }
-    25% {
-        transform: Rotate(360deg);
+      transform: translateY(0%);
     }
     50% {
-        transform: translateY(-110%);
+        transform: translateY(-130%);
     }
 }
 
+
+.show-form{
+  animation:  show 1s ;
+  position: absolute;
+}
+@keyframes show{
+    0% {
+      transform: translateY(-110%);
+    }
+    50% {
+        transform: translateY(0%);
+    }
+}
 .border-error {
   border: 1px solid red !important;
 }
