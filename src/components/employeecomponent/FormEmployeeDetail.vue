@@ -19,48 +19,52 @@
           <div class="form__input--left">
             <div class ="form-input-code">
              <div class="label-input">
-              <label id="label" for="">{{ this.MISAResource["VN"].EmployeeCode }} <span class="text--required">*</span>
+              <label id="label"  for="">{{ this.MISAResource["VN"].EmployeeCode }} <span class="text--required">*</span>
               </label>
               <MInput
+                  title="Mã không được để trống"
                  v-model="state.EmployeeSelect.EmployeeCode"
                   input-id="empcode"
                  :hasError="v$.EmployeeSelect.EmployeeCode.$error"
                  ref="focusText"
                  ></MInput>
-                 <div
-                  style="font-size: 12px; color: red"
+                 <div class="error-text"
                   v-if="v$.EmployeeSelect.EmployeeCode.$error">
-                  {{ v$.EmployeeSelect.EmployeeCode.$errors[0].$message }}
                 </div>
               </div>
               <div class="label-input">
               <label id="label" for="">{{ this.MISAResource["VN"].FullName }}<span class="text--required">*</span>
               </label>
               <MInput
+                 title="Tên không được để trống"
                  v-model="state.EmployeeSelect.FullName"
                  :hasError="v$.EmployeeSelect.FullName.$error"
                  input-id="name"
                  ></MInput>
                  <div
-                  style="font-size: 12px; color: red"
+                  class="error-text"
                   v-if="v$.EmployeeSelect.FullName.$error">
-                  {{ v$.EmployeeSelect.FullName.$errors[0].$message }}
+                  <!-- {{ v$.EmployeeSelect.FullName.$errors[0].$message }} -->
               </div>
             </div>
             </div>
+            <div class="label-input">
             <label id="label" for="">Đơn vị<span class="text--required">*</span>
                 <m-combobox :dataApi="department" 
+                title="Hãy chọn phòng ban"
                 propText="DepartmentName"
                 propValue="DepartmentId"
                 v-model="state.EmployeeSelect.DepartmentId"
                 :hasError="v$.EmployeeSelect.DepartmentId.$error"
                 ></m-combobox>
-                <div
-                  style="font-size: 12px; color: red"
-                  v-if="v$.EmployeeSelect.DepartmentId.$error">
-                  {{ v$.EmployeeSelect.DepartmentId.$errors[0].$message }}
-              </div>
+               
             </label>
+            <div
+                class="error-text"
+                  v-if="v$.EmployeeSelect.DepartmentId.$error">
+                  <!-- {{ v$.EmployeeSelect.DepartmentId.$errors[0].$message }} -->
+              </div>
+            </div>
             <label id="label" for="">{{ this.MISAResource["VN"].PositionName}}
               <input type="text" v-model="state.EmployeeSelect.PositionName" />
             </label>
@@ -129,18 +133,22 @@
           <label id="label" for="">{{ this.MISAResource["VN"].Fax }}
             <input type="text" value="(077) 123-4567"/>
           </label>
+          <div class="label-input">
           <label id="label" for="">Email
-            <MInput
+          <MInput
+                 title="Email chưa đúng định dạng"
                  v-model="state.EmployeeSelect.Email"
                  :hasError="v$.EmployeeSelect.Email.$error"
                  input-id="email"
             ></MInput>
               <span
-                style="font-size: 12px; color: red"
+              class="error-text"
                 v-if="v$.EmployeeSelect.Email.$error">
-                {{ v$.EmployeeSelect.Email.$errors[0].$message }}
+                <!-- {{ v$.EmployeeSelect.Email.$errors[0].$message }} -->
               </span>
           </label>
+
+          </div>
           <label id="label" for="">{{ this.MISAResource["VN"].CreditNumber }}
             <input type="text" v-model="state.EmployeeSelect.CreditNumber"/>
           </label>
@@ -193,10 +201,10 @@ export default {
     props: ["EmployeeSelected", "methodP","MaxCode"],
     created() {
         this.state.EmployeeSelect = this.EmployeeSelected;
-        this.state.EmployeeSelect.Gender = 0;
         this.method = this.methodP;
         if(  this.methodP === this.MISAEnum.method.ADD){
           (this.title = this.MISAResource.NameMode.AddNew);
+           this.state.EmployeeSelect.Gender = 0;
            this.state.EmployeeSelect.EmployeeCode = "NV-"+ (this.MaxCode + 1);
         }
         else{
@@ -274,6 +282,7 @@ export default {
         },
         hideDlg() {
             this.isShowDlg = false;
+            this.$refs.focusText.$el.focus();
         },
       //  async OnClickAddData(e) {
       //        if(e===null){
@@ -300,7 +309,6 @@ export default {
                   this.type = this.MISAResource.notice.error;
                   this.isShowDlg = true;
                   this.textBtn = this.MISAResource.TextBtn.Accept;
-                  return;
                  }
                  else{
                   if (this.method === this.MISAEnum.method.ADD) {
@@ -395,10 +403,12 @@ export default {
             this.showToast=false,2000
             )
             this.$emit('loadData');
+            
         },
     },
    mounted(){
-
+    // Focus vào input khi component được mounted
+    this.$refs.focusText.$el.focus();
    },
     data() {
         return {

@@ -1,6 +1,6 @@
 <template>
 <div class="load--background">
-   <div class="lds-roller"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
+    <span class="loader"></span>
 </div>
 </template>
 

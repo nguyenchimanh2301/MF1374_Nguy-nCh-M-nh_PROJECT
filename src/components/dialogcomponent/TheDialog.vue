@@ -108,18 +108,13 @@ export default{
     addData(){
        if(this.titleDialog===this.MISAResource.NameMode.Delete){
         this.$emit('removeData', this.employeeId.EmployeeId);
-        this.$emit('loadData');
        }
        if(this.titleDialog===this.MISAResource.NameMode.DeleteMultiple){
         this.$emit('deleteMultiple');
-        this.$emit('loadData');
-        this.hideDlg();
        }
        else{
         // this.$emit('addData');
         this.hideDlg();
-        this.$emit('loadData');
-   
        }
     },
     data() {

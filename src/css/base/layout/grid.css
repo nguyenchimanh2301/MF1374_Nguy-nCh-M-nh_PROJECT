@@ -112,7 +112,7 @@
 }
 
 .highlighted-row {
-  background-color: #f2fff0;
+  background-color: #6BC18D;
   /* Màu nền để làm nổi bật dòng đang được chọn */
 }
 
@@ -172,7 +172,7 @@ background-color: rgb(57, 172, 102);
   border-radius:4px;
   border: unset;
   text-align: center;
-  margin: 0px 18px 0px 12px;
+  margin: 0px 12px 0px 12px;
   display: grid;
   place-content: center;
 }

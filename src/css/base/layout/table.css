@@ -29,6 +29,7 @@
 }
 #table tr{
     position: relative;
+    outline:none;
 }
 #table thead,tbody tr,td{
     border: 1px solid #E0E0E0;
@@ -99,7 +100,7 @@ tfoot tr td{
     right: 0;
     background-color: #ffffff;
 } */
-#table thead tr,th,td:last-child{
+#table thead tr th:last-child{
     text-align: center;
 }
 #table th{
@@ -132,7 +133,7 @@ overflow: scroll;
     background-color: #ffffff;
 }
 #table tbody tr:hover{
-    background-color: #F8F8F8;
+    background-color: #9CD5B3;
 }
 
 #table tbody tr:active{
@@ -223,3 +224,32 @@ overflow: scroll;
     border-radius: 8px; 
 
   }
+
+.delete-multiple-text{
+    font-weight: 600;
+    padding: 12px;
+
+}
+.delete-multiple .icon-combobox{
+    position: relative;
+}
+.delete-text:hover{
+    background-color: var(--border-color);
+}
+.delete-text{
+    text-align: left;
+    background-color: #ffffff;
+    position: absolute;
+    top: 20px;
+    left: -90px;
+    width: 100px;
+    height: 40px;
+    border: 1px solid var(--border-color);
+    display: flex;
+    justify-content: left;
+    justify-items: center;
+    align-items: center;
+    padding-left: 10px;
+    border-radius: 4px;
+    z-index: 999;
+}

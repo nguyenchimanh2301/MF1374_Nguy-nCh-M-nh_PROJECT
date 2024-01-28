@@ -30,11 +30,18 @@
         </div>
         <div class="data">
           <div class="feature">
-            <div class="delete-multiple" v-show="sum>0">
-              <button  class="btn-delete-multiple"  data-c-tooltip="Xóa nhiều" tooltip-position ="right"  @click="showDlgDelete()"> 
+            <div class="delete-multiple" @click="ShowDeleteMultiple"  v-show="sum>0">
+              <!-- <button  class="btn-delete-multiple"  data-c-tooltip="Xóa nhiều" tooltip-position ="right"  @click="showDlgDelete()"> 
               <i class="fas fa-trash"></i>
              </button>
-             <p>Đã chọn</p> <strong>  {{ sum }}</strong>
+             <p>Đã chọn</p> <strong>  {{ sum }}</strong> -->
+              
+             <div class="delete-multiple-text">
+              {{ this.MISAResource["VN"].MultipleCommand }}            
+             </div>
+             <div class="icon-combobox" >
+              <div v-show="isShowDeleteMultiple" class="delete-text"  @click="showDlgDelete" >{{ this.MISAResource.NameMode.Delete }}</div>
+             </div>
             </div>
             <div class="box__input-icon">
               <input
@@ -54,7 +61,7 @@
              <button class="btn-export" data-c-tooltip="Xuất tệp" tooltip-position ="left" @click="ExportFile">
               <div class="icon--export" ></div>
              </button>
-              <button class=" btn-import " data-c-tooltip="Chèn tệp " tooltip-position ="left" @click="ImportFileClick">
+              <button class=" btn-import " data-c-tooltip="Chèn tệp " tooltip-position ="left" @click="ShowFormImport">
                 <div class="icon--import "></div>
            
               </button>
@@ -69,17 +76,31 @@
                        @change="toggleSelectAll"/>
                     </div>
                   </th>
-                  <th>MÃ NHÂN VIÊN</th>
-                  <th>Tên nhân viên</th>
-                  <th>GIỚI TÍNH</th>
-                  <th>NGÀY SINH</th>
-                  <th data-c-tooltip="Số chứng minh thư nhân dân" tooltip-position ="bottom">SỐ CMND</th>
-                  <th>CHỨC DANH</th>
-                  <th>TÊN ĐƠN VỊ</th>
-                  <th>SỐ TÀI KHOẢN</th>
-                  <th>TÊN NGÂN HÀNG</th>
-                  <th>CHI NHÁNH TK NGÂN HÀNG</th>
-                  <th>CHỨC NĂNG</th>
+                  <th>
+                    {{ this.MISAResource["VN"].TableColumn.EmployeeCode }}
+                  </th>
+                  <th>
+                    {{ this.MISAResource["VN"].TableColumn.EmployeeName }}
+                  </th>
+                  <th>{{ this.MISAResource["VN"].TableColumn.Gender }}</th>
+                  <th>{{ this.MISAResource["VN"].TableColumn.DateOfBirth }}</th>
+                  <th data-c-tooltip="Số chứng minh thư nhân dân" tooltip-position ="bottom">
+                    {{ this.MISAResource["VN"].TableColumn.IdentityNumber }}
+                  </th>
+                 
+                  <th>
+                    {{ this.MISAResource["VN"].TableColumn.PositionName }}
+                  </th>
+                  <th>
+                    {{ this.MISAResource["VN"].TableColumn.DepartmentName }}
+                  </th>
+                  <th >
+                    {{ this.MISAResource["VN"].TableColumn.CreditNumber }}
+                  </th>
+                  <th>{{ this.MISAResource["VN"].TableColumn.BankName }}</th>
+                  <th>{{ this.MISAResource["VN"].TableColumn.BankAddress }}</th>
+                  <th>{{ this.MISAResource["VN"].TableColumn.Feature }}</th>
+                 
                 </tr>
               </thead>
               <tbody>
@@ -127,19 +148,20 @@
                   <td class="txt-right">
                     {{ item.IdentityNumber }}
                   </td>
-                  <td class="txt-left"  >
-                    <div v-for="(department, index) in department" :key="index" >
-                      <span v-if="department.DepartmentId===item.DepartmentId"> 
-                        {{ department.DepartmentName }}
-                      </span>
-                    </div>
-                  </td>
                 
                   <td class="txt-left"  >
                     <div v-for="(position, index) in position" :key="index">
                       <div v-if="position.PositionId===item.PositionId">
                       {{ position.PositionName }}
                     </div>
+                    </div>
+                  </td>
+             
+                  <td class="txt-left"  >
+                    <div v-for="(department, index) in department" :key="index" >
+                      <span v-if="department.DepartmentId===item.DepartmentId"> 
+                        {{ department.DepartmentName }}
+                      </span>
                     </div>
                   </td>
                   <td class="txt-right">
@@ -202,8 +224,7 @@
       </div>
     </div>
   </div>
-  <form-import-excel v-show="false">
-    
+  <form-import-excel v-if="formExcel" @closeFormExcel="CloseFormImport">
   </form-import-excel>
   <form-employee-detail
     v-if="isShowForm"
@@ -253,9 +274,14 @@ export default {
     
   },
   methods: {
-    // async GetMaxCode(){
-    //   let data =   await this.MISAApiService.GetData();
-    // },
+    //Hiển thị form Import
+   ShowFormImport(){
+     this.formExcel = true;
+   },
+   // Đóng form Import
+   CloseFormImport(){
+     this.formExcel = false;
+   },
     //Lọc dữ liệu khi nhập
     //CreatedBy NCMANH(24/1/2024)
     OninputSearchData(){
@@ -277,10 +303,7 @@ export default {
       this.loader = false;
     }
     } , 
-    //Hiển thị màn hình chọn tệp
-    ImportFileClick(){
-      this.$refs.fileInput.click();
-     },
+   
    //Hàm xuất tệp
   //CreatedBy NCMANH(24/1/2024)
     async ExportFile(){
@@ -293,15 +316,7 @@ export default {
     });
 
      },
-      //Hàm lấy về tệp  dữ liệu
-    //CreatedBy NCMANH(24/1/2024)
-   async handleFileChange() {
-      this.loader = true;
-      this.selectedFile = this.$refs.fileInput.files[0];
-      this.employees = await this.MISAApiService.uploadFile(this.selectedFile);
-      this.loader = false;
-
-    },
+   
     //Hiển thị dialog cảnh báo xóa nhiều
     //CreadtedBy : NC Mạnh(23/01/2024)
     showDlgDelete(){
@@ -310,18 +325,10 @@ export default {
       this.title = this.MISAResource.NameMode.DeleteMultiple;
       console.log(this.title);
       this.type = this.MISAResource.notice.warning;
-      this.msgDialog.push(this.MISAResource["VN"].DeleteQuestion);
+      this.msgDialog.push(this.MISAResource["VN"].DeleteMultipleQuestion);
     },
 
-    //Hàm xóa nhiều bản ghi 
-    //CreadtedBy : NC Mạnh(23/01/2024)
-    DeleteMultiple(){
-      this.selectedItems.map(x=>this.employeeIdArray.push(x.EmployeeId));
-      this.msgToast.push(this.MISAResource.returnMessage.deleteComplete);
-      this.MISAApiService.DeleteDataMultiple(this.employeeIdArray);
-      this.employeeIdArray=[];
-      this.showFormToast();
-    },
+   
     CountRowSelect() {
       this.sum = this.selectedItems.length; // Cập nhật tổng số phần tử trong selectedItems
     },
@@ -330,9 +337,10 @@ export default {
     //CreatedDate "5/12/2023"
     async LoadAllData(){
           let data = await this.MISAApiService.GetData();
-          this.maxCode = this.MISADataService.GetMaxCode(data) +1;
           this.position =  await this.MISAApiService.GetDataName('Positions');
           this.department =  await this.MISAApiService.GetDataName('Departments');
+          this.maxCode =  this.MISADataService.GetMaxCode(data) +1;
+
     },
      //Hàm toggle tất cả bản ghi  với checkbox
     //CreadtedBy : NC Mạnh
@@ -411,22 +419,36 @@ export default {
       this.type = this.MISAResource.notice.warning;
       this.msgDialog.push(this.MISAResource["VN"].DeleteQuestion +`<${item.EmployeeCode}>`);
     },
+     //Hàm xóa nhiều bản ghi 
+    //CreadtedBy : NC Mạnh(23/01/2024)
+   async DeleteMultiple(){
+      this.employeeIdArray=[];
+      this.msgToast = [];
+      this.selectedItems.map(x=>this.employeeIdArray.push(x.EmployeeId));
+      this.msgToast.push(this.MISAResource.returnMessage.deleteComplete);
+      this.typeToast = this.MISAResource.notice.success;
+     await this.MISAApiService.DeleteDataMultiple(this.employeeIdArray);
+      this.isShowDlg = false;
+        this.showFormToast();
+       await this.Reload();
+    },
     //hàm xóa employee
     //param : employeeId
     //CreadtedBy : NC Mạnh
     //CreatedDate "5/12/2023"
-    deleteData(id) {
+   async deleteData(id) {
       this.msgToast = [];
       this.msgToast.push(this.MISAResource.returnMessage.deleteComplete);
       this.typeToast = this.MISAResource.notice.success;
       try {
-        this.MISAApiService.DeleteData(id);
+        await this.MISAApiService.DeleteData(id);
         this.isShowDlg = false;
         this.showFormToast();
-        this.Reload();
+       await this.Reload();
       } catch (error) {
         console.log(error);
       }
+      await this.Reload();
     },
     //hàm show tool
     //CreadtedBy : NC Mạnh
@@ -488,14 +510,17 @@ export default {
        setTimeout(() => this.loader = false,2);
        
     },
- 
-    },
-  //hàm load dữ liệu
+   //hàm show xóa nhiều
   //CreadtedBy : NC Mạnh
   //CreatedDate "5/12/2023"
-
+    ShowDeleteMultiple(){
+      this.isShowDeleteMultiple = !this.isShowDeleteMultiple;
+    },
+  },
   data() {
     return {
+      formExcel : false,
+      isShowDeleteMultiple : false,
       employees: [],
       isShowForm: false,
       employee: {},

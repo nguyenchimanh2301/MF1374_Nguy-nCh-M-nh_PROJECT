@@ -1,7 +1,10 @@
-/* 
 
+.form-header h3{
+    margin: 20px;
+}
 .form-sidebar{
     height: 100%;
+    background-color: #F5F5F5;
 }
 
 .menu-import li{
@@ -15,27 +18,40 @@
     border-radius: 4px;
 }
 .menu-import li:hover{
-    background-color: aqua;
+    background-color: #99CAFF;
 }
 
 .form-table{
     background-color: #ffffff;
-
+   width: 100%;
+   overflow: scroll;
+   height: 100%;
+   border: 1px solid #E0E0E0;
 }
 .form-excel-title{
-    border: 1px solid var(--border-color);
     border-radius: 4px;
     display: grid;
     grid-template-rows: 36px 36px auto;
+    column-gap: 10px;
+    row-gap: 10px;
+    padding: 20px;
 }
-input[type="file"]{
-   display: none;
+.input-file{
+  display: flex;
+  column-gap: 10px;
 }
-
+.input-file > input[type="file"]{
+   display: none;                                             
+   background-color: #E0E0E0 ;                                                                                                                    ;
+}                                     
 #filename{
     width: 700px;
+    background-color: #E0E0E0  ;
 }
-
+#table--excel th{
+    line-height: 36px;
+    width: 300px;
+}
 
 #table--excel{
     line-height: 48px;
@@ -43,21 +59,24 @@ input[type="file"]{
     border-collapse: collapse;
     margin-left: 12px;
     width: 100%;
-    overflow-x: scroll;
     white-space: nowrap;
     table-layout: fixed;
-    
+    font-size: 14px;
 }
 .data-excel{
     height: 100%;
-
+    width: 100%;
 }
 .scroll__table-excel{
-    width: 100%;
-overflow: scroll; 
-height: 100%;
+ width: 100vw;
+ height: 50vh;
+}
 
-} */
+.import-count{
+    margin-left: 20px;
+    display:  flex;
+    column-gap: 50px;
+}
 
 .form-excel{
     width: 90vw;
@@ -66,7 +85,6 @@ height: 100%;
     background-color: #ffffff;
     top: 5%;
     left: 5%;
-
     border-radius: 4px;
     display: grid;
     grid-template-rows: 56px auto 56px;
@@ -81,5 +99,36 @@ height: 100%;
     grid-template-rows: 100% 100%;
     column-gap: 10px;
     background-color: var(--border-color);
+    margin: 0px 12px;
 
 }
+.excel-text-error{
+   color: red;
+   font-size: 14px;
+}
+
+
+#table--excel th{
+    width: 200px;
+    border: 1px solid #E0E0E0;
+
+
+}
+#table--excel th:last-child{
+    width: 400px;
+}
+#table--excel tbody tr:nth-child(even){
+    background-color: #F5F5F5;
+}
+
+.form-excel-result{
+  display: grid;
+  row-gap: 20px;
+  padding: 20px;
+}
+
+.form-excel-result .text{
+    display: grid;
+    row-gap: 5px;
+    padding: 15px;
+  }

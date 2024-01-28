@@ -33,7 +33,7 @@ import FormEmployeeDetail from './components/employeecomponent/FormEmployeeDetai
 import { createRouter , createWebHistory } from 'vue-router';
 
 const routes = [
- {path:'/employee', name:'employee' , component:DataImport},
+ {path:'/data', name:'data' , component:DataImport},
  {path:'/choosefile', name:'setting' , component:ChooseFile},
  {path:'/result', name:'report' , component:ImportResult},
  {path:'/', name:'customer' , component:TableEmployee},

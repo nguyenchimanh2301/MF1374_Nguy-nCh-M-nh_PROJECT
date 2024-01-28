@@ -108,9 +108,7 @@
   .PageNumber li:hover{
     background-color: #E0E0E0;
   }
-  .PageNumber li:active{
-    background-color: green;
-  }
+ 
   .page--active {
     border: 1px solid;
     border-radius: 4px;
