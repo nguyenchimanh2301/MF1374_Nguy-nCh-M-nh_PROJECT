@@ -270,7 +270,7 @@
       </div>
     </div>
   </div>
-  <form-import-excel v-if="formExcel" @closeFormExcel="CloseFormImport">
+  <form-import-excel v-if="formExcel" @closeFormExcel="CloseFormImport" @loadData="reload">
   </form-import-excel>
   <form-employee-detail
     v-if="isShowForm"
@@ -609,7 +609,9 @@ export default {
     //CreadtedBy : NC Mạnh
     //CreatedDate "23/01/2024"
     async changPageSize(pageSize) {
+      
       try{
+        this.pageSize = pageSize;
         this.loader = true;
       await this.SearchData(pageSize, this.numberPage);
       }

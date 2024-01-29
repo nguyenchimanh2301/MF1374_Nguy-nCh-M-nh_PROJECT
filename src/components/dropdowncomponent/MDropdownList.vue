@@ -22,7 +22,7 @@ methods:{
     console.log(this.dataApi);
   },
   mounted() {
-    this.arrays = this.api;
+    this.arrays = this.dataApi;
   },
   showDataClick(){
     this.showData=!this.showData;

@@ -212,6 +212,7 @@ export default {
         }, {});
         this.loader = false;
         this.excelName = this.selectedFile.name;
+        this.$emit("loadData");
       } catch (e) {
         console.log(e);
       }

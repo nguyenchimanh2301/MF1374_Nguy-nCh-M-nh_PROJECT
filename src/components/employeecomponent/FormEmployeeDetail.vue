@@ -385,6 +385,7 @@ export default {
     async getDataCombobox() {
       this.position = await this.MISAApiService.GetDataName("Positions");
       this.department = await this.MISAApiService.GetDataName("Departments");
+
     },
     //Hàm hiển thị dialog
     //cretedBy : NC Mạnh
