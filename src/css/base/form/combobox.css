@@ -34,10 +34,9 @@
   flex-direction: column;
   width: 100%;
   z-index: 999;
-   height: 170px;
+   height: 150px;
    overflow-y: scroll;
   background-color:#ffffff;
-
 }
 .combobox-item {
   width: 100%;
@@ -45,6 +44,9 @@
   background-color: #ffffff;
   border-radius: 4px;
   font-weight: 400;
+  display: flex;
+  column-gap: 30px;
+  padding-left: 30px;
 }
 .combobox-item:hover {
   background-color: #6BC18D;
@@ -63,6 +65,13 @@
   width: 10px;
   height: 8px;
 }
+.icon-combobox-select{
+  background: var(--image)-1499px -309px;
+  width: 20px;
+	height: 20px;
+}
+
+
 .combobox__button:hover {
   background-color: #e6e6e6;
 }

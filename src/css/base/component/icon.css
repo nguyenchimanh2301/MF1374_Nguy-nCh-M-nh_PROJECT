@@ -135,7 +135,16 @@
 	margin: 0px 0px 0px 10px;
 	position: relative;
 }
-
+.icon--continue{
+	background: var(--image) -320px -313px;
+	width: 16px;
+	height: 14px;
+}
+.icon--previous-step{
+	background: var(--image) -368px -313px;
+	width: 16px;
+	height: 14px;
+}
 .fas{
 	font-size: 20px;
 	color: red;

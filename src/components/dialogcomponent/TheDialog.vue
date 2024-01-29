@@ -132,6 +132,9 @@ export default{
        if(this.titleDialog===this.MISAResource.NameMode.DeleteMultiple){
         this.$emit('deleteMultiple');
        }
+       if(this.type === this.MISAResource.notice.warning){
+        this.hideDlg();
+       }
        else{
         this.$emit('addData');
         this.hideDlg();

@@ -132,3 +132,44 @@
     row-gap: 5px;
     padding: 15px;
   }
+
+.form--footer .button{
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+.close-form {
+    animation: hide 2s;
+    position: absolute;
+  }
+  @keyframes hide {
+    0% {
+      transform: translateY(0%);
+    }
+    50% {
+      transform: translateY(-130%);
+    }
+  }
+  
+  .show-form {
+    animation: show 1s;
+    position: absolute;
+  }
+  @keyframes show {
+    0% {
+      transform: translateY(-110%);
+    }
+    50% {
+      transform: translateY(0%);
+    }
+  }
+  .border-error {
+    border: 1px solid red !important;
+  }
+  a {
+    text-decoration: none;
+  }
+  .menu-active {
+    background-color: rgb(102, 175, 255) !important;
+  }

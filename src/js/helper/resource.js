@@ -1,5 +1,11 @@
 const MISAResource = {
   VN: {
+      "CompanyName" : 'CÔNG TY CỔ PHẦN MISA',
+      "UserName" : 'Nguyễn Chí Mạnh',
+      "Employee" : 'Nhân viên',
+      "AddNewTitle" : 'Thêm mới nhân viên',
+      "Edit" : 'Sửa',
+      "Copy" : 'Nhân bản',
       "EmployeeNotEmpty" : 'Mã nhân viên  không được để trống',
       "DepartmentNotEmpty" :'Hãy chọn phòng ban',
       "FullNameNotEmpty" : 'Họ tên không được để trống',
@@ -38,8 +44,9 @@ const MISAResource = {
       "CancelBtn"  : 'Hủy bỏ',
       "Previous"  :'Quay lại',
       "Next"  : 'Tiếp tục',
-      "MultipleCommand" : "Thực thi hàng loạt",
-
+      "StopUsing"  : 'Ngừng sử dụng',
+      "MultipleCommand" : "Thực hiện hàng loạt",
+      "AddAndNew" : "Cất và thêm mới",
       TableColumn:{
         EmployeeCode   :"MÃ NHÂN VIÊN",
         EmployeeName   : "TÊN NHÂN VIÊN",
@@ -56,11 +63,11 @@ const MISAResource = {
       },
       Import:{
         DownLoadHere   :"Tải tập tin chứa tệp nhập khẩu tại đây.",
-        RowImportValid   : "+ Số dòng nhập khẩu thành công",
-        RowImportNotValid:  "+ Số dòng nhập khẩu không thành công",
+        RowImportValid   : "Số dòng nhập khẩu thành công",
+        RowImportNotValid:  "Số dòng nhập khẩu không thành công",
         ImportResult     :"Kết quả nhập khẩu",
-        RowValid   : "+ Số dòng nhập khẩu thành công",
-        RowNotValid   : "+ Số dòng nhập khẩu không thành công",
+        RowValid   : " dòng hợp lệ",
+        RowNotValid   : " dòng không hợp lệ",
         ChoseFileImport   : "Chọn dữ liệu đã chuẩn bị để nhập khẩu vào phần mềm",
         DownLoadEmptyFile   : "Chưa có tệp mẫu để chuẩn bị dữ liệu? Tải tệp excel mẫu mà phần mềm cung cấp để chuẩn bị dữ liệu nhập khẩu tại đây",
         Step   : "Bước",

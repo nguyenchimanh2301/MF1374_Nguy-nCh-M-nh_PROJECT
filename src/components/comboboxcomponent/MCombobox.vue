@@ -11,7 +11,7 @@
     v-for="(item,index) in dataApi" :key="index" 
     :class="{'item-selected':item[propText] ==itemSelected}"
     @click="Selectitem(item)"
-    > <div v-if="item!==null">{{ item[propText] }}</div></a>
+    ><div class='icon-combobox-select' v-show=" item[propText]==itemSelected"></div>  <div>{{ item[propText] }}</div></a>
     </div>
     </div>
 </template>

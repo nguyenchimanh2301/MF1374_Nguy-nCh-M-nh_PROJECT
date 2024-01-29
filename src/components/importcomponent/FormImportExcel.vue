@@ -1,5 +1,5 @@
 <template>
-  <div class="dark--screen" >
+  <div class="dark--screen">
     <div
       class="form-excel"
       :class="{
@@ -7,21 +7,29 @@
         'show-form': showForm === true,
       }"
     >
-      <div class="form-header"> <h3>{{ this.MISAResource["VN"].Import.Step }}{{ header }}</h3></div>
+      <div class="form-header">
+        <h3>{{ this.MISAResource["VN"].Import.Step }}{{ header }}</h3>
+      </div>
       <div class="form-excel-content">
         <div class="form-sidebar">
           <div>
             <ul class="menu-import">
-              <li v-for="(menu,index) in sidebar" :key="index" 
-              @click="ChangeContent(menu)"
-              :class="{ 'menu-active': isShow === menu.value }
-              ">{{ menu.name }}</li>
+              <li
+                v-for="(menu, index) in sidebar"
+                :key="index"
+                @click="ChangeContent(menu)"
+                :class="{ 'menu-active': isShow === menu.value }"
+              >
+                {{ menu.name }}
+              </li>
             </ul>
           </div>
         </div>
         <div class="form-table">
           <div class="form-excel-title" v-show="isShow === 0">
-            <div class="title">{{ this.MISAResource["VN"].Import.ChoseFileImport }}</div>
+            <div class="title">
+              {{ this.MISAResource["VN"].Import.ChoseFileImport }}
+            </div>
             <div class="input-file">
               <input type="text" v-model="excelName" id="filename" />
               <button
@@ -32,13 +40,21 @@
               </button>
               <input type="file" ref="fileInput" @change="handleFileChange" />
             </div>
-            <div class="text">{{ this.MISAResource["VN"].Import.DownLoadEmptyFile }}</div>
+            <div class="text">
+              {{ this.MISAResource["VN"].Import.DownLoadEmptyFile }}
+            </div>
           </div>
           <div class="scroll__table-excel" v-show="isShow === 1">
             <div class="import-count" v-show="valid > 0">
-              <strong>{{ valid }}/{{ length }}{{ this.MISAResource["VN"].Import.RowValid }}</strong>
+              <strong
+                >{{ valid }}/{{ length
+                }}{{ this.MISAResource["VN"].Import.RowValid }}</strong
+              >
               <span></span>
-              <strong>{{ notValid }}/{{ length }} {{ this.MISAResource["VN"].Import.RowNotValid }}</strong>
+              <strong
+                >{{ notValid }}/{{ length }}
+                {{ this.MISAResource["VN"].Import.RowNotValid }}</strong
+              >
             </div>
             <table id="table--excel">
               <thead>
@@ -85,11 +101,8 @@
                   <td class="txt-right">
                     {{ item.IdentityNumber }}
                   </td>
-                  <td class="txt-left">
-                  </td>
-                  <td class="txt-left">
-                    
-                  </td>
+                  <td class="txt-left"></td>
+                  <td class="txt-left"></td>
                   <td class="txt-right">
                     {{ item.CreditNumber }}
                   </td>
@@ -97,13 +110,15 @@
                   <td class="txt-left">
                     {{ item.BankAdress }}
                   </td>
-                  <td >
-                    <div v-for="(error, index) in item.DTOImportErrors"
-                    :key="index">
-                    <p class="excel-text-error">
-                      {{ error }}
-                    </p>
-                  </div>
+                  <td>
+                    <div
+                      v-for="(error, index) in item.DTOImportErrors"
+                      :key="index"
+                    >
+                      <p class="excel-text-error">
+                        {{ error }}
+                      </p>
+                    </div>
                   </td>
                 </tr>
               </tbody>
@@ -114,29 +129,48 @@
           </div>
           <div class="form-excel-result" v-show="isShow === 2">
             <div class="title">
-              <h2>{{this.MISAResource["VN"].Import.ImportResult}}</h2>
+              <h2>{{ this.MISAResource["VN"].Import.ImportResult }}</h2>
             </div>
-            <div><h4>{{this.MISAResource["VN"].Import.DownLoadHere}}</h4></div>
+            <div>
+              <h4>{{ this.MISAResource["VN"].Import.DownLoadHere }}</h4>
+            </div>
             <div class="text">
-              <div> {{this.MISAResource["VN"].Import.RowImportValid}}{{ valid }}</div>
-              <div> {{this.MISAResource["VN"].Import.RowImportNotValid}}{{ notValid }}</div>
+              <div>
+                + {{ this.MISAResource["VN"].Import.RowImportValid }}<span>:</span>  <span></span> {{ valid }}
+              </div>
+              <div>
+                +{{ this.MISAResource["VN"].Import.RowImportNotValid}}<span>:</span><span></span>{{ notValid }}
+              </div>
             </div>
           </div>
         </div>
       </div>
       <div class="form--footer">
-        <button class="button btn-second btn-cancel" >
-          {{ this.MISAResource['VN'].Help }}
+        <button class="button btn-second btn-cancel">
+          <div class="icon--info"></div>
+          <div>{{ this.MISAResource["VN"].Help }}</div>
         </button>
         <div>
-          <button class="button btn-add " v-bind:disabled="isShow===0" v-show="isShow<2" @click="onClickPreviousStep">
-            {{ this.MISAResource['VN'].Previous }}
+          <button
+            class="button btn-add"
+            v-bind:disabled="isShow === 0"
+            v-show="isShow < 2"
+            @click="onClickPreviousStep"
+          >
+          <div class="icon--previous-step"></div>
+          <div>  {{ this.MISAResource["VN"].Previous }}</div>
           </button>
-          <button class="button btn-add " v-show="isShow<2" @click="onClickNextStep">
-            {{ this.MISAResource['VN'].Next }}
+          <button
+            class="button btn-add"
+            v-show="isShow < 2"
+            @click="onClickNextStep"
+          >
+           <div>{{ this.MISAResource["VN"].Next }}</div>
+            <div class="icon--continue"></div>
           </button>
-          <button class="button btn-add " @click="CloseForm">
-            {{ this.MISAResource['VN'].CancelBtn }}
+          <button class="button btn-add" @click="CloseForm">
+             <div><i class="fas fa-ban"></i></div>
+             <div>{{ this.MISAResource["VN"].CancelBtn }}</div>
           </button>
         </div>
       </div>
@@ -148,71 +182,90 @@
 export default {
   props: [],
   created() {},
-  
+
   methods: {
+    //Mở màn hình chọn tệp
     ImportFileClick() {
       this.$refs.fileInput.click();
-    }, //Hàm lấy về tệp  dữ liệu
-    //CreatedBy NCMANH(24/1/2024)
-    handleFileChange(){
+    }, 
+    //Chọn tệp
+    handleFileChange() {
       this.loader = true;
-      setTimeout(() =>this.handleFile(),3000);
+      setTimeout(() => this.handleFile(), 3000);
     },
-
+    //Hàm lấy về tệp  dữ liệu
+    //CreatedBy NCMANH(24/1/2024)
     async handleFile() {
-      this.selectedFile = this.$refs.fileInput.files[0];
-      this.employees = await this.MISAApiService.uploadFile(this.selectedFile);
-      this.length = this.employees.length;
-      this.employees.reduce((acc, x) => {
-        console.log(acc);
-        if (x.DTOImportErrors.length < 1) {
-          this.valid++;
-        } else {
-          this.notValid++;
-        }
-      }, {});
-      this.loader = false;
-      this.excelName = this.selectedFile.name;
-
-     },
+      try {
+        this.selectedFile = this.$refs.fileInput.files[0];
+        this.employees = await this.MISAApiService.uploadFile(
+          this.selectedFile
+        );
+        this.length = this.employees.length;
+        this.employees.reduce((acc, x) => {
+          console.log(acc);
+          if (x.DTOImportErrors.length < 1) {
+            this.valid++;
+          } else {
+            this.notValid++;
+          }
+        }, {});
+        this.loader = false;
+        this.excelName = this.selectedFile.name;
+      } catch (e) {
+        console.log(e);
+      }
+    },
+    //Hàm chạy đến bước tiếp theo
+    //CreatedBy NCMANH(24/1/2024)
     onClickNextStep() {
       if (this.isShow < 2) {
         this.isShow += 1;
-        let obj = this.sidebar.filter(x => x.value === this.isShow);
+        let obj = this.sidebar.filter((x) => x.value === this.isShow);
         this.header = obj[0].name;
       }
     },
+    //Hàm chạy đến bước trước đó
+    //CreatedBy NCMANH(24/1/2024)
     onClickPreviousStep() {
       if (this.isShow > 0) {
         this.isShow -= 1;
-        let obj = this.sidebar.filter(x => x.value === this.isShow);
+        let obj = this.sidebar.filter((x) => x.value === this.isShow);
         this.header = obj[0].name;
       }
     },
-    ChangeContent(menu){
-       this.isShow = menu.value;
-       this.header = menu.name;
-    },
-    CloseForm(){
-      this.$emit('closeFormExcel');
+    //Thay đổi nội dung tiêu đề
+    //CreatedBy NCMANH(24/1/2024)
+    ChangeContent(menu) {
+    try {
+      this.isShow = menu.value;
+      this.header = menu.name;
+    } catch (error) {
+      console.log(error);
     }
+    },
+     //Đóng formExcel
+    //CreatedBy NCMANH(24/1/2024)
+    CloseForm() {
+      this.$emit("closeFormExcel");
+    },
   },
   mounted() {},
   data() {
     return {
-      sidebar:[
+      sidebar: [
         {
-           name : '1.Chọn tệp nguồn',
-           value: 0
+          name: "1.Chọn tệp nguồn",
+          value: 0,
         },
         {
-           name : '2.Kiểm tra dữ liệu',
-           value: 1
+          name: "2.Kiểm tra dữ liệu",
+          value: 1,
         },
         {
-           name : '3.Kết quả nhập khẩu',
-           value: 2
-        }
+          name: "3.Kết quả nhập khẩu",
+          value: 2,
+        },
       ],
       employees: [],
       excelName: "",
@@ -220,48 +273,15 @@ export default {
       notValid: 0,
       length: 0,
       isShow: 0,
-      loader : false,
-      header : '1.Chọn tệp nguồn',
+      loader: false,
+      header: "1.Chọn tệp nguồn",
     };
   },
 };
 </script>
   
   <style>
-.close-form {
-  animation: hide 2s;
-  position: absolute;
-}
-@keyframes hide {
-  0% {
-    transform: translateY(0%);
-  }
-  50% {
-    transform: translateY(-130%);
-  }
-}
 
-.show-form {
-  animation: show 1s;
-  position: absolute;
-}
-@keyframes show {
-  0% {
-    transform: translateY(-110%);
-  }
-  50% {
-    transform: translateY(0%);
-  }
-}
-.border-error {
-  border: 1px solid red !important;
-}
-a {
-  text-decoration: none;
-}
-.menu-active {
-  background-color: rgb(102, 175, 255) !important;
-}
 </style>
 
 

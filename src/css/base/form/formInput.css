@@ -20,11 +20,11 @@
 }
 .form{
     width: 1140px;
-    height: 700px;
+    height: 670px;
     position: absolute;
     background-color: #ffffff;
-    top: 10%;
-    left: 20%;
+    top: 5%;
+    left: 17%;
     border-radius: 4px;
 }
 .form--title{

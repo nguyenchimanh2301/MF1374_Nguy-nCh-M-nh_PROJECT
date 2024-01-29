@@ -6,7 +6,8 @@ const ApiService={
     //Api Service lấy dữ liệu theo tên 
     //CreatedBy(23/1/2024)
   async GetDataName(name){
-    return await axios
+    try {
+      return await axios
     .get(
       Api+name
     )
@@ -15,19 +16,28 @@ const ApiService={
     }).catch((e) => {
       console.log(e);
     });
+    } catch (error) {
+      console.log(error);
+    }
    } ,
     //DeleteData Service
    //CreatedBy NCMANH(23/1/2024)
   async DeleteData(id){
-    return await axios.delete(MISAApi +`/${id}`)
-    .then((response) => {
-      response.data;
-    })
-    .catch((e) => {
-      console.log(e);
-    });
+    try {
+      return await axios.delete(MISAApi +`/${id}`)
+      .then((response) => {
+        response.data;
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+    } catch (error) {
+      console.log(error);
+      
+    }
    }, 
    async DeleteDataMultiple(data){
+   try {
     return await axios.delete(MISAApi,{data})
     .then((response) => {
       response.data;
@@ -35,10 +45,15 @@ const ApiService={
     .catch((e) => {
       console.log(e);
     });
+   } catch (error) {
+    console.log(error);
+    
+   }
    }, 
     //Api Service lấy dữ liệu theo Url 
     //CreatedBy(23/1/2024)
    async GetDataUrl(url){
+  try {
     return await axios
     .get(
       url
@@ -48,38 +63,50 @@ const ApiService={
     }).catch((e) => {
       console.log(e);
     });
+  } catch (error) {
+    console.log(error);
+    
+  }
    } ,
    
     //GetData Service
    //CreatedBy NCMANH(23/1/2024)
    async GetData(){
-    return await axios
-    .get(
-      MISAApi
-    )
-    .then((response) => {
-      return response.data;
-    }).catch((e) => {
-      console.log(e);
-    });
+    try {
+      return await axios
+      .get(
+        MISAApi
+      )
+      .then((response) => {
+        return response.data;
+      }).catch((e) => {
+        console.log(e);
+      });
+    } catch (error) {
+      console.log(error);
+    }
    } ,
    //Import Service
    //CreatedBy NCMANH(23/1/2024)
    async uploadFile(file) {
     // Tạo một FormData object để gửi dữ liệu là tệp tin
-    const formData = new FormData();
-    formData.append('file',file);
-
-    // Gọi API với yêu cầu POST và FormData object
-    return await axios.post(MISAApi+'/Import', formData)
-      .then(response => {
-        // Xử lý phản hồi từ API
-      return response.data;
-      })
-      .catch(error => {
-        // Xử lý lỗi
-        console.error('Error uploading file:', error);
-      });
+    try {
+      const formData = new FormData();
+      formData.append('file',file);
+  
+      // Gọi API với yêu cầu POST và FormData object
+      return await axios.post(MISAApi+'/Import', formData)
+        .then(response => {
+          // Xử lý phản hồi từ API
+        return response.data;
+        })
+        .catch(error => {
+          // Xử lý lỗi
+          console.error('Error uploading file:', error);
+        });
+    } catch (error) {
+      console.log(error);
+    }
   },
    //Api Service phân trang
       //CreatedBy NCMANH(23/1/2024)
@@ -102,6 +129,17 @@ const ApiService={
       console.log(error);
      }
     },
+     //Api Service Xuất tệp
+      //CreatedBy NCMANH(23/1/2024)
+  async exportFile(){
+      let url =  MISAApi +`/Export`;
+     return await axios
+      .get(url)
+      .then((response) => {
+        console.log(response);
+        window.open(url);
+      });
+    }
 }
 
 export default ApiService;

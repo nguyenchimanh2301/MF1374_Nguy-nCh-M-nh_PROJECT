@@ -1,5 +1,5 @@
 <template>
-  <div class="dark--screen">
+  <div class="dark--screen" v-if="true">
     <div
       class="form"
       :class="{
@@ -48,9 +48,9 @@
                 <div
                   class="error-text"
                   v-if="v$.EmployeeSelect.EmployeeCode.$error"
-                  
                 >
-                {{ v$.EmployeeSelect.EmployeeCode.$errors[0].$message }}</div>
+                  {{ v$.EmployeeSelect.EmployeeCode.$errors[0].$message }}
+                </div>
               </div>
               <div class="label-input">
                 <label id="label" for=""
@@ -202,7 +202,7 @@
             </label>
             <label id="label" for=""
               >{{ this.MISAResource["VN"].Fax }}
-              <input type="text" value="(077) 123-4567" />
+              <input type="text" />
             </label>
             <div class="label-input">
               <label id="label" for=""
@@ -214,7 +214,7 @@
                   input-id="email"
                 ></MInput>
                 <span class="error-text" v-if="v$.EmployeeSelect.Email.$error">
-                  <!-- {{ v$.EmployeeSelect.Email.$errors[0].$message }} -->
+                  {{ v$.EmployeeSelect.Email.$errors[0].$message }}
                 </span>
               </label>
             </div>
@@ -243,8 +243,9 @@
             >
               {{ this.MISAResource["VN"].Add }}
             </button>
-            <button class="button btn-add btn-main" @click="addData">
-              Cất và thêm
+            <button class="button btn-add btn-main" @click="addAndNew">
+              {{ this.MISAResource["VN"].AddAndNew }}
+             
             </button>
           </div>
         </div>
@@ -260,8 +261,8 @@
     :title="title"
     :msgError="msgError"
     :textBtn="textBtn"
-    :classBinding ="binding"
-    @hideForm ="hideForm"
+    :classBinding="binding"
+    @hideForm="hideForm"
   >
   </the-dialog>
   <MToast
@@ -288,7 +289,7 @@ import MISAResource from "../../js/helper/resource";
 export default {
   props: ["EmployeeSelected", "methodP", "MaxCode"],
   created() {
-    this.state.EmployeeSelect = this.EmployeeSelected;
+    this.state.EmployeeSelect = JSON.parse(JSON.stringify(this.EmployeeSelected));
     this.method = this.methodP;
     if (this.methodP === this.MISAEnum.method.ADD) {
       this.title = this.MISAResource.NameMode.AddNew;
@@ -376,18 +377,32 @@ export default {
     return { state, v$ };
   },
   methods: {
-    //
+    async addAndNew() {
+      //  await this.addData();
+      await this.addData();
+    },
+    //Lấy dữ liệu cho combobox
     async getDataCombobox() {
       this.position = await this.MISAApiService.GetDataName("Positions");
       this.department = await this.MISAApiService.GetDataName("Departments");
     },
+    //Hàm hiển thị dialog
+    //cretedBy : NC Mạnh
+    //CreatedAt : 5/12/2023
     showDlg() {
-      this.type =
-        this.methodP === this.MISAEnum.method.ADD
-          ? this.MISAResource.notice.information
-          : this.MISAResource.notice.question;
-      this.isShowDlg = true;
+      try {
+        this.type =
+          this.methodP === this.MISAEnum.method.ADD
+            ? this.MISAResource.notice.information
+            : this.MISAResource.notice.question;
+        this.isShowDlg = true;
+      } catch (error) {
+        console.log(error);
+      }
     },
+    //Hàm ẩn dialog
+    //cretedBy : NC Mạnh
+    //CreatedAt : 5/12/2023
     hideDlg() {
       this.isShowDlg = false;
       this.$refs.focusText.$el.focus();
@@ -398,9 +413,6 @@ export default {
     async addData() {
       this.msgError = [];
       this.type = " ";
-      this.state.EmployeeSelect.Gender = parseInt(
-        this.state.EmployeeSelect.Gender
-      );
       this.Employee = Object.assign({}, this.state.EmployeeSelect);
       this.v$.$validate();
       console.log(this.v$.$errors);
@@ -421,7 +433,9 @@ export default {
                 this.closeToast();
               })
               .catch((error) => {
-                this.MsgValidate = this.MISAErrorService.GetErrorCode(error.response);
+                this.MsgValidate = this.MISAErrorService.GetErrorCode(
+                  error.response
+                );
                 this.msgError = this.msgError.concat(this.MsgValidate);
                 this.textBtn = this.MISAResource.TextBtn.Close;
                 this.loadForm(error.response);
@@ -450,7 +464,7 @@ export default {
                 this.MsgValidate = this.MISAErrorService.GetErrorCode(
                   error.response
                 );
-               console.log(error);
+                console.log(error);
                 this.msgError = this.msgError.concat(this.MsgValidate);
                 this.textBtn = this.MISAResource.TextBtn.Close;
                 this.loadForm(error.response);
@@ -461,33 +475,43 @@ export default {
         }
       }
     },
-    showDialog(){
-      this.msgError = [];
-      this.isShowDlg = true;
-      this.type = this.MISAResource.notice.info;
-      this.binding = false;
-      this.textBtn = "Có";
-      this.msgError.push(this.MISAResource["VN"].HideDialogQuestion);
+    showDialog() {
+      try {
+        this.msgError = [];
+        this.isShowDlg = true;
+        this.type = this.MISAResource.notice.info;
+        this.binding = false;
+        this.textBtn = "Có";
+        this.msgError.push(this.MISAResource["VN"].HideDialogQuestion);
+      } catch (error) {
+        console.log(error);
+      }
     },
     //hàm loadForm
     //cretedBy : NC Mạnh
     //CreatedAt : 5/12/2023
     loadForm(error) {
       // window.location.reload();
-      this.msgToast = [];
-      this.isShowDlg = true;
-      let message =
-        error.status === 201
-          ? this.MISAResource.returnMessage.addComplete
-          : this.MISAResource.returnMessage.updateComplete;
-      if ((error.status === 201) | (error.status === 200)) {
-        this.typeToast = this.MISAResource.notice.success;
-        this.type = this.MISAResource.notice.success;
-      } else {
-        this.typeToast = this.MISAResource.notice.success;
-        this.type = this.MISAResource.notice.warning;
+      try {
+        this.msgToast = [];
+        this.isShowDlg = true;
+        let message =
+          error.status === 201
+            ? this.MISAResource.returnMessage.addComplete
+            : this.MISAResource.returnMessage.updateComplete;
+        if ((error.status === 201) | (error.status === 200)) {
+          this.typeToast = this.MISAResource.notice.success;
+          this.type = this.MISAResource.notice.success;
+        } else {
+          this.typeToast = this.MISAResource.notice.success;
+          this.type = this.MISAResource.notice.warning;
+          this.textBtn = this.MISAResource["VN"].Accept;
+
+        }
+        this.msgToast.push(message);
+      } catch (error) {
+        console.log(error);
       }
-      this.msgToast.push(message);
     },
     //hàm đóng form
     //cretedBy : NC Mạnh
@@ -500,19 +524,23 @@ export default {
     //hàm đóng form
     //cretedBy : NC Mạnh
     //CreatedAt : 5/12/2023
-    hideForm(){
-    setTimeout(() => this.$emit("hideForm"), 1000);
+    hideForm() {
+      this.$emit("hideForm");
     },
     //hàm đóng form
     //cretedBy : NC Mạnh
     //CreatedAt : 20/12/2023
     closeToast() {
       // this.showToast=true
-      this.isShowDlg = false;
-      this.showToast = true;
-      setTimeout(() => this.$emit("hideForm"), 2000);
-      setTimeout(() => (this.showToast = false), 2000);
-      this.$emit("loadData");
+      try {
+        this.isShowDlg = false;
+        this.showToast = true;
+        setTimeout(() => (this.showToast = false), 2000);
+        this.$emit("loadData");
+        setTimeout(() => (this.hideForm()), 2000);
+      } catch (error) {
+        console.log(error);
+      }
     },
   },
   mounted() {
@@ -521,7 +549,7 @@ export default {
   },
   data() {
     return {
-      binding : true,
+      binding: true,
       EmployeeSelect: {},
       isShowDlg: false,
       showToast: false,
@@ -545,32 +573,4 @@ export default {
 </script>
 
 <style>
-.close-form {
-  animation: hide 2s;
-  position: absolute;
-}
-@keyframes hide {
-  0% {
-    transform: translateY(0%);
-  }
-  50% {
-    transform: translateY(-130%);
-  }
-}
-
-.show-form {
-  animation: show 1s;
-  position: absolute;
-}
-@keyframes show {
-  0% {
-    transform: translateY(-110%);
-  }
-  50% {
-    transform: translateY(0%);
-  }
-}
-.border-error {
-  border: 1px solid red !important;
-}
 </style>
