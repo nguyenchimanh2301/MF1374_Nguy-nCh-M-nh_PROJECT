@@ -50,10 +50,11 @@ input:focus {
  border-radius: 4px;
  display: grid;
  place-items: center;
+ width: 36px;
+ height: 36px;
+ background-color: #ffffff;
 }
-.btn-search:hover{
-  background-color: #50b83c;
-}
+
 .icon-search {
   background:var(--image) no-repeat -1041px -89px;
   height: 24px;

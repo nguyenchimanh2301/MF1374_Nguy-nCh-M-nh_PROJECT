@@ -32,12 +32,11 @@
   top: calc(100% + 2px);
   display: flex;
   flex-direction: column;
-  row-gap: 3px;
   width: 100%;
   z-index: 999;
    height: 170px;
    overflow-y: scroll;
-  background-color:#e6e6e6;
+  background-color:#ffffff;
 
 }
 .combobox-item {

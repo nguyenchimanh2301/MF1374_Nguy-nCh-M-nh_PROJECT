@@ -19,12 +19,14 @@
           </ul>
         </div>
        </div>
-       <div class="dialog__btn">
-        <button class="btn-main btn-second btn-cancel" id="closedialog" @click="hideDlg">Hủy</button>
-        <button class="button " :class="{
-          'btn-main':button===true,
-          'btn-cancel':button===false
-       }" @click="addData" v-if="button" >{{ textBtn }}</button>
+       <div class="dialog__btn" :class="{'position-item': classBinding===false,
+       'position-item2': classBinding===true,
+        }">
+        <button class="btn-main btn-second btn-cancel" id="closedialog" v-if="classBinding===false"   @click="hideDlg">Hủy</button>
+         <div style="column-gap: 8px;display: flex;">
+          <button class="button  btn-second btn-cancel" @click="hideForm">{{ textBtn2 }}</button>
+           <button class="button btn-main"  @click="addData"  >{{ textBtn }}</button>
+         </div>
        </div>
     </div> 
 </div>
@@ -71,7 +73,7 @@ export default{
       },
       type:{
         type : String,
-        default : "information  ",
+        default : "information",
         required : true
       },
       textBtn:{
@@ -79,14 +81,24 @@ export default{
         default : "Đồng ý",
         required : true
       },
+      textBtn2:{
+        type : String,
+        default : "Không",
+        required : true
+      },
       button:{
         type : Boolean,
-        default : true,
+        default : false,
       },
       position:{
         type : String,
         default : "",
+      },
+      classBinding: {
+        type : Boolean,
+        default : true,
       }
+
    },
    created(){
       this.titleDialog = this.title;
@@ -103,7 +115,15 @@ export default{
    },
    methods:{
     hideDlg(){
-       this.$emit('hideDlg');
+        this.$emit('hideDlg');
+    },
+    hideForm(){
+      if(this.msgError[[0]]===this.MISAResource["VN"].HideDialogQuestion){
+        this.$emit('hideForm');
+      }
+      else{
+        this.hideDlg();
+      }
     },
     addData(){
        if(this.titleDialog===this.MISAResource.NameMode.Delete){
@@ -121,7 +141,7 @@ export default{
         return {
             titleDialog: '',
             employeeId  :{},
-            text : ""
+            text : "",
         }
     },
    }    
@@ -134,6 +154,13 @@ export default{
 }
 #btn-cancel{
   align-self: end;
+}
+
+.position-item{
+  justify-content: space-between;
+}
+.position-item2{
+  justify-content: flex-end
 }
 .dialog__btn .btn-cancel:hover{
    background-color: #E0E0E0;

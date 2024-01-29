@@ -106,7 +106,7 @@
               <tbody>
                 <tr v-show="orderedUsers.length===0">
                   <div> 
-                      Không tồn tại bản ghi muốn tìm
+                  {{ this.MISAResource["VN"].NotFoundRecord }}
                   </div>
                 </tr>
                 <tr
@@ -122,7 +122,7 @@
                     showData(orderedUsers[selectedRowIndex])
                   "
                   @dblclick="showData(orderedUsers[selectedRowIndex])"
-                  :class="{ 'highlighted-row': index === selectedRowIndex }"
+                  :class="{ 'highlighted-row': index === selectedRowIndex  }"
                   @click="Select(index)"
                   tabindex="0"
                 >

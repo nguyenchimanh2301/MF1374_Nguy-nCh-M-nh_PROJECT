@@ -12,6 +12,8 @@ const MISAResource = {
       "EmployeeInformation"  : 'Thông tin nhân viên',
       "DateNotValid"  : 'Ngày sinh không hợp lệ',
       "DateNotGreater" : 'Ngày sinh không lớn hơn ngày hiện tại',
+      "NotFoundRecord" : 'Không tồn tại bản ghi muốn tìm',
+      "HideDialogQuestion" : 'Dữ liệu đã bị thay đổi bạn có muốn cất không ?',
       "EmployeeCode"  : 'Mã',
       "FullName" : 'Tên',
       "PhoneNumber" : 'Số điện thoại',

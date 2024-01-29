@@ -48,7 +48,9 @@
                 <div
                   class="error-text"
                   v-if="v$.EmployeeSelect.EmployeeCode.$error"
-                ></div>
+                  
+                >
+                {{ v$.EmployeeSelect.EmployeeCode.$errors[0].$message }}</div>
               </div>
               <div class="label-input">
                 <label id="label" for=""
@@ -65,7 +67,7 @@
                   class="error-text"
                   v-if="v$.EmployeeSelect.FullName.$error"
                 >
-                  <!-- {{ v$.EmployeeSelect.FullName.$errors[0].$message }} -->
+                  {{ v$.EmployeeSelect.FullName.$errors[0].$message }}
                 </div>
               </div>
             </div>
@@ -85,7 +87,7 @@
                 class="error-text"
                 v-if="v$.EmployeeSelect.DepartmentId.$error"
               >
-                <!-- {{ v$.EmployeeSelect.DepartmentId.$errors[0].$message }} -->
+                {{ v$.EmployeeSelect.DepartmentId.$errors[0].$message }}
               </div>
             </div>
             <div class="label-input">
@@ -258,6 +260,8 @@
     :title="title"
     :msgError="msgError"
     :textBtn="textBtn"
+    :classBinding ="binding"
+    @hideForm ="hideForm"
   >
   </the-dialog>
   <MToast
@@ -349,9 +353,9 @@ export default {
             // minLength: minLength(10),
           },
           DateOfBirth: {
-            notFutureDate: helpers.withMessage(
-              MISAResource["VN"].DateNotGreater,
-              (value) => new Date(value) < new Date())
+            // notFutureDate: helpers.withMessage(
+            //   MISAResource["VN"].DateNotGreater,
+            //   (value) => new Date(value) < new Date())
           },
 
           // PhoneNumber: {
@@ -461,8 +465,9 @@ export default {
       this.msgError = [];
       this.isShowDlg = true;
       this.type = this.MISAResource.notice.info;
+      this.binding = false;
       this.textBtn = "Có";
-      this.msgError.push("Dữ liệu đã bị thay đổi bạn có muốn cất không ?");
+      this.msgError.push(this.MISAResource["VN"].HideDialogQuestion);
     },
     //hàm loadForm
     //cretedBy : NC Mạnh
@@ -494,6 +499,12 @@ export default {
     },
     //hàm đóng form
     //cretedBy : NC Mạnh
+    //CreatedAt : 5/12/2023
+    hideForm(){
+    setTimeout(() => this.$emit("hideForm"), 1000);
+    },
+    //hàm đóng form
+    //cretedBy : NC Mạnh
     //CreatedAt : 20/12/2023
     closeToast() {
       // this.showToast=true
@@ -510,6 +521,7 @@ export default {
   },
   data() {
     return {
+      binding : true,
       EmployeeSelect: {},
       isShowDlg: false,
       showToast: false,

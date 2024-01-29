@@ -185,7 +185,7 @@ input[type="date"]{
 input[type="radio"]{
     height: 20px;
     width: 30px;
-
+    /* accent-color: var(--button-color); */
 }
 #gender{
     font-weight: 400;

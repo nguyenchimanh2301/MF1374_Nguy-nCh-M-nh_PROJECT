@@ -93,6 +93,6 @@
     background-color: #67c8b9;
   }
   .button:focus {
-    background-color: #033c1a;
+    background-color: var(--border-color);
   }
   

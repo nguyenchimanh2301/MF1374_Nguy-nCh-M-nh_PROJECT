@@ -48,5 +48,4 @@
 .dialog__btn{
     display: flex;
     height: 36px;
-    justify-content: flex-end;
 }
