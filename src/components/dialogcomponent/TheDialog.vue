@@ -71,7 +71,7 @@ export default{
       },
       type:{
         type : String,
-        default : "question",
+        default : "information  ",
         required : true
       },
       textBtn:{
@@ -113,7 +113,7 @@ export default{
         this.$emit('deleteMultiple');
        }
        else{
-        // this.$emit('addData');
+        this.$emit('addData');
         this.hideDlg();
        }
     },

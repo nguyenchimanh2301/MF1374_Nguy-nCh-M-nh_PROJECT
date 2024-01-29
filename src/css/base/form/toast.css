@@ -45,9 +45,9 @@
        height:22px;
    }
    .toast__icon.icon--info{
-       background:  var(--image) -706px -146px;
-       width: 22px;
-       height:22px;
+    background:  var(--image) -832px -462px;
+    width: 36px;
+    height:36px;
    }
    .toast--btn{
        background:  var(--image) -147px -147px;

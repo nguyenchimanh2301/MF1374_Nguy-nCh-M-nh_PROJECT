@@ -30,7 +30,7 @@
         </div>
         <div class="data">
           <div class="feature">
-            <div class="delete-multiple" @click="ShowDeleteMultiple"  v-show="sum>0">
+            <div class="delete-multiple" @click="showDeleteMultiple"  v-show="sum>0">
               <!-- <button  class="btn-delete-multiple"  data-c-tooltip="Xóa nhiều" tooltip-position ="right"  @click="showDlgDelete()"> 
               <i class="fas fa-trash"></i>
              </button>
@@ -56,7 +56,7 @@
               </button>
             </div>
              <button class="btn-reload"  data-c-tooltip="Tải lại trang" tooltip-position ="left" >
-              <div class="icon--reload" @click="Reload"></div>
+              <div class="icon--reload" @click="reload"></div>
              </button>
              <button class="btn-export" data-c-tooltip="Xuất tệp" tooltip-position ="left" @click="ExportFile">
               <div class="icon--export" ></div>
@@ -181,7 +181,7 @@
                       <div class="icon--drop">
                         <div id="edit--feature" v-show="index === tool">
                           <ul>
-                            <li @click="CopyData(item)">Nhân bản</li>
+                            <li @click="copyData(item)">Nhân bản</li>
                             <li @click="showDlg(item)">Xóa</li>
                             <li>Ngừng sử dụng</li>
                           </ul>
@@ -233,7 +233,7 @@
     :methodP="method"
     :MaxCode="maxCode"
     @showFormToast="showFormToast"
-    @loadData="Reload"></form-employee-detail>
+    @loadData="reload"></form-employee-detail>
   <!-- this is toast-message -->
   <MToast :text="content" :msgToast="msgToast" :icon="typeToast" v-if="showToast">
   </MToast>
@@ -248,15 +248,13 @@
     :type="type"
     :msgError="msgDialog"
     :employeeIdRemove="employeeId"
-    @loadData="Reload"
+    @loadData="reload"
     @deleteMultiple="DeleteMultiple"
   >
   </the-dialog>
   <!-- end dialog -->
 </template>
-
 <script>
-
 import _ from "lodash";
 import FormImportExcel from '../importcomponent/FormImportExcel.vue';
 export default {
@@ -327,7 +325,6 @@ export default {
       this.type = this.MISAResource.notice.warning;
       this.msgDialog.push(this.MISAResource["VN"].DeleteMultipleQuestion);
     },
-
    
     CountRowSelect() {
       this.sum = this.selectedItems.length; // Cập nhật tổng số phần tử trong selectedItems
@@ -430,7 +427,7 @@ export default {
      await this.MISAApiService.DeleteDataMultiple(this.employeeIdArray);
       this.isShowDlg = false;
         this.showFormToast();
-       await this.Reload();
+       await this.reload();
     },
     //hàm xóa employee
     //param : employeeId
@@ -444,11 +441,11 @@ export default {
         await this.MISAApiService.DeleteData(id);
         this.isShowDlg = false;
         this.showFormToast();
-       await this.Reload();
+       await this.reload();
       } catch (error) {
         console.log(error);
       }
-      await this.Reload();
+      await this.reload();
     },
     //hàm show tool
     //CreadtedBy : NC Mạnh
@@ -472,7 +469,7 @@ export default {
      //hàm nhân bản
     //CreadtedBy : NC Mạnh
     //CreatedDate "5/12/2023"
-     CopyData(item){
+     copyData(item){
       this.isShowForm = true;
       this.employee = {};
       this.employee = item;
@@ -504,7 +501,7 @@ export default {
     //hàm Load lại dữ liệu
     //CreadtedBy : NC Mạnh
     //CreatedDate "23/01/2024"
-   async Reload(){
+   async reload(){
        this.loader = true;
        await this.SearchData(this.pageSize,this.numberPage);
        setTimeout(() => this.loader = false,2);
@@ -513,7 +510,7 @@ export default {
    //hàm show xóa nhiều
   //CreadtedBy : NC Mạnh
   //CreatedDate "5/12/2023"
-    ShowDeleteMultiple(){
+    showDeleteMultiple(){
       this.isShowDeleteMultiple = !this.isShowDeleteMultiple;
     },
   },
@@ -530,7 +527,7 @@ export default {
       content: "",
       method: 0,
       formattedDate: "",
-      selectedRowIndex: 0,
+      selectedRowIndex: "",
       row: 0,
       selectAll: false,
       selectedItems: [],

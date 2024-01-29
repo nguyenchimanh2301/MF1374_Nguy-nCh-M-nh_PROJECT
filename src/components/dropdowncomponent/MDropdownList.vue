@@ -19,7 +19,7 @@ props:["dataApi","propText","propValue","hasError"],
 methods:{
   
   created() {
-    console.log(this.propValue);
+    console.log(this.dataApi);
   },
   mounted() {
     this.arrays = this.api;
@@ -38,7 +38,7 @@ data(){
     return{
        showData:false,
        arrays : [],
-       itemSelected:"",
+       itemSelected: this.dataApi[0].text,
     }
 },
 }

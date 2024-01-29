@@ -10,6 +10,8 @@ const MISAResource = {
       "PhoneIsValid" : 'Điện thoại phải đủ 10 số',
       "DebitAmountIsNumeric" : 'Tiền nợ  phải là số',
       "EmployeeInformation"  : 'Thông tin nhân viên',
+      "DateNotValid"  : 'Ngày sinh không hợp lệ',
+      "DateNotGreater" : 'Ngày sinh không lớn hơn ngày hiện tại',
       "EmployeeCode"  : 'Mã',
       "FullName" : 'Tên',
       "PhoneNumber" : 'Số điện thoại',
