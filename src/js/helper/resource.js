@@ -6,9 +6,10 @@ const MISAResource = {
       "AddNewTitle" : 'Thêm mới nhân viên',
       "Edit" : 'Sửa',
       "Copy" : 'Nhân bản',
-      "EmployeeNotEmpty" : 'Mã nhân viên  không được để trống',
-      "DepartmentNotEmpty" :'Hãy chọn phòng ban',
-      "FullNameNotEmpty" : 'Họ tên không được để trống',
+     
+      "EmployeeNotEmpty" : 'Mã nhân viên  không được để trống,',
+      "DepartmentNotEmpty" :'Mời chọn phòng ban,',
+      "FullNameNotEmpty" : 'Họ tên không được để trống,',
       "EmailNotEmpty" : 'Email không được để trống',
       "EmailNotValid" : 'Email không đúng định dạng',
       "PhoneIsNumeric" : 'Điện thoại phải là số',
@@ -87,9 +88,9 @@ const MISAResource = {
       "Add":'Cất',
   },
   EN: {
-    "EmployeeNotEmpty" : 'Mã nhân viên không được để trống',
-    "FullNameNotEmpty" : 'Họ tên không được để trống',
-    "EmailNotValid" : 'Email không đúng định dạng',
+    "EmployeeNotEmpty" : 'Mã nhân viên không được để trống,',
+    "FullNameNotEmpty" : 'Họ tên không được để trống,',
+    "EmailNotValid" :  'Email không đúng định dạng',
     
   },
   returnMessage: {
@@ -98,6 +99,9 @@ const MISAResource = {
     deleteComplete: "Thành công! Nhân viên đã bị xóa",
     notFoundUrl: "Đường dẫn không chính xác",
     severError: "Lỗi hệ thống",
+    HasError : 'Đã có lỗi xảy ra vui lòng liên Hệ MISA để được giải quyết',
+    Unauthorized : 'Truy cập bị từ chối',
+    Forbidden : "Bạn đã bị chặn truy cập vào đường dẫn",
   },
   notice: {
     question: "question",

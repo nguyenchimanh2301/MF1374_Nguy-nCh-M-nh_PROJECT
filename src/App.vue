@@ -12,7 +12,7 @@
 </template>
 
 <script>
-import TheSidebar from './components/layoutcomponent/TheSidebar.vue';
+import TheSidebar from './view/layout/TheSidebar.vue';
 export default {
   name: 'App',
   components: {

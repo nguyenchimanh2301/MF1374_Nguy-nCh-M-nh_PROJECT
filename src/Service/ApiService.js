@@ -111,7 +111,7 @@ const ApiService={
    //Api Service phân trang
       //CreatedBy NCMANH(23/1/2024)
  async loadFilter(text, pageSize, numberPage) {
-    let url = MISAApi+`/getpaging?searchText=${text}&pageSize=${pageSize}&numberPage= ${numberPage}`;
+    let url = MISAApi+`/getpagingdto?searchText=${text}&pageSize=${pageSize}&numberPage= ${numberPage}`;
       try {
     return await axios
         .get(

@@ -25,15 +25,16 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: Roboto;
+    font-family:  Roboto;
+}
+@font-face {
+    font-family:'MISA';
+    src: url(../assets/fonts/notosans-regular.2cb88a13.woff2);
 }
 ::-webkit-scrollbar {
     width: 5px;
     background-color: gray;
   }
-/* 
-@font-face {
-    font-family: font;
-    src: url(../assets/font/GoogleSans-Regular.otf);
-} */
+
+
 

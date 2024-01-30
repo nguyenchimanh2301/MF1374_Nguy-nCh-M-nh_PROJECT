@@ -122,8 +122,10 @@
                 </label>
                 <input
                   type="date"
+                  :formatter="format"
                   id="selectedDate"
                   v-model="state.EmployeeSelect.DateOfBirth"
+                  format="dd/MM/yyyy"
                 />
               </div>
 
@@ -171,6 +173,9 @@
                   id="idcard"
                   v-model="state.EmployeeSelect.IdentityNumber"
                 />
+                <div
+              >
+              </div> 
               </div>
               <label id="label" for=""
                 >{{ this.MISAResource["VN"].IdentityDate }}
@@ -213,9 +218,9 @@
                   :hasError="v$.EmployeeSelect.Email.$error"
                   input-id="email"
                 ></MInput>
-                <span class="error-text" v-if="v$.EmployeeSelect.Email.$error">
-                  {{ v$.EmployeeSelect.Email.$errors[0].$message }}
-                </span>
+                <!-- <span class="error-text" v-if="v$.EmployeeSelect.Email.$error">
+                  {{ v$.EmployeeSelect.Email.$errors[0].$message }} -->
+                <!-- </span> -->
               </label>
             </div>
             <label id="label" for=""
@@ -277,15 +282,14 @@
 import useValidate from "@vuelidate/core";
 import {
   required,
-  // minLength,
-  // maxLength,
-  // numeric,
+  minLength,
+  maxLength,
+  numeric,
   email,
   helpers,
 } from "@vuelidate/validators";
 import { reactive, computed } from "vue";
 import MISAResource from "../../js/helper/resource";
-
 export default {
   props: ["EmployeeSelected", "methodP", "MaxCode"],
   created() {
@@ -309,7 +313,7 @@ export default {
         FullName: "",
         PhoneNumber: "",
         Gender: 1,
-        DateOfBirth: "",
+        DateOfBirth:"",
         DepartmentId: "",
         Address: "",
         BankName: "",
@@ -326,6 +330,7 @@ export default {
       //   const currentDate = new Date();
       //   return selectedDate <= currentDate;
       // });
+
       return {
         EmployeeSelect: {
           EmployeeCode: {
@@ -359,12 +364,12 @@ export default {
             //   (value) => new Date(value) < new Date())
           },
 
-          // PhoneNumber: {
-          //     // required: helpers.withMessage(MISAResource["VN"].PhoneIsNotEmpty, required),
-          //     numeric: helpers.withMessage(MISAResource["VN"].PhoneIsNumeric, numeric),
-          //     minLength: helpers.withMessage(MISAResource["VN"].PhoneIsValid, minLength(10)),
-          //     maxLength: helpers.withMessage(MISAResource["VN"].PhoneIsValid, maxLength(10)),
-          // },
+          PhoneNumber: {
+              // required: helpers.withMessage(MISAResource["VN"].PhoneIsNotEmpty, required),
+              numeric: helpers.withMessage(MISAResource["VN"].PhoneIsNumeric, numeric),
+              minLength: helpers.withMessage(MISAResource["VN"].PhoneIsValid, minLength(10)),
+              maxLength: helpers.withMessage(MISAResource["VN"].PhoneIsValid, maxLength(10)),
+          },
           // DebitAmount: {
           //     numeric: helpers.withMessage(MISAResource["VN"].DebitAmountIsNumeric, numeric),
           //     // minLength: minLength(4),
@@ -381,6 +386,7 @@ export default {
       //  await this.addData();
       await this.addData();
     },
+ 
     //Lấy dữ liệu cho combobox
     async getDataCombobox() {
       this.position = await this.MISAApiService.GetDataName("Positions");
@@ -432,18 +438,17 @@ export default {
                 this.msgError = this.MISAErrorService.GetErrorCode(response);
                 this.loadForm(response);
                 this.closeToast();
+                console.log(response);
+
               })
               .catch((error) => {
-                this.MsgValidate = this.MISAErrorService.GetErrorCode(
-                  error.response
-                );
+                this.MsgValidate = this.MISAErrorService.GetErrorCode(error.response);
                 this.msgError = this.msgError.concat(this.MsgValidate);
                 this.textBtn = this.MISAResource.TextBtn.Close;
                 this.loadForm(error.response);
                 console.log(error);
               });
           } catch (error) {
-            this.MISAErrorService.GetErrorCode(error);
             this.loadForm();
             console.log(error);
           }
@@ -543,6 +548,9 @@ export default {
         console.log(error);
       }
     },
+  },
+  computed: {
+   
   },
   mounted() {
     // Focus vào input khi component được mounted

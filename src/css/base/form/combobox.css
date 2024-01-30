@@ -26,6 +26,7 @@
   background-color: #ffffff;
   display: grid;
   place-items: center;
+  border-left: 1px solid #e6e6e6;
 }
 .combobox_data {
   position: absolute;

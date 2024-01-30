@@ -189,21 +189,10 @@
                   </td>
 
                   <td class="txt-left">
-                    <div v-for="(position, index) in position" :key="index">
-                      <div v-if="position.PositionId === item.PositionId">
-                        {{ position.PositionName }}
-                      </div>
-                    </div>
+                        {{ item.PositionName }}
                   </td>
-
                   <td class="txt-left">
-                    <div v-for="(department, index) in department" :key="index">
-                      <span
-                        v-if="department.DepartmentId === item.DepartmentId"
-                      >
-                        {{ department.DepartmentName }}
-                      </span>
-                    </div>
+                        {{ item.DepartmentName }}
                   </td>
                   <td class="txt-right">
                     {{ item.CreditNumber }}
@@ -309,7 +298,7 @@
 </template>
 <script>
 import _ from "lodash";
-import FormImportExcel from "../importcomponent/FormImportExcel.vue";
+import FormImportExcel from "../import/FormImportExcel.vue";
 export default {
   components: { FormImportExcel },
   computed: {
@@ -341,7 +330,7 @@ export default {
     async SearchData(pageSize, numberPage) {
       try {
         let text = this.searchText.trim();
-      let urlRecord = this.MISAApi + `/getpaging?searchText=${text}`;
+        let urlRecord =  this.MISAApi+`/getpagingdto?searchText=${text}`
       if (this.text === null) {
         console.log(text);
       } else {
@@ -350,9 +339,9 @@ export default {
           pageSize,
           numberPage
         );
-        let CountRecords = await this.MISAApiService.GetDataUrl(urlRecord);
-        if (CountRecords) {
-          this.records = CountRecords.length;
+        let countRecords = await this.MISAApiService.GetDataUrl(urlRecord);
+        if (countRecords) {
+          this.records = countRecords.length;
         }
         this.loader = false;
       }
@@ -390,10 +379,10 @@ export default {
     //CreadtedBy : NC Mạnh
     //CreatedDate "5/12/2023"
     async LoadAllData() {
-      let data = await this.MISAApiService.GetData();
-      this.position = await this.MISAApiService.GetDataName("Positions");
-      this.department = await this.MISAApiService.GetDataName("Departments");
       try{
+        //  this.employees = data;
+        //  this.records = data.length;
+        let data = await this.MISAApiService.GetData();
         this.maxCode = this.MISADataService.GetMaxCode(data) + 1;
       }
       catch(error){

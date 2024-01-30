@@ -4,30 +4,30 @@ import App from './App.vue'
 import excel from 'vue-excel-export'
 
  import TheToastMessage from './components/toastmessage/TheToastMessage.vue';
- import MInput from './components/inputcomponent/MInput.vue';
- import MLoader from './components/pagingcomponent/MLoader.vue';
- import TheDialog from './components/dialogcomponent/TheDialog.vue';
- import TableEmployee from './components/employeecomponent/TableEmployee.vue'
- import ThePagination from './components/pagingcomponent/ThePagination.vue'
- import MCombobox from './components/comboboxcomponent/MCombobox.vue'
- import  MDropdownList from './components/dropdowncomponent/MDropdownList.vue';
- import FormExcel from './components/importcomponent/FormImportExcel.vue'
+ import MInput from './components/input/MInput.vue';
+ import MLoader from './components/paging/MLoader.vue';
+ import TheDialog from './components/dialog/TheDialog.vue';
+ import TableEmployee from './view/employee/TableEmployee.vue'
+ import ThePagination from './components/paging/ThePagination.vue'
+ import MCombobox from './components/combobox/MCombobox.vue'
+ import  MDropdownList from './components/dropdown/MDropdownList.vue';
+ import FormExcel from './view/import/FormImportExcel.vue'
 
 
  /* import font awesome icon component */
 
 import MISAResource from './js/helper/resource';
-import TheEmployee from './components/routercomponent/TheEmployee.vue';
-import ChooseFile from './components/routercomponent/ChooseFile.vue';
-import ImportResult from './components/routercomponent/ImportResult.vue';
-import DataImport from './components/routercomponent/DataImport.vue';
+import TheEmployee from './view/router/TheEmployee.vue';
+import ChooseFile from './view/router/ChooseFile.vue';
+import ImportResult from './view/router/ImportResult.vue';
+import DataImport from './view/router/DataImport.vue';
 
 import  axios  from 'axios';
 import MISAEnum from './js/helper/enum';
 import MISAErrorService from './service/errorservice';
 import MISAApiService from './service/apiservice';
 import DataService from './service/dataservice';
-import FormEmployeeDetail from './components/employeecomponent/FormEmployeeDetail.vue';
+import FormEmployeeDetail from './view/employee/FormEmployeeDetail.vue';
 
 
 import { createRouter , createWebHistory } from 'vue-router';
