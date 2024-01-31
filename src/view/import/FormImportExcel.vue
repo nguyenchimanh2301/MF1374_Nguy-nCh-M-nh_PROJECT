@@ -190,8 +190,10 @@ export default {
     }, 
     //Chọn tệp
     handleFileChange() {
+      this.loader = true;
       this.selectedFile = this.$refs.fileInput.files[0];
       this.excelName = this.selectedFile.name;
+      setTimeout(() => this.handleFile(), 2000);
     },
     //Hàm lấy về tệp  dữ liệu
     //CreatedBy NCMANH(24/1/2024)
@@ -220,8 +222,6 @@ export default {
     //Hàm chạy đến bước tiếp theo
     //CreatedBy NCMANH(24/1/2024)
     onClickNextStep() {
-      this.loader = true;
-      setTimeout(() => this.handleFile(), 2000);
       if (this.isShow < 2) {
         this.isShow += 1;
         let obj = this.sidebar.filter((x) => x.value === this.isShow);
