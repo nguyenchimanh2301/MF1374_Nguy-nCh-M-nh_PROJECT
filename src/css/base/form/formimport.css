@@ -1,4 +1,13 @@
 
+.form-import{
+  width: 1140px;
+  height: 900px;
+  position: absolute;
+  background-color: #ffffff;
+  top: 5%;
+  left: 20%;
+  border-radius: 4px;
+}
 .form-header h3{
     margin: 20px;
 }
@@ -87,7 +96,7 @@
     left: 5%;
     border-radius: 4px;
     display: grid;
-    grid-template-rows: 56px auto 56px;
+    grid-template-rows: 56px auto 90px;
 }
 
 .form-header{
@@ -172,4 +181,47 @@
   }
   .menu-active {
     background-color: rgb(102, 175, 255) !important;
+  }
+
+.scroll__table-excel::-webkit-scrollbar {
+    height: 8px; /* Chiều cao của thanh cuộn */
+    border-radius: 8px; 
+
+  }
+  
+.scroll__table-excel::-webkit-scrollbar-thumb {
+    background-color: #333;
+    height: 5px;
+    border-radius: 8px; 
+
+
+/* Màu sắc của "nút" thanh cuộn */
+  }
+  
+.form-table::-webkit-scrollbar {
+    height: 8px !important;
+    border-radius: 8px;
+}
+  /* Tùy chỉnh thanh cuộn cho Firefox */
+.scroll__table-excel::-moz-scrollbar {
+    height: 5px;
+    border-radius: 8px;
+  }
+  
+.scroll__table-excel::-moz-scrollbar-thumb {
+    background: #888; 
+    border-radius: 8px; 
+  }
+  
+  /* Tùy chỉnh thanh cuộn cho Edge */
+.scroll__table-excel::-ms-scrollbar {
+    height: 5px;
+    border-radius: 8px; 
+
+  }
+  
+.scroll__table-excel::-ms-scrollbar-thumb {
+    background-color: #333;
+    border-radius: 8px; 
+
   }

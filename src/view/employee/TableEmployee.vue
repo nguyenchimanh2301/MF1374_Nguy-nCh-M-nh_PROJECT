@@ -36,7 +36,7 @@
         </div>
         <div class="data">
           <div class="feature">
-            <div
+            <div  @mouseleave="isShowDeleteMultiple=false"
               class="delete-multiple"
               @click="showDeleteMultiple"
               v-show="sum > 0"
@@ -49,7 +49,7 @@
               <div class="delete-multiple-text">
                 {{ this.MISAResource["VN"].MultipleCommand }}
               </div>
-              <div class="icon-combobox">
+              <div class="icon-combobox"    >
                 <div
                   v-show="isShowDeleteMultiple"
                   class="delete-text"
@@ -353,8 +353,10 @@ export default {
     //Hàm xuất tệp
     //CreatedBy NCMANH(24/1/2024)
     async ExportFile() {
+      this.loader = true;
       try {
         await this.MISAApiService.exportFile();
+         this.loader = false;
       } catch (error) {
         console.log(error);
       }
@@ -578,9 +580,13 @@ export default {
     //CreadtedBy : NC Mạnh
     //CreatedDate "5/12/2023"
     showForm() {
+      this.employee = {};
      try {
       this.isShowForm = true;
-      this.employee = {};
+      this.employee = {
+        EmployeeCode : "NV-"+ this.maxCode,
+        Gender : 0,
+      };
       this.method = this.MISAEnum.method.ADD;
       this.content = this.MISAResource.returnMessage.addComplete;
      } catch (error) {

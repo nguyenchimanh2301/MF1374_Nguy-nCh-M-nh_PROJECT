@@ -45,7 +45,7 @@
             </div>
           </div>
           <div class="scroll__table-excel" v-show="isShow === 1">
-            <div class="import-count" v-show="valid > 0">
+            <div class="import-count">
               <strong
                 >{{ valid }}/{{ length
                 }}{{ this.MISAResource["VN"].Import.RowValid }}</strong
@@ -190,17 +190,18 @@ export default {
     }, 
     //Chọn tệp
     handleFileChange() {
-      this.loader = true;
-      setTimeout(() => this.handleFile(), 3000);
+      this.selectedFile = this.$refs.fileInput.files[0];
+      this.excelName = this.selectedFile.name;
     },
     //Hàm lấy về tệp  dữ liệu
     //CreatedBy NCMANH(24/1/2024)
     async handleFile() {
       try {
-        this.selectedFile = this.$refs.fileInput.files[0];
         this.employees = await this.MISAApiService.uploadFile(
           this.selectedFile
         );
+        this.valid = 0;
+        this.notValid=0;
         this.length = this.employees.length;
         this.employees.reduce((acc, x) => {
           console.log(acc);
@@ -211,7 +212,6 @@ export default {
           }
         }, {});
         this.loader = false;
-        this.excelName = this.selectedFile.name;
         this.$emit("loadData");
       } catch (e) {
         console.log(e);
@@ -220,6 +220,8 @@ export default {
     //Hàm chạy đến bước tiếp theo
     //CreatedBy NCMANH(24/1/2024)
     onClickNextStep() {
+      this.loader = true;
+      setTimeout(() => this.handleFile(), 2000);
       if (this.isShow < 2) {
         this.isShow += 1;
         let obj = this.sidebar.filter((x) => x.value === this.isShow);

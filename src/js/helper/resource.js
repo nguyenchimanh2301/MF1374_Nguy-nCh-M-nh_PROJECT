@@ -23,7 +23,7 @@ const MISAResource = {
       "HideDialogQuestion" : 'Dữ liệu đã bị thay đổi bạn có muốn cất không ?',
       "EmployeeCode"  : 'Mã',
       "FullName" : 'Tên',
-      "PhoneNumber" : 'Số điện thoại',
+      "PhoneNumber" : 'ĐT di động',
       "Fax" : 'ĐT cố định',
       "DateOfBirth" : 'Ngày sinh',
       "Gender" : 'Giới tính',

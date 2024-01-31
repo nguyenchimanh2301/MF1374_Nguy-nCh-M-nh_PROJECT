@@ -93,7 +93,7 @@
             <div class="label-input">
               <label id="label" for=""
                 >{{ this.MISAResource["VN"].PositionName
-                }}<span class="text--required">*</span>
+                }}
                 <m-combobox
                   :dataApi="position"
                   title="Hãy chọn chức vụ"
@@ -109,10 +109,6 @@
                 <!-- {{ v$.EmployeeSelect.DepartmentId.$errors[0].$message }} -->
               </div>
             </div>
-            <!-- <label id="label" for=""
-              >{{ this.MISAResource["VN"].PositionName }}
-              <input type="text" v-model="state.EmployeeSelect.PositionName" />
-            </label> -->
           </div>
           <div class="form__input--right">
             <div>
@@ -120,13 +116,21 @@
                 <label id="label" for=""
                   >{{ this.MISAResource["VN"].DateOfBirth }}
                 </label>
-                <input
-                  type="date"
-                  :formatter="format"
-                  id="selectedDate"
-                  v-model="state.EmployeeSelect.DateOfBirth"
-                  format="dd/MM/yyyy"
-                />
+                <div class="format-date">
+                  <input
+                    type="text"
+                    placeholder="dd/mm/yyyy"
+                    v-model="showDob"
+                    id="dateDisplay"
+                  />
+                  <input
+                    type="date"
+                    id="selectedDate"
+                    v-model="state.EmployeeSelect.DateOfBirth"
+                    @input="formatDate"
+                    @change="showDate"
+                  />
+                </div>
               </div>
 
               <label id="label" for=""
@@ -173,18 +177,29 @@
                   id="idcard"
                   v-model="state.EmployeeSelect.IdentityNumber"
                 />
-                <div
-              >
-              </div> 
+                <div></div>
               </div>
+         
+            <div class="label-input">
               <label id="label" for=""
-                >{{ this.MISAResource["VN"].IdentityDate }}
+              >{{ this.MISAResource["VN"].IdentityDate }}
+            </label>
+              <div class="format-date">
+                  <input
+                    type="text"
+                    placeholder="dd/mm/yyyy"
+                    v-model="identityDate"
+                    id="dateDisplay"
+                  />
                 <input
                   type="date"
+                  @change="showIdentityDate"
                   v-model="state.EmployeeSelect.IdentityDate"
                 />
-              </label>
             </div>
+            </div>
+            </div>
+
             <label id="label" for=""
               >{{ this.MISAResource["VN"].IdentityPlace }}
               <input
@@ -232,7 +247,7 @@
               <input type="text" v-model="state.EmployeeSelect.BankName" />
             </label>
             <label id="label" for=""
-              >{{ this.MISAResource["VN"].Address }}
+              >{{ this.MISAResource["VN"].BankAddress }}
               <input type="text" v-model="state.EmployeeSelect.BankAdress" />
             </label>
           </div>
@@ -250,7 +265,6 @@
             </button>
             <button class="button btn-add btn-main" @click="addAndNew">
               {{ this.MISAResource["VN"].AddAndNew }}
-             
             </button>
           </div>
         </div>
@@ -280,6 +294,7 @@
 </template>
 <script>
 import useValidate from "@vuelidate/core";
+import isEqual from "lodash/isEqual";
 import {
   required,
   minLength,
@@ -293,12 +308,13 @@ import MISAResource from "../../js/helper/resource";
 export default {
   props: ["EmployeeSelected", "methodP", "MaxCode"],
   created() {
-    this.state.EmployeeSelect = JSON.parse(JSON.stringify(this.EmployeeSelected));
+    this.state.EmployeeSelect = JSON.parse(
+      JSON.stringify(this.EmployeeSelected)
+    );
+
     this.method = this.methodP;
     if (this.methodP === this.MISAEnum.method.ADD) {
       this.title = this.MISAResource.NameMode.AddNew;
-      this.state.EmployeeSelect.Gender = 0;
-      this.state.EmployeeSelect.EmployeeCode = "NV-" + (this.MaxCode + 1);
     } else {
       this.title = this.MISAResource.NameMode.Change;
     }
@@ -313,7 +329,7 @@ export default {
         FullName: "",
         PhoneNumber: "",
         Gender: 1,
-        DateOfBirth:"",
+        DateOfBirth: "",
         DepartmentId: "",
         Address: "",
         BankName: "",
@@ -365,10 +381,19 @@ export default {
           },
 
           PhoneNumber: {
-              // required: helpers.withMessage(MISAResource["VN"].PhoneIsNotEmpty, required),
-              numeric: helpers.withMessage(MISAResource["VN"].PhoneIsNumeric, numeric),
-              minLength: helpers.withMessage(MISAResource["VN"].PhoneIsValid, minLength(10)),
-              maxLength: helpers.withMessage(MISAResource["VN"].PhoneIsValid, maxLength(10)),
+            // required: helpers.withMessage(MISAResource["VN"].PhoneIsNotEmpty, required),
+            numeric: helpers.withMessage(
+              MISAResource["VN"].PhoneIsNumeric,
+              numeric
+            ),
+            minLength: helpers.withMessage(
+              MISAResource["VN"].PhoneIsValid,
+              minLength(10)
+            ),
+            maxLength: helpers.withMessage(
+              MISAResource["VN"].PhoneIsValid,
+              maxLength(10)
+            ),
           },
           // DebitAmount: {
           //     numeric: helpers.withMessage(MISAResource["VN"].DebitAmountIsNumeric, numeric),
@@ -377,7 +402,6 @@ export default {
         },
       };
     });
-
     const v$ = useValidate(rules, state);
     return { state, v$ };
   },
@@ -386,12 +410,10 @@ export default {
       //  await this.addData();
       await this.addData();
     },
- 
     //Lấy dữ liệu cho combobox
     async getDataCombobox() {
       this.position = await this.MISAApiService.GetDataName("Positions");
       this.department = await this.MISAApiService.GetDataName("Departments");
-
     },
     //Hàm hiển thị dialog
     //cretedBy : NC Mạnh
@@ -419,11 +441,13 @@ export default {
     //CreatedAt : 5/12/2023
     async addData() {
       this.msgError = [];
-      this.type = " ";
-      this.Employee = Object.assign({}, this.state.EmployeeSelect);
+      this.type = "";
+      this.employee = Object.assign({}, this.state.EmployeeSelect);
+      //Chạy hàm validate
       this.v$.$validate();
-      console.log(this.v$.$errors);
+      //Thêm cảnh báo vào dialog
       this.v$.$errors.forEach((x) => this.msgError.push(x.$message));
+      //Nếu cảnh báo ở validate ở UI >0
       if (this.msgError.length > 0) {
         this.type = this.MISAResource.notice.error;
         this.isShowDlg = true;
@@ -432,17 +456,19 @@ export default {
         if (this.method === this.MISAEnum.method.ADD) {
           try {
             await this.api
-              .post(this.MISAApi, this.Employee)
+              .post(this.MISAApi, this.employee)
               .then((response) => {
                 response.data;
                 this.msgError = this.MISAErrorService.GetErrorCode(response);
                 this.loadForm(response);
                 this.closeToast();
                 console.log(response);
-
               })
               .catch((error) => {
-                this.MsgValidate = this.MISAErrorService.GetErrorCode(error.response);
+                //Bắt lỗi trả về  từ API
+                this.MsgValidate = this.MISAErrorService.GetErrorCode(
+                  error.response
+                );
                 this.msgError = this.msgError.concat(this.MsgValidate);
                 this.textBtn = this.MISAResource.TextBtn.Close;
                 this.loadForm(error.response);
@@ -457,7 +483,7 @@ export default {
             await this.api
               .put(
                 this.MISAApi + "/" + this.state.EmployeeSelect.EmployeeId,
-                this.Employee
+                this.employee
               )
               .then((response) => {
                 response.data;
@@ -481,6 +507,7 @@ export default {
         }
       }
     },
+    //Hiển thị dialog
     showDialog() {
       try {
         this.msgError = [];
@@ -512,7 +539,6 @@ export default {
           this.typeToast = this.MISAResource.notice.success;
           this.type = this.MISAResource.notice.warning;
           this.textBtn = this.MISAResource["VN"].Accept;
-
         }
         this.msgToast.push(message);
       } catch (error) {
@@ -523,10 +549,17 @@ export default {
     //cretedBy : NC Mạnh
     //CreatedAt : 5/12/2023
     closeForm() {
-      this.showDialog();
-      // this.showForm = false;
-      // setTimeout(() => this.$emit("hideForm"), 1000);
+      this.dataChange = JSON.parse(JSON.stringify(this.EmployeeSelected));
+      if (isEqual(this.dataChange, this.state.EmployeeSelect)) {
+        this.$emit("hideForm");
+        // Đối tượng có cùng giá trị
+      } else {
+        this.showDialog();
+        // Đối tượng khác nhau
+      }
     },
+    // this.showForm = false;
+    // setTimeout(() => this.$emit("hideForm"), 1000);
     //hàm đóng form
     //cretedBy : NC Mạnh
     //CreatedAt : 5/12/2023
@@ -543,15 +576,27 @@ export default {
         this.showToast = true;
         setTimeout(() => (this.showToast = false), 2000);
         this.$emit("loadData");
-        setTimeout(() => (this.hideForm()), 2000);
+        setTimeout(() => this.hideForm(), 2000);
       } catch (error) {
         console.log(error);
       }
     },
+    //Định dạng ngày sinh là dd/mm/yyyy
+    showDate() {
+      const selectedDate = new Date(this.state.EmployeeSelect.DateOfBirth);
+      this.showDob = `${selectedDate.getDate()}/${
+        selectedDate.getMonth() + 1
+      }/${selectedDate.getFullYear()}`;
+    },
+    //Định gày cấp là dd/mm/yyyy
+    showIdentityDate() {
+      const selectedDate = new Date(this.state.EmployeeSelect.IdentityDate);
+      this.identityDate = `${selectedDate.getDate()}/${
+        selectedDate.getMonth() + 1
+      }/${selectedDate.getFullYear()}`;
+    },
   },
-  computed: {
-   
-  },
+  computed: {},
   mounted() {
     // Focus vào input khi component được mounted
     this.$refs.focusText.$el.focus();
@@ -566,7 +611,8 @@ export default {
       title: " ",
       formattedValue: 0,
       type: "",
-      Employee: {},
+      employee: {},
+      dataChange: {},
       msgError: [],
       msgToast: [],
       typeToast: "info",
@@ -576,6 +622,8 @@ export default {
       department: [],
       showForm: true,
       textBtn: "",
+      showDob:"",
+      identityDate:""
     };
   },
 };
