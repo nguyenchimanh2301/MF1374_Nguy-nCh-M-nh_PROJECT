@@ -446,7 +446,7 @@ export default {
       //Chạy hàm validate
       this.v$.$validate();
       //Thêm cảnh báo vào dialog
-      this.v$.$errors.forEach((x) => this.msgError.push(x.$message));
+      this.v$.$errors.forEach((x) => this.msgError.push('-'+x.$message));
       //Nếu cảnh báo ở validate ở UI >0
       if (this.msgError.length > 0) {
         this.type = this.MISAResource.notice.error;
