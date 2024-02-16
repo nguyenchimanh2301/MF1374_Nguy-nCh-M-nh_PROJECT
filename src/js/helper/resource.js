@@ -74,6 +74,18 @@ const MISAResource = {
         Step   : "Bước",
 
       },
+      Login:{
+        VN   :"Tiếng Việt",
+        EN   :"English",
+        UserNotEmpty   : "Tài khoản không được để trống",
+        PasswordNotEmpty:  "Mật khẩu không được để trống",
+        ForgotPassword     :"Quên mật khẩu?",
+        Login   : " Đăng nhập",
+        LoginWith   : "Hoặc đăng nhập với",
+        CopyWriterText   : "Copyright © 2012 - 2024 MISA JSC",
+
+      },
+      
       GenderName:{
         Male:"Nam",
         Female:"Nữ",

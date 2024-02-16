@@ -258,7 +258,7 @@ input[type="radio"]{
   background-color: #e6e6e6;
 }
 .error-text{
- font-size: 12px; color: red;
+ font-size: 12px; color: rgb(245, 56, 56);
  position: absolute;
  font-weight: 600;
  bottom: -13px;

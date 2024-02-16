@@ -1,22 +1,24 @@
 <template>
   <div>
     <!-- <the-header></the-header> -->
-    <div class="layout">
-     <the-sidebar></the-sidebar>
+    <!-- <div class="layout">
+     <the-sidebar></the-sidebar> -->
     <!-- end sidebar -->
-    <table-employee></table-employee>
+    <!-- <table-employee></table-employee> -->
      <!-- <the-content></the-content> -->
-   
-  </div>
+   <the-login></the-login>
+  <!-- </div> -->
   </div>
 </template>
 
 <script>
-import TheSidebar from './view/layout/TheSidebar.vue';
+import TheLogin from './view/login/TheLogin.vue'
+// import TheSidebar from './view/layout/TheSidebar.vue';
 export default {
   name: 'App',
   components: {
-    TheSidebar,
+    TheLogin
+    // TheSidebar,
     // TheContent,
   }
 }

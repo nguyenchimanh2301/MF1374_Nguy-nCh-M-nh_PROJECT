@@ -12,6 +12,7 @@ import excel from 'vue-excel-export'
  import MCombobox from './components/combobox/MCombobox.vue'
  import  MDropdownList from './components/dropdown/MDropdownList.vue';
  import FormExcel from './view/import/FormImportExcel.vue'
+ import TheLogin from './view/login/TheLogin.vue'
 
 
  /* import font awesome icon component */
@@ -52,6 +53,7 @@ app.component("MInput",MInput)
 app.component("MLoader",MLoader)
 app.component("the-dialog",TheDialog)
 app.component("the-employee",TheEmployee)
+app.component("the-login",TheLogin)
 app.component("the-result",ImportResult)
 app.component("the-choosefile",ChooseFile)
 app.component("the-data",DataImport)
