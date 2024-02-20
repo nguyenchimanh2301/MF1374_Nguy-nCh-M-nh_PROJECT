@@ -6,18 +6,16 @@
     <!-- end sidebar -->
     <!-- <table-employee></table-employee> -->
      <!-- <the-content></the-content> -->
-   <the-login></the-login>
+     <router-view></router-view>
   <!-- </div> -->
   </div>
 </template>
 
 <script>
-import TheLogin from './view/login/TheLogin.vue'
 // import TheSidebar from './view/layout/TheSidebar.vue';
 export default {
   name: 'App',
   components: {
-    TheLogin
     // TheSidebar,
     // TheContent,
   }

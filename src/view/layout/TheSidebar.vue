@@ -14,7 +14,7 @@
             <div class="item">
               <div class="icon--item icon--home"></div>
             <div>
-            Tổng quan
+           <router-link to="/layout/employees">Tổng quan</router-link>
             </div>
           </div>
           <div class="item">

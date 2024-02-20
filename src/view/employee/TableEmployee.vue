@@ -298,6 +298,7 @@
 </template>
 <script>
 import _ from "lodash";
+// import jwt_decode from "jwt-decode";
 import FormImportExcel from "../import/FormImportExcel.vue";
 export default {
   components: { FormImportExcel },
@@ -309,6 +310,10 @@ export default {
   created() {
     this.SearchData(this.pageSize, this.numberPage);
     this.LoadAllData();
+    // this.decodedToken = jwt_decode(this.token);
+    //   // Access the payload (which is typically a JSON object)
+    // console.log(this.decodedToken);
+
   },
   watch: {},
   methods: {
@@ -692,6 +697,7 @@ export default {
       position: [],
       department: [],
       titleDialog: "",
+      token: "",
     };
     // Thêm các dòng dữ liệu khác cần hiển thị
   },

@@ -1,4 +1,7 @@
 import axios from "axios";
+let token = localStorage.getItem('token');
+
+axios.defaults.headers.common['Authorization'] = `Bearer ${token}`
 const  MISAApi ="https://localhost:7096/api/v1/Employees";
 const  Api ="https://localhost:7096/api/v1/";
 
@@ -110,35 +113,166 @@ const ApiService={
   },
    //Api Service phân trang
       //CreatedBy NCMANH(23/1/2024)
- async loadFilter(text, pageSize, numberPage) {
-    let url = MISAApi+`/getpagingdto?searchText=${text}&pageSize=${pageSize}&numberPage= ${numberPage}`;
+//  async loadFilter(text, pageSize, numberPage) {
+//     let url = MISAApi+`/getpagingdto?searchText=${text}&pageSize=${pageSize}&numberPage= ${numberPage}`;
+//       try {
+//     return await axios
+//         .get(
+//         url
+//         )
+//         .then((response) => {
+//          return  response.data;
+//         })
+//         .catch((e) => {
+//           if(e){
+//             console.log(e);
+//           }
+//         });
+//     } catch (error) {
+//       console.log(error);
+//      }
+//     },
+// async loadFilter(text, pageSize, numberPage) {
+
+//   let url = MISAApi+`/getpagingdto?searchText=${text}&pageSize=${pageSize}&numberPage=${numberPage}`;
+//   try {
+//       // Gửi yêu cầu với token hiện tại
+//       const response = await axios.get(url);
+//       return response.data;
+//   } catch (error) {
+//       // Nếu gặp lỗi, kiểm tra xem lỗi có phải do token hết hạn không
+//       if (error.response && error.response.status === 401) {
+//           try {
+//               // Nếu lỗi 401, thử làm mới token
+//               const newToken = await this.refreshToken();
+//               // Nếu làm mới token thành công, thử gửi lại yêu cầu
+//               const response = await axios.get(url, {
+//                   headers: {
+//                       Authorization: `Bearer ${newToken}`
+//                   }
+//               });
+//               // Trả về dữ liệu từ yêu cầu mới
+//               return response.data;
+//           } catch (refreshError) {
+//               // Nếu làm mới token không thành công, xử lý lỗi
+//               console.error('Làm mới token không thành công:', refreshError);
+//               throw refreshError;
+//           }
+//       } else {
+//           // Nếu lỗi không phải do token hết hạn, xử lý lỗi
+//           console.error('Lỗi khi gửi yêu cầu:', error);
+//           throw error;
+//       }
+//   }
+// },
+// async refreshToken() {
+//   try {
+      
+//       let object ={
+//         "AccessToken": accessToken,
+//         "RefreshToken":refreshToken
+//       }
+
+//    console.log(object);
+//       // Gửi yêu cầu làm mới token đến máy chủ
+//       const response = await axios.post('https://localhost:7096/api/Authenticate/refresh-token',object)
+//       // Trả về token mới từ phản hồi của máy chủ
+//       localStorage.setItem('token',response.data.Token);
+//       localStorage.setItem('refresh',response.data.RefreshToken);
+//       return response.data.Token;
+//   }  catch (refreshError) {
+//       // Xử lý lỗi nếu không thể làm mới token
+//       console.error('Lỗi khi làm mới token:', refreshError);
+//       throw refreshError;
+//   }
+// },
+// Hàm kiểm tra và làm mới token
+async checkAndRefreshToken() {
+  const token = localStorage.getItem('token');
+  const expiryDate = localStorage.getItem('expiration');
+  
+  // Nếu không có token hoặc thời gian hết hạn, hoặc thời gian hết hạn đã qua
+  if (!token || !expiryDate || new Date(expiryDate) < new Date()) {
       try {
-    return await axios
-        .get(
-        url
-        )
-        .then((response) => {
-         return  response.data;
-        })
-        .catch((e) => {
-          if(e){
-            console.log(e);
+          // Làm mới token
+          const newToken = await this.refreshToken();
+          // Lưu trữ token mới và thời gian hết hạn mới
+          localStorage.setItem('token', newToken.Token);
+          localStorage.setItem('expiration', newToken.Expiration);
+          localStorage.setItem('refresh', newToken.RefreshToken);
+
+          return newToken.token;
+      } catch (error) {
+          console.error('Lỗi khi làm mới token:', error);
+          throw error;
+      }
+  } else {
+      // Trả về token hiện tại nếu vẫn hợp lệ
+      return token;
+  }
+},
+// Hàm làm mới token
+async refreshToken() {
+  let accessToken = localStorage.getItem('token');
+  let refreshToken = localStorage.getItem('refresh');
+  try {
+      // Gửi yêu cầu làm mới token đến máy chủ
+      const response = await axios.post('https://localhost:7096/api/Authenticate/refresh-token',{
+        AccessToken: accessToken,
+        RefreshToken: refreshToken,
+      });
+      // Trả về token mới từ phản hồi của máy chủ
+      return {
+          AccessToken: response.data.Token,
+          RefreshToken: response.data.RefreshToken,
+          Expiration: response.data.Expiration
+          //         "RefreshToken":refreshToken
+      };
+  } catch (error) {
+      console.error('Lỗi khi làm mới token:', error);
+      throw error;
+  }
+},
+
+// Hàm gửi yêu cầu với token
+async loadFilter(text, pageSize, numberPage) {
+  try {
+      const token = await this.checkAndRefreshToken();
+      const url = MISAApi + `/getpagingdto?searchText=${text}&pageSize=${pageSize}&numberPage=${numberPage}`;
+      const response = await axios.get(url, {
+          headers: {
+              Authorization: `Bearer ${token}`
           }
-        });
-    } catch (error) {
-      console.log(error);
-     }
-    },
+      });
+      return response.data;
+  } catch (error) {
+      console.error('Lỗi khi gửi yêu cầu:', error);
+      throw error;
+  }
+},
      //Api Service Xuất tệp
       //CreatedBy NCMANH(23/1/2024)
   async exportFile(){
       let url =  MISAApi +`/Export`;
-     return await axios
-      .get(url)
+     
+     try {
+      const token = localStorage.getItem('token'); // Lấy token từ localStorage
+      if (!token) {
+          throw new Error('Token không tồn tại');
+      }
+      return await axios
+      .get(url,{
+        headers: {
+            Authorization: `Bearer ${token}`
+        }
+    })
       .then((response) => {
         console.log(response);
         window.open(url);
       });
+     } catch (error) {
+       console.log(error);
+     }
     }
 }
 
