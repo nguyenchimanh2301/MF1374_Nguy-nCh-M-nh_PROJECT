@@ -19,9 +19,12 @@
             </span>
             </div>
             <div class="form-password">
-                <input type="text"  placeholder="Mật khẩu" v-model="state.account.password">
-                 <i class="icon-toggle-password"></i>
+              <input v-if="showPassword"  placeholder="Mật khẩu" type="text" class="input" v-model="state.account.password" />
+             <input v-else type="password"  placeholder="Mật khẩu" class="input" v-model="state.account.password">  
+                <!-- <input type="text"  placeholder="Mật khẩu" v-model="state.account.password"> -->
+                 <i class="icon-toggle-password" @click="toggleShow"></i>
                  <span class="error-text-message" v-if="v$.account.password.$error">{{ v$.account.password.$errors[0].$message }}</span>
+                 <span class="error-text-message" v-for="(item,index) in MsgValidate" :key="index">{{item}}</span>
             </div>
             <a href="" class="forgot-password">{{this.MISAResource["VN"].Login.ForgotPassword }}</a>
         </div>
@@ -42,6 +45,7 @@
         <div class="copy-right-text">{{this.MISAResource["VN"].Login.CopyWriterText }}</div>
      </div>
     </div>
+    <MLoader v-if="loader"></MLoader>
 </template>
 
 <script>
@@ -88,28 +92,45 @@ export default {
   },
     methods: {
      async login(){
-        this.v$.$validate();
+        if(this.v$.$validate()===false){
+          return ;
+        }
         console.log();
         try {
-          
-            await this.api.post('https://localhost:7096/api/Authenticate/login',this.state.account)
+            await this.api.post('https://localhost:7096/api/v1/Authenticate/login',this.state.account)
            .then(res=>{
+            this.loader= true;
             console.log(res),
             localStorage.setItem('token',res.data.Token);
             localStorage.setItem('refresh',res.data.RefreshToken);
             localStorage.setItem('expiration',res.data.Expiration);
-            router.push('/layout');
-
-            }).catch(error=>console.log(error));
+            setTimeout(()=>{
+              this.loader= false;
+              router.push('/layout')},2000)
+            }).catch(error=>{
+              console.log(error);
+              this.MsgValidate = this.MISAErrorService.GetErrorCode(
+                  error.response
+              );
+              console.log(this.MsgValidate);
+            }
+         );
         } catch (error) {
             console.log(error);
+           
         }
         //  this.validate = true;
-      }
+      },
+      toggleShow() {
+      this.showPassword = !this.showPassword;
+    }
     },
     data(){
         return {
             validate : false,
+            loader : false,
+            showPassword: false,
+            MsgValidate:"",
         }
     }
 }

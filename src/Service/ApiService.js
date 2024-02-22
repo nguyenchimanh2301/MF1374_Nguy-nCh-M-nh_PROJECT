@@ -1,11 +1,32 @@
 import axios from "axios";
-let token = localStorage.getItem('token');
+// Hàm để thêm token vào tiêu đề Authorization của một yêu cầu Axios
+async function addTokenToRequest(config) {
+  let token = localStorage.getItem('token');
+  if (token) {
+      config.headers['Authorization'] = `Bearer ${token}`;
+  }
+  return config;
+}
 
-axios.defaults.headers.common['Authorization'] = `Bearer ${token}`
+// Khởi tạo interceptor để thực hiện thêm token vào tiêu đề Authorization cho mỗi yêu cầu
+axios.interceptors.request.use(addTokenToRequest);
+
 const  MISAApi ="https://localhost:7096/api/v1/Employees";
 const  Api ="https://localhost:7096/api/v1/";
-
 const ApiService={
+  async loadFilter(text, pageSize, numberPage) {
+    let url = MISAApi + `/getpagingdto?searchText=${text}&pageSize=${pageSize}&numberPage=${numberPage}`;
+    
+    try {
+        const response = await axios.get(url);
+        
+        // Trả về dữ liệu từ response
+        return response.data;
+    } catch (error) {
+        console.log(error);
+        throw error;
+    }
+},
     //Api Service lấy dữ liệu theo tên 
     //CreatedBy(23/1/2024)
   async GetDataName(name){
@@ -111,27 +132,37 @@ const ApiService={
       console.log(error);
     }
   },
-   //Api Service phân trang
-      //CreatedBy NCMANH(23/1/2024)
-//  async loadFilter(text, pageSize, numberPage) {
-//     let url = MISAApi+`/getpagingdto?searchText=${text}&pageSize=${pageSize}&numberPage= ${numberPage}`;
-//       try {
-//     return await axios
-//         .get(
-//         url
-//         )
-//         .then((response) => {
-//          return  response.data;
-//         })
-//         .catch((e) => {
-//           if(e){
-//             console.log(e);
-//           }
-//         });
-//     } catch (error) {
-//       console.log(error);
-//      }
-//     },
+  // async  refreshToken() {
+  //   try {
+  //     const accessToken = localStorage.getItem('token');
+  //     const refreshToken = localStorage.getItem("refresh");
+  //      console.log(accessToken,refreshToken);
+  //     if (!refreshToken) {
+  //       // Xử lý nếu không có refreshToken
+  //       return Promise.reject("Không có refreshToken trong local storage");
+  //     }
+  
+  //     // Gửi yêu cầu làm mới token
+  //     const response = await axios.post(Api+"Authenticate/refresh-token", {
+  //       AccessToken: accessToken, RefreshToken: refreshToken
+  //     });
+  
+  //     // Lưu token mới vào local storage
+  //     localStorage.setItem("token", response.data.accessToken);
+  //     localStorage.setItem("refresh", response.data.refreshToken);
+  
+  //     // Trả về accessToken mới
+  //     return response.data.Token;
+  //   } catch (error) {
+  //     // Xử lý lỗi khi làm mới token
+  //     return Promise.reject(error);
+  //   }
+  // },
+  //  Api Service phân trang
+  //     CreatedBy NCMANH(23/1/2024)
+
+
+    
 // async loadFilter(text, pageSize, numberPage) {
 
 //   let url = MISAApi+`/getpagingdto?searchText=${text}&pageSize=${pageSize}&numberPage=${numberPage}`;
@@ -187,69 +218,10 @@ const ApiService={
 //   }
 // },
 // Hàm kiểm tra và làm mới token
-async checkAndRefreshToken() {
-  const token = localStorage.getItem('token');
-  const expiryDate = localStorage.getItem('expiration');
-  
-  // Nếu không có token hoặc thời gian hết hạn, hoặc thời gian hết hạn đã qua
-  if (!token || !expiryDate || new Date(expiryDate) < new Date()) {
-      try {
-          // Làm mới token
-          const newToken = await this.refreshToken();
-          // Lưu trữ token mới và thời gian hết hạn mới
-          localStorage.setItem('token', newToken.Token);
-          localStorage.setItem('expiration', newToken.Expiration);
-          localStorage.setItem('refresh', newToken.RefreshToken);
 
-          return newToken.token;
-      } catch (error) {
-          console.error('Lỗi khi làm mới token:', error);
-          throw error;
-      }
-  } else {
-      // Trả về token hiện tại nếu vẫn hợp lệ
-      return token;
-  }
-},
-// Hàm làm mới token
-async refreshToken() {
-  let accessToken = localStorage.getItem('token');
-  let refreshToken = localStorage.getItem('refresh');
-  try {
-      // Gửi yêu cầu làm mới token đến máy chủ
-      const response = await axios.post('https://localhost:7096/api/Authenticate/refresh-token',{
-        AccessToken: accessToken,
-        RefreshToken: refreshToken,
-      });
-      // Trả về token mới từ phản hồi của máy chủ
-      return {
-          AccessToken: response.data.Token,
-          RefreshToken: response.data.RefreshToken,
-          Expiration: response.data.Expiration
-          //         "RefreshToken":refreshToken
-      };
-  } catch (error) {
-      console.error('Lỗi khi làm mới token:', error);
-      throw error;
-  }
-},
 
 // Hàm gửi yêu cầu với token
-async loadFilter(text, pageSize, numberPage) {
-  try {
-      const token = await this.checkAndRefreshToken();
-      const url = MISAApi + `/getpagingdto?searchText=${text}&pageSize=${pageSize}&numberPage=${numberPage}`;
-      const response = await axios.get(url, {
-          headers: {
-              Authorization: `Bearer ${token}`
-          }
-      });
-      return response.data;
-  } catch (error) {
-      console.error('Lỗi khi gửi yêu cầu:', error);
-      throw error;
-  }
-},
+
      //Api Service Xuất tệp
       //CreatedBy NCMANH(23/1/2024)
   async exportFile(){

@@ -3,7 +3,6 @@ import App from './App.vue'
 
 // import jwt_decode from "jwt-decode";
 import excel from 'vue-excel-export'
-import apiClient from './service/apiclientservice';
  import TheToastMessage from './components/toastmessage/TheToastMessage.vue';
  import MInput from './components/input/MInput.vue';
  import MLoader from './components/paging/MLoader.vue';
@@ -36,7 +35,7 @@ import FormEmployeeDetail from './view/employee/FormEmployeeDetail.vue';
 
 
 import routers from './service/routerservice.js'
-
+import './service/apiclientservice.js'
 
 const app = createApp(App);
 app.component("MToast",TheToastMessage)
@@ -65,7 +64,6 @@ app.use(excel)
 app.use(routers);
 
 app.config.globalProperties.api = axios;
-app.config.globalProperties.apiClient = apiClient;
 
 app.config.globalProperties.MISAEnum = MISAEnum;
 app.config.globalProperties.MISAResource = MISAResource;
