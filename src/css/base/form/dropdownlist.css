@@ -63,6 +63,7 @@
     background: var(--image) -1129px -365px;
     width: 14px;
     height: 8px;
+    position: relative;
   }
   .dropdown__button:hover {
     background-color: #e6e6e6;

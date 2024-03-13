@@ -308,10 +308,11 @@ import MISAResource from "../../js/helper/resource";
 export default {
   props: ["EmployeeSelected", "methodP", "MaxCode"],
   created() {
+    
+
     this.state.EmployeeSelect = JSON.parse(
       JSON.stringify(this.EmployeeSelected)
     );
-
     this.method = this.methodP;
     if (this.methodP === this.MISAEnum.method.ADD) {
       this.title = this.MISAResource.NameMode.AddNew;

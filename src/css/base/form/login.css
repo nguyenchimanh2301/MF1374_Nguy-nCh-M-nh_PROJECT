@@ -73,7 +73,9 @@
     text-decoration: none;
     justify-self: flex-end;
 }
-
+.btn-login:hover{
+    background-color: #C199FF;
+}
 .btn-login{
     position: relative;
     width: 100%;

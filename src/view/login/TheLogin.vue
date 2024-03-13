@@ -91,11 +91,13 @@ export default {
     return { state, v$ };
   },
     methods: {
+    ///Hàm đăng nhập 
+    ///CreatedBy : NCManh(20/1/2024)
      async login(){
-        if(this.v$.$validate()===false){
-          return ;
-        }
-        console.log();
+      this.v$.$validate();
+         if (this.v$.$errors.length > 0) {
+            return; 
+         }
         try {
             await this.api.post('https://localhost:7096/api/v1/Authenticate/login',this.state.account)
            .then(res=>{
@@ -112,15 +114,15 @@ export default {
               this.MsgValidate = this.MISAErrorService.GetErrorCode(
                   error.response
               );
-              console.log(this.MsgValidate);
             }
          );
         } catch (error) {
             console.log(error);
-           
         }
         //  this.validate = true;
       },
+    ///Hàm ẩn hiện mật khẩu
+    ///CreatedBy : NCManh(20/1/2024)
       toggleShow() {
       this.showPassword = !this.showPassword;
     }

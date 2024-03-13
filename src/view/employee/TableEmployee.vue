@@ -10,7 +10,7 @@
         </div>
         <div class="navbar--name"></div>
         <div class="navbar__input"></div>
-        <div class="navbar__icon--user">
+        <div class="navbar__icon--user" @mouseleave="isLogout=false">
           <div
             data-c-tooltip="Thông báo"
             tooltip-position="left"
@@ -18,7 +18,11 @@
           ></div>
           <div class="icon--user"></div>
           <div class="name--user">{{ this.MISAResource["VN"].UserName }}</div>
-          <div class="icon-dropdown"></div>
+          <div class="icon-dropdown" @click="isLogout=!isLogout"  >
+            <div class="log-out" @click="logout" v-if="isLogout">
+              Đăng xuất 
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -266,7 +270,6 @@
     @hideForm="hideForm"
     :EmployeeSelected="employee"
     :methodP="method"
-    :MaxCode="maxCode"
     @showFormToast="showFormToast"
     @loadData="reload"
     @showForm ="showForm"
@@ -300,6 +303,8 @@
 import _ from "lodash";
 // import jwt_decode from "jwt-decode";
 import FormImportExcel from "../import/FormImportExcel.vue";
+import route from '@/main';
+
 export default {
   components: { FormImportExcel },
   computed: {
@@ -309,7 +314,7 @@ export default {
   },
   created() {
     this.SearchData(this.pageSize, this.numberPage);
-    this.LoadAllData();
+
     // this.decodedToken = jwt_decode(this.token);
     //   // Access the payload (which is typically a JSON object)
     // console.log(this.decodedToken);
@@ -385,17 +390,16 @@ export default {
     // Láy tất cả bản ghi
     //CreadtedBy : NC Mạnh
     //CreatedDate "5/12/2023"
-    async LoadAllData() {
-      try{
-        //  this.employees = data;
-        //  this.records = data.length;
-        let data = await this.MISAApiService.GetData();
-        this.maxCode = this.MISADataService.GetMaxCode(data) + 1;
-      }
-      catch(error){
-        console.log(error);
-      }
-    },
+    // async LoadAllData() {
+    //   try{
+    //     //  this.employees = data;
+    //     //  this.records = data.length;
+    //     let data = await this.MISAApiService.GetData();
+    //   }
+    //   catch(error){
+    //     console.log(error);
+    //   }
+    // },
     //Hàm toggle tất cả bản ghi  với checkbox
     //CreadtedBy : NC Mạnh
     //CreatedDate "5/12/2023"
@@ -584,13 +588,15 @@ export default {
     //hàm mở form thông tin
     //CreadtedBy : NC Mạnh
     //CreatedDate "5/12/2023"
-    showForm() {
+   async showForm() {
+    let maxCode =  await this.MISAApiService.GetMaxCode();
+    console.log();
       this.employee = {};
      try {
       this.isShowForm = true;
       this.employee = {
-        EmployeeCode : "NV-"+ this.maxCode,
         Gender : 0,
+        EmployeeCode :maxCode
       };
       this.method = this.MISAEnum.method.ADD;
       this.content = this.MISAResource.returnMessage.addComplete;
@@ -635,16 +641,20 @@ export default {
       }
     
     },
-    
+    logout(){
+      localStorage.clear();
+      route.push('/');
+    },
     //hàm show xóa nhiều
     //CreadtedBy : NC Mạnh
     //CreatedDate "5/12/2023"
     showDeleteMultiple() {
       this.isShowDeleteMultiple = !this.isShowDeleteMultiple;
-    },
+    }
   },
   data() {
     return {
+      isLogout : false,
       formExcel: false,
       isShowDeleteMultiple: false,
       employees: [],
@@ -692,7 +702,6 @@ export default {
       pageNumber: 1,
       selectedFile: "",
       response: [],
-      maxCode: 0,
       employeeIdArray: [],
       searchText: " ",
       position: [],

@@ -64,7 +64,6 @@ app.use(excel)
 app.use(routers);
 
 app.config.globalProperties.api = axios;
-
 app.config.globalProperties.MISAEnum = MISAEnum;
 app.config.globalProperties.MISAResource = MISAResource;
 app.config.globalProperties.MISAErrorService = MISAErrorService;

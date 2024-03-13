@@ -18,21 +18,26 @@
 <script>
 export default {
 props:["dataApi","propText","propValue","hasError"],
-methods:{
-  
-  created() {
-    console.log(this.propValue);
+created() {
   },
   mounted() {
-    this.arrays = this.api;
+
   },
+methods:{
   showDataClick(){
     this.showData=!this.showData;
+    this.arrays = this.dataApi; 
   },
   Selectitem(item){
     this.itemSelected = item[this.propText];
      this.showData=false;
     this.$emit('update:modelValue',item[this.propValue])
+  },
+  FilterData(){
+    this.showData=true,
+    this.txtCombobox = event.target.value.toLowerCase();
+    this.arrays = this.arrays.filter(item => item[this.propText].toLowerCase().includes(this.txtCombobox));
+      
   }
 },
 data(){
@@ -40,6 +45,7 @@ data(){
        showData:false,
        arrays : [],
        itemSelected:"",
+       txtCombobox:""
     }
 },
 }

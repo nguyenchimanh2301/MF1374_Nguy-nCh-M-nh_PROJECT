@@ -3,6 +3,8 @@
         let expiration = localStorage.getItem("expiration");
         // Kiểm tra xem yêu cầu có chứa Authorization header và token đã hết hạn hay không
         if (config.headers.Authorization && new Date() >= new Date(expiration)) {
+        console.log(new Date() >= new Date(expiration));
+            
             try {
                 // Gọi hàm refresh token
                 await reFreshtoken();
@@ -54,3 +56,5 @@
 //   }
 //   return config; // Trả về config sau khi hoàn thành refresh token
 // });
+
+// Hàm để phân tích token JWT thành JSON

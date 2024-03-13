@@ -11,9 +11,9 @@ const routes = [
 //  {path:'/data', name:'data' , component:DataImport},
 //  {path:'/choosefile', name:'setting' , component:ChooseFile},
 //  {path:'/result', name:'report' , component:ImportResult},
- {path:'/unauthorize', name:'report' , component:TheUnauthorize},
+ {path:'/unauthorized', name:'unauthorize' , component:TheUnauthorize },
 
- {path:'/layout', name:'customer' , component:TheLayout,
+ {path:'/layout', name:'layout' , component:TheLayout,
  
    children: [
    // Các route cho phần nội dung sau khi đăng nhập
@@ -68,23 +68,23 @@ const routes = [
  async function userHasAdminRole() {
    // Kiểm tra token role của người dùng ở đây, và trả về true nếu có quyền admin, false nếu không
   //  // Đây chỉ là một hàm giả định, bạn cần thay thế nó bằng cách kiểm tra token role thực tế
-  //  const jwt = localStorage.getItem('token');
-  // //  if (jwt) {
-  //    // Giải mã JWT
-  //    const decodedToken = decodeJWT(jwt);
-  //    console.log(decodedToken);
-     // Kiểm tra vai trò của người dùng
-    //  const isAdmin = decodedToken.jti !== "8428d642-ffd1-4310-9a93-c5d892ada6de";
-    //  if (isAdmin) {
-    //    // Người dùng là admin, cho phép truy cập vào router
-    //    return true
-    //  } else {
-    //    // Người dùng không phải là admin, chuyển hướng hoặc xử lý lỗi 403
-    //    return false
-    //  }
-  //  } else {
-  //    // JWT không tồn tại, xử lý lỗi hoặc chuyển hướng đến trang đăng nhập
-  //  }
+   const jwt = localStorage.getItem('token');
+   if (jwt) {
+     // Giải mã JWT
+     const decodedToken = decodeJWT(jwt);
+    //  console.log(decodedToken['http://schemas.microsoft.com/ws/2008/06/identity/claims/role']);
+     if (decodedToken['http://schemas.microsoft.com/ws/2008/06/identity/claims/role']) {
+       // Người dùng là admin, cho phép truy cập vào router
+       return true
+     } else {
+       // Người dùng không phải là admin, chuyển hướng hoặc xử lý lỗi 403
+       router.push('/unauthorized')
+       return false
+     }
+   } else {
+     // JWT không tồn tại, xử lý lỗi hoặc chuyển hướng đến trang đăng nhập
+     router.push('/')
+   }
   //  return  api.response.status !==401;
  }
  
@@ -99,14 +99,15 @@ const routes = [
     return true;
    }
  }
-//  function decodeJWT(token) {
-//   const base64Url = token.split('.')[1];
-//   const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-//   const jsonPayload = decodeURIComponent(atob(base64).split('').map(function(c) {
-//       return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
-//   }).join(''));
-//   return JSON.parse(jsonPayload);
-// }
+ //Hàm giải mã token
+ function decodeJWT(token) {
+  const base64Url = token.split('.')[1];
+  const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+  const jsonPayload = decodeURIComponent(atob(base64).split('').map(function(c) {
+      return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+  }).join(''));
+  return JSON.parse(jsonPayload);
+}
 
 
 export default router;

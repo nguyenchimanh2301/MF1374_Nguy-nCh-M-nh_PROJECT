@@ -14,11 +14,16 @@ axios.interceptors.request.use(addTokenToRequest);
 const  MISAApi ="https://localhost:7096/api/v1/Employees";
 const  Api ="https://localhost:7096/api/v1/";
 const ApiService={
+  
+  MISAUrl : Api,
   async loadFilter(text, pageSize, numberPage) {
+  let token = localStorage.getItem('token');
     let url = MISAApi + `/getpagingdto?searchText=${text}&pageSize=${pageSize}&numberPage=${numberPage}`;
-    
     try {
-        const response = await axios.get(url);
+        const response = await axios.get(url,{
+          headers: {
+              Authorization: `Bearer ${token}`
+          }});
         
         // Trả về dữ liệu từ response
         return response.data;
@@ -130,98 +135,17 @@ const ApiService={
         });
     } catch (error) {
       console.log(error);
+    }},
+    //Lấy mã lớn nhất
+   //CreatedBy NCMANH(23/1/2024)
+   async GetMaxCode() {
+    try {
+      const res = await axios.get(MISAApi+'/maxcode');
+      return res.data;
+    } catch (error) {
+      console.log(error);
     }
   },
-  // async  refreshToken() {
-  //   try {
-  //     const accessToken = localStorage.getItem('token');
-  //     const refreshToken = localStorage.getItem("refresh");
-  //      console.log(accessToken,refreshToken);
-  //     if (!refreshToken) {
-  //       // Xử lý nếu không có refreshToken
-  //       return Promise.reject("Không có refreshToken trong local storage");
-  //     }
-  
-  //     // Gửi yêu cầu làm mới token
-  //     const response = await axios.post(Api+"Authenticate/refresh-token", {
-  //       AccessToken: accessToken, RefreshToken: refreshToken
-  //     });
-  
-  //     // Lưu token mới vào local storage
-  //     localStorage.setItem("token", response.data.accessToken);
-  //     localStorage.setItem("refresh", response.data.refreshToken);
-  
-  //     // Trả về accessToken mới
-  //     return response.data.Token;
-  //   } catch (error) {
-  //     // Xử lý lỗi khi làm mới token
-  //     return Promise.reject(error);
-  //   }
-  // },
-  //  Api Service phân trang
-  //     CreatedBy NCMANH(23/1/2024)
-
-
-    
-// async loadFilter(text, pageSize, numberPage) {
-
-//   let url = MISAApi+`/getpagingdto?searchText=${text}&pageSize=${pageSize}&numberPage=${numberPage}`;
-//   try {
-//       // Gửi yêu cầu với token hiện tại
-//       const response = await axios.get(url);
-//       return response.data;
-//   } catch (error) {
-//       // Nếu gặp lỗi, kiểm tra xem lỗi có phải do token hết hạn không
-//       if (error.response && error.response.status === 401) {
-//           try {
-//               // Nếu lỗi 401, thử làm mới token
-//               const newToken = await this.refreshToken();
-//               // Nếu làm mới token thành công, thử gửi lại yêu cầu
-//               const response = await axios.get(url, {
-//                   headers: {
-//                       Authorization: `Bearer ${newToken}`
-//                   }
-//               });
-//               // Trả về dữ liệu từ yêu cầu mới
-//               return response.data;
-//           } catch (refreshError) {
-//               // Nếu làm mới token không thành công, xử lý lỗi
-//               console.error('Làm mới token không thành công:', refreshError);
-//               throw refreshError;
-//           }
-//       } else {
-//           // Nếu lỗi không phải do token hết hạn, xử lý lỗi
-//           console.error('Lỗi khi gửi yêu cầu:', error);
-//           throw error;
-//       }
-//   }
-// },
-// async refreshToken() {
-//   try {
-      
-//       let object ={
-//         "AccessToken": accessToken,
-//         "RefreshToken":refreshToken
-//       }
-
-//    console.log(object);
-//       // Gửi yêu cầu làm mới token đến máy chủ
-//       const response = await axios.post('https://localhost:7096/api/Authenticate/refresh-token',object)
-//       // Trả về token mới từ phản hồi của máy chủ
-//       localStorage.setItem('token',response.data.Token);
-//       localStorage.setItem('refresh',response.data.RefreshToken);
-//       return response.data.Token;
-//   }  catch (refreshError) {
-//       // Xử lý lỗi nếu không thể làm mới token
-//       console.error('Lỗi khi làm mới token:', refreshError);
-//       throw refreshError;
-//   }
-// },
-// Hàm kiểm tra và làm mới token
-
-
-// Hàm gửi yêu cầu với token
-
      //Api Service Xuất tệp
       //CreatedBy NCMANH(23/1/2024)
   async exportFile(){
